@@ -1,0 +1,1 @@
+timestamp,order_id,symbol,side,qty,price_usd,commission_usd,exchange_rate_eur_usd,price_eur,commission_eur,total_eur

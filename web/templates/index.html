@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>robTrader Dashboard - Control de Algoritmos</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="glow-backdrop"></div>
+    
+    <header class="app-header">
+        <div class="brand">
+            <span class="logo-icon">▲</span>
+            <h1>robTrader <span class="accent-text">Engine</span></h1>
+        </div>
+        <div class="tabs-nav">
+            <button class="tab-link active" data-tab="tab-dashboard">Dashboard</button>
+            <button class="tab-link" data-tab="tab-orders">Órdenes y FIFO</button>
+            <button class="tab-link" data-tab="tab-analysis">Análisis</button>
+            <button class="tab-link" data-tab="tab-config">Ajustes (.env)</button>
+        </div>
+        <div class="system-status-container">
+            <span class="status-label">Bot:</span>
+            <div id="status-indicator" class="status-indicator stopped">
+                <span class="pulse-light"></span>
+                <span id="status-text">Detenido</span>
+            </div>
+            <button id="btn-toggle-bot" class="btn btn-primary start">Iniciar Bot</button>
+        </div>
+    </header>
+
+    <main class="app-main-content">
+        <!-- PESTAÑA 1: DASHBOARD PRINCIPAL -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+                <!-- Resumen de Cartera -->
+                <section class="card glassmorphism portfolio-card">
+                    <h2>Resumen de Cartera</h2>
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <span class="stat-label">Valor Total (USD)</span>
+                            <span id="portfolio-value" class="stat-value">$0.00</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Efectivo Disponible</span>
+                            <span id="portfolio-cash" class="stat-value">$0.00</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Balance Diario (Hoy)</span>
+                            <span id="portfolio-daily-return" class="stat-value">$0.00 (0.00%)</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Balance Global</span>
+                            <span id="portfolio-global-return" class="stat-value">$0.00 (0.00%)</span>
+                        </div>
+                    </div>
+                    <div class="last-updated">
+                        Última actualización: <span id="portfolio-updated">Nunca</span>
+                    </div>
+                </section>
+
+                <!-- Posiciones Activas -->
+                <section class="card glassmorphism positions-card">
+                    <h2>Posiciones Activas</h2>
+                    <div class="table-container">
+                        <table id="table-positions">
+                            <thead>
+                                <tr>
+                                    <th>Activo</th>
+                                    <th>Acciones</th>
+                                    <th>Precio Compra</th>
+                                    <th>Precio Actual</th>
+                                    <th>Valor Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="positions-tbody">
+                                <tr>
+                                    <td colspan="5" class="empty-state">No hay posiciones abiertas</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Órdenes Activas / Pendientes -->
+                <section class="card glassmorphism pending-orders-card">
+                    <h2>Órdenes Activas / Pendientes</h2>
+                    <div class="table-container">
+                        <table id="table-pending-orders">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Activo</th>
+                                    <th>Lado</th>
+                                    <th>Cant. Solicitada</th>
+                                    <th>Cant. Ejecutada</th>
+                                    <th>Precio</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pending-orders-tbody">
+                                <tr>
+                                    <td colspan="7" class="empty-state">No hay órdenes activas o pendientes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Gráfica de Evolución de Balance -->
+                <section class="card glassmorphism chart-card full-width">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                        <h2 style="margin: 0; border: none; padding: 0; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>📈</span> Evolución de Balance
+                        </h2>
+                        <div class="chart-filters" style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary filter-btn" data-range="1d" style="width: auto; margin: 0; padding: 0.35rem 0.75rem; font-size: 0.8rem; border-radius: 6px; cursor: pointer;">1D</button>
+                            <button class="btn btn-secondary filter-btn" data-range="1y" style="width: auto; margin: 0; padding: 0.35rem 0.75rem; font-size: 0.8rem; border-radius: 6px; cursor: pointer;">1Y</button>
+                            <button class="btn btn-secondary filter-btn active" data-range="all" style="width: auto; margin: 0; padding: 0.35rem 0.75rem; font-size: 0.8rem; border-radius: 6px; cursor: pointer; background: rgba(0, 240, 255, 0.1); color: var(--text-accent);">Histórico</button>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="position: relative; height: 320px; width: 100%;">
+                        <canvas id="balance-chart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Consola de Salida del Bot (Output Logs) -->
+                <section class="card glassmorphism console-card full-width">
+                    <h2>Consola de Ejecución</h2>
+                    <div id="console-logs" class="console-box">
+                        <span class="system-log">[Sistema] Conectando con servidor de logs...</span>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 2: HISTORIAL Y ÓRDENES -->
+        <div id="tab-orders" class="tab-content">
+            <div class="dashboard-grid">
+                <!-- Historial de Órdenes Ejecutadas -->
+                <section class="card glassmorphism trades-card">
+                    <h2>Historial de Órdenes Ejecutadas (EUR) <a href="/api/trades/download" class="btn btn-secondary" style="width: auto; margin: 0; padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 6px;" download>Descargar Órdenes (CSV)</a></h2>
+                    <div class="table-container">
+                        <table id="table-trades">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Activo</th>
+                                    <th>Lado</th>
+                                    <th>Cant.</th>
+                                    <th>Precio (EUR)</th>
+                                    <th>Comisión (EUR)</th>
+                                    <th>Total (EUR)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trades-tbody">
+                                <tr>
+                                    <td colspan="7" class="empty-state">No hay operaciones registradas</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Últimas Órdenes en Broker (Live Alpaca State) -->
+                <section class="card glassmorphism live-orders-card">
+                    <h2>Órdenes del Broker (Estado Real)</h2>
+                    <div class="table-container">
+                        <table id="table-live-orders">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Activo</th>
+                                    <th>Lado</th>
+                                    <th>Cant.</th>
+                                    <th>Precio (USD)</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="live-orders-tbody">
+                                <tr>
+                                    <td colspan="6" class="empty-state">No hay órdenes registradas en Alpaca/Simulador</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Declaración de la Renta España (IRPF / FIFO) -->
+                <section class="card glassmorphism tax-card full-width">
+                    <h2>Hacienda España - Informe FIFO (Plusvalías IRPF) <a href="/api/tax/download" class="btn btn-secondary" style="width: auto; margin: 0; padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 6px;" download>Descargar Reporte (CSV)</a></h2>
+                    <div class="tax-summary-row" id="tax-summary">
+                        <div class="tax-stat">
+                            <span class="tax-label">Ganancia/Pérdida Neta</span>
+                            <span id="tax-net-gain" class="tax-val neutral">0.00 €</span>
+                        </div>
+                        <div class="tax-stat">
+                            <span class="tax-label">Dividendos Recibidos</span>
+                            <span id="tax-dividends" class="tax-val">0.00 €</span>
+                        </div>
+                        <div class="tax-stat">
+                            <span class="tax-label">Retenciones en Origen</span>
+                            <span id="tax-withholdings" class="tax-val">0.00 €</span>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="table-tax">
+                            <thead>
+                                <tr>
+                                    <th>Activo</th>
+                                    <th>F. Compra</th>
+                                    <th>F. Venta</th>
+                                    <th>Cant.</th>
+                                    <th>Val. Adquisición</th>
+                                    <th>Val. Transmisión</th>
+                                    <th>Ganancia/Pérdida</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tax-tbody">
+                                <tr>
+                                    <td colspan="7" class="empty-state">No hay ganancias o pérdidas registradas en FIFO</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 3: ANÁLISIS DE ESTRATEGIAS -->
+        <div id="tab-analysis" class="tab-content">
+            <div class="dashboard-grid">
+                <!-- Panel de Reglas de Decisión -->
+                <section class="card glassmorphism analysis-summary-card full-width">
+                    <h2>Reglas de Decisión del Algoritmo</h2>
+                    <div class="analysis-rules-row">
+                        <div class="rule-box">
+                            <span class="rule-title">Umbral de Compra (BUY)</span>
+                            <span id="analysis-buy-threshold" class="rule-val success-log">>= 0.25</span>
+                        </div>
+                        <div class="rule-box">
+                            <span class="rule-title">Umbral de Venta (SELL)</span>
+                            <span id="analysis-sell-threshold" class="rule-val error-log"><= -0.25</span>
+                        </div>
+                        <div class="rule-box">
+                            <span class="rule-title">Último Análisis de Mercado</span>
+                            <span id="analysis-updated" class="rule-val">Nunca</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tabla de Análisis Completa -->
+                <section class="card glassmorphism analysis-table-card full-width">
+                    <h2>Métricas y Puntuaciones de Activos en Evaluación</h2>
+                    <div class="table-container">
+                        <table id="table-analysis">
+                            <thead>
+                                <tr>
+                                    <th>Activo</th>
+                                    <th>Precio Actual</th>
+                                    <th>Técnico (40%)</th>
+                                    <th>Fundamental (30%)</th>
+                                    <th>Noticias/Sentim. (30%)</th>
+                                    <th>Puntuación Final</th>
+                                    <th>Decisión</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analysis-tbody">
+                                <tr>
+                                    <td colspan="7" class="empty-state">No hay análisis disponibles. Activa el bot para recopilar métricas.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 4: AJUSTES (.ENV) -->
+        <div id="tab-config" class="tab-content">
+            <div class="dashboard-grid">
+                <section class="card glassmorphism config-card full-width">
+                    <h2>Parámetros del Archivo de Configuración (.env)</h2>
+                    <form id="config-form" class="dashboard-form">
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="alpaca-key-id">Alpaca API Key ID</label>
+                                <input type="text" id="alpaca-key-id" placeholder="Clave pública de Alpaca">
+                            </div>
+                            <div class="form-group">
+                                <label for="alpaca-secret-key">Alpaca Secret Key</label>
+                                <input type="password" id="alpaca-secret-key" placeholder="••••••••••••••••••••••••">
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="alpaca-env">Entorno Alpaca</label>
+                                <select id="alpaca-env">
+                                    <option value="paper">Paper Trading (Pruebas)</option>
+                                    <option value="live">Live Trading (Real)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="order-type">Tipo de Orden</label>
+                                <select id="order-type">
+                                    <option value="market">Orden a Mercado (Market)</option>
+                                    <option value="limit">Orden Limitada (Limit)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="trading-symbols">Símbolos por defecto</label>
+                                <input type="text" id="trading-symbols" placeholder="AAPL,MSFT,TSLA,BTCUSD">
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group toggle-group">
+                                <label for="dynamic-scan">Escáner Dinámico</label>
+                                <select id="dynamic-scan">
+                                    <option value="False">Desactivado (Fijo)</option>
+                                    <option value="True">Activado (Dinámico)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dynamic-scan-index">Índice a Escanear</label>
+                                <select id="dynamic-scan-index">
+                                    <option value="SP500">S&P 500 (EE. UU.)</option>
+                                    <option value="IBEX35">IBEX 35 (España)</option>
+                                    <option value="BOTH">Ambos (S&P 500 + IBEX 35)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dynamic-limit">Límite Escáner Stocks</label>
+                                <input type="number" id="dynamic-limit" min="1" max="50">
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="buy-threshold">Umbral Compra (BUY)</label>
+                                <input type="number" id="buy-threshold" step="0.01" min="-1" max="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="sell-threshold">Umbral Venta (SELL)</label>
+                                <input type="number" id="sell-threshold" step="0.01" min="-1" max="1">
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="refresh-secs">Intervalo Refresco Cartera (seg)</label>
+                                <input type="number" id="refresh-secs" min="5" max="300">
+                            </div>
+                            <div class="form-group">
+                                <label for="reanalyze-mins">Intervalo Reanálisis (minutos)</label>
+                                <input type="number" id="reanalyze-mins" min="1" max="1440">
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="max-pos-pct">Posición Máxima por Activo (%)</label>
+                                <input type="number" id="max-pos-pct" min="0.01" max="1.00" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="daily-loss-pct">Pérdida Máxima Diaria (%)</label>
+                                <input type="number" id="daily-loss-pct" min="0.01" max="1.00" step="0.01">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btn-save-config" class="btn btn-secondary">Guardar Configuración (.env)</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>robTrader Platform &copy; 2026. Diseñado para operativa segura y cumplimiento tributario IRPF (FIFO).</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>

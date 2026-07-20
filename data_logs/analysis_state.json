@@ -1,0 +1,576 @@
+{
+    "timestamp": "2026-07-20T13:08:18.614226",
+    "buy_threshold": 0.15,
+    "sell_threshold": -0.1,
+    "evaluations": {
+        "MMM": {
+            "score": 0.11,
+            "action": "HOLD",
+            "latest_price": 159.84,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "AOS": {
+            "score": 0.07,
+            "action": "HOLD",
+            "latest_price": 58.85,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.25,
+                "article_count": 8
+            }
+        },
+        "ABT": {
+            "score": 0.19,
+            "action": "BUY",
+            "latest_price": 100.68,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.62,
+                "article_count": 8
+            }
+        },
+        "ABBV": {
+            "score": 0.09,
+            "action": "HOLD",
+            "latest_price": 254.49,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.29,
+                "article_count": 8
+            }
+        },
+        "ACN": {
+            "score": 0.04,
+            "action": "HOLD",
+            "latest_price": 143.57,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8
+            }
+        },
+        "ADBE": {
+            "score": 0.0,
+            "action": "HOLD",
+            "latest_price": 237.25,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8
+            }
+        },
+        "AMD": {
+            "score": 0.07,
+            "action": "HOLD",
+            "latest_price": 495.76,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.25,
+                "article_count": 8
+            }
+        },
+        "AES": {
+            "score": 0.11,
+            "action": "HOLD",
+            "latest_price": 14.77,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "AFL": {
+            "score": 0.0,
+            "action": "HOLD",
+            "latest_price": 124.72,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8
+            }
+        },
+        "A": {
+            "score": 0.11,
+            "action": "HOLD",
+            "latest_price": 131.46,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "APD": {
+            "score": 0.07,
+            "action": "HOLD",
+            "latest_price": 295.62,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.25,
+                "article_count": 8
+            }
+        },
+        "ABNB": {
+            "score": 0.07,
+            "action": "HOLD",
+            "latest_price": 145.98,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.25,
+                "article_count": 8
+            }
+        },
+        "AKAM": {
+            "score": 0.0,
+            "action": "HOLD",
+            "latest_price": 120.19,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8
+            }
+        },
+        "ALB": {
+            "score": 0.19,
+            "action": "BUY",
+            "latest_price": 120.78,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.62,
+                "article_count": 8
+            }
+        },
+        "ARE": {
+            "score": 0.11,
+            "action": "HOLD",
+            "latest_price": 50.22,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "ALGN": {
+            "score": 0.0,
+            "action": "HOLD",
+            "latest_price": 176.76,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8
+            }
+        },
+        "ALLE": {
+            "score": 0.04,
+            "action": "HOLD",
+            "latest_price": 137.24,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8
+            }
+        },
+        "LNT": {
+            "score": 0.11,
+            "action": "HOLD",
+            "latest_price": 74.82,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "ALL": {
+            "score": 0.11,
+            "action": "HOLD",
+            "latest_price": 249.9,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "GOOGL": {
+            "score": 0.04,
+            "action": "HOLD",
+            "latest_price": 346.77,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8
+            }
+        },
+        "BTCUSD": {
+            "score": 0.2,
+            "action": "BUY",
+            "latest_price": 64364.629,
+            "details": {
+                "technical_score": 0.12,
+                "technical_indicators": {
+                    "close": 64364.629,
+                    "rsi": 51.54499510565318,
+                    "macd_hist": 273.2942641389388,
+                    "ema_10": 64087.65577967763,
+                    "sma_50": 63171.22181000001,
+                    "bb_upper": 65916.22948017872,
+                    "bb_lower": 60940.87571982127
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.5,
+                "article_count": 8
+            }
+        },
+        "ETHUSD": {
+            "score": 0.14,
+            "action": "HOLD",
+            "latest_price": 1872.336847045,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 1872.336847045,
+                    "rsi": 58.400605825615436,
+                    "macd_hist": 10.499599936002376,
+                    "ema_10": 1844.2132374535056,
+                    "sma_50": 1732.1283269408998,
+                    "bb_upper": 1942.8993107721872,
+                    "bb_lower": 1653.2222739323129
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "SOLUSD": {
+            "score": 0.12,
+            "action": "HOLD",
+            "latest_price": 76.44185,
+            "details": {
+                "technical_score": 0.02,
+                "technical_indicators": {
+                    "close": 76.44185,
+                    "rsi": 49.411212857417446,
+                    "macd_hist": -0.37982220861394445,
+                    "ema_10": 76.41160238989906,
+                    "sma_50": 73.23563911709999,
+                    "bb_upper": 83.03192755551848,
+                    "bb_lower": 73.15838802998152
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "LTCUSD": {
+            "score": 0.06,
+            "action": "HOLD",
+            "latest_price": 47.0805,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 47.0805,
+                    "rsi": 61.3412348594943,
+                    "macd_hist": 0.39858463953882745,
+                    "ema_10": 45.71737427459805,
+                    "sma_50": 44.1958921053,
+                    "bb_upper": 47.24195302357224,
+                    "bb_lower": 42.37002697642776
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8
+            }
+        },
+        "DOGEUSD": {
+            "score": 0.16,
+            "action": "BUY",
+            "latest_price": 0.07223575,
+            "details": {
+                "technical_score": 0.03,
+                "technical_indicators": {
+                    "close": 0.07223575,
+                    "rsi": 35.76120181424044,
+                    "macd_hist": 0.000394717278518782,
+                    "ema_10": 0.0729221957941743,
+                    "sma_50": 0.079539545,
+                    "bb_upper": 0.07781541788579752,
+                    "bb_lower": 0.06991590211420248
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.5,
+                "article_count": 8
+            }
+        },
+        "ADAUSD": {
+            "score": -0.01,
+            "action": "HOLD",
+            "latest_price": 0.163148,
+            "details": {
+                "technical_score": -0.02,
+                "technical_indicators": {
+                    "close": 0.163148,
+                    "rsi": 45.416501456998354,
+                    "macd_hist": 0.00041427871455972836,
+                    "ema_10": 0.165022953392979,
+                    "sma_50": 0.1671136996,
+                    "bb_upper": 0.18903275965841337,
+                    "bb_lower": 0.14827819034158662
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8
+            }
+        },
+        "LINKUSD": {
+            "score": -0.01,
+            "action": "HOLD",
+            "latest_price": 8.39855,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 8.39855,
+                    "rsi": 57.73236253642077,
+                    "macd_hist": 0.06529783436443631,
+                    "ema_10": 8.240935342118046,
+                    "sma_50": 7.9067474,
+                    "bb_upper": 8.634996437731537,
+                    "bb_lower": 7.432629062268462
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": -0.12,
+                "article_count": 8
+            }
+        }
+    }
+}

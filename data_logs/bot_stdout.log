@@ -1,0 +1,108 @@
+2026-07-20 13:07:41,513 - robTrader.Scheduler - INFO - Dynamic scan enabled. Fetching symbols dynamically from S&P 500 and top Cryptocurrencies...
+2026-07-20 13:07:46,244 - robTrader.Scheduler - INFO - Alpaca credentials found. Initializing Alpaca data provider and broker.
+2026-07-20 13:07:46,250 - robTrader.Scheduler - INFO - Recovered daily start portfolio value from history: 100000.00 (Date: 2026-07-20)
+2026-07-20 13:07:46,251 - robTrader.Scheduler - INFO - Starting execution loop.
+2026-07-20 13:07:46,252 - robTrader.Scheduler - INFO - - Portfolio Refresh Interval: 30 seconds
+2026-07-20 13:07:46,253 - robTrader.Scheduler - INFO - - Market Re-Analysis Interval: 2 minutes
+2026-07-20 13:07:49,364 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 1000000.00 | Total Value = 1000000.00
+2026-07-20 13:07:49,365 - robTrader.Scheduler - INFO - ------ Starting Trading Cycle ------
+2026-07-20 13:07:49,366 - robTrader.Scheduler - INFO - Signal Thresholds: BUY >= 0.15 | SELL <= -0.1
+2026-07-20 13:07:51,694 - robTrader.Scheduler - INFO - Dynamically scanned market. Target symbols for this cycle: ['MMM', 'AOS', 'ABT', 'ABBV', 'ACN', 'ADBE', 'AMD', 'AES', 'AFL', 'A', 'APD', 'ABNB', 'AKAM', 'ALB', 'ARE', 'ALGN', 'ALLE', 'LNT', 'ALL', 'GOOGL', 'BTCUSD', 'ETHUSD', 'SOLUSD', 'LTCUSD', 'DOGEUSD', 'ADAUSD', 'LINKUSD']
+2026-07-20 13:07:52,155 - robTrader.Scheduler - INFO - Broker Cash: 1000000.00 | Reserved in Pending Buys: 0.00 | Estimated Available Cash: 1000000.00
+2026-07-20 13:07:52,156 - robTrader.Scheduler - INFO - Portfolio Value: 1000000.00 | Cash: 1000000.00 | Open Positions: []
+2026-07-20 13:07:52,156 - robTrader.Scheduler - INFO - Analyzing MMM...
+2026-07-20 13:08:00,747 - robTrader.Scheduler - INFO - Strategy recommendation for MMM: HOLD (Score: 0.11) | Price: 159.84
+2026-07-20 13:08:00,859 - robTrader.Scheduler - INFO - Holding current position for MMM.
+2026-07-20 13:08:00,859 - robTrader.Scheduler - INFO - Analyzing AOS...
+2026-07-20 13:08:01,166 - robTrader.Scheduler - INFO - Strategy recommendation for AOS: HOLD (Score: 0.07) | Price: 58.85
+2026-07-20 13:08:01,270 - robTrader.Scheduler - INFO - Holding current position for AOS.
+2026-07-20 13:08:01,270 - robTrader.Scheduler - INFO - Analyzing ABT...
+2026-07-20 13:08:01,512 - robTrader.Scheduler - INFO - Strategy recommendation for ABT: BUY (Score: 0.19) | Price: 100.68
+2026-07-20 13:08:01,619 - robTrader.Scheduler - INFO - Submitting LIMIT BUY order for ABT: 993.2459 shares at 100.68
+2026-07-20 13:08:01,932 - robTrader.Scheduler - INFO - BUY Order Placed! Order ID: ddf49341-0c43-4294-90c0-e10fbf2b219d | Status: new
+2026-07-20 13:08:01,932 - robTrader.Scheduler - INFO - Updated local available cash after BUY order: 899900.00
+2026-07-20 13:08:01,932 - robTrader.Scheduler - INFO - Analyzing ABBV...
+2026-07-20 13:08:02,171 - robTrader.Scheduler - INFO - Strategy recommendation for ABBV: HOLD (Score: 0.09) | Price: 254.49
+2026-07-20 13:08:02,274 - robTrader.Scheduler - INFO - Holding current position for ABBV.
+2026-07-20 13:08:02,274 - robTrader.Scheduler - INFO - Analyzing ACN...
+2026-07-20 13:08:02,504 - robTrader.Scheduler - INFO - Strategy recommendation for ACN: HOLD (Score: 0.04) | Price: 143.57
+2026-07-20 13:08:02,610 - robTrader.Scheduler - INFO - Holding current position for ACN.
+2026-07-20 13:08:02,610 - robTrader.Scheduler - INFO - Analyzing ADBE...
+2026-07-20 13:08:02,849 - robTrader.Scheduler - INFO - Strategy recommendation for ADBE: HOLD (Score: 0.0) | Price: 237.25
+2026-07-20 13:08:02,953 - robTrader.Scheduler - INFO - Holding current position for ADBE.
+2026-07-20 13:08:02,954 - robTrader.Scheduler - INFO - Analyzing AMD...
+2026-07-20 13:08:03,220 - robTrader.Scheduler - INFO - Strategy recommendation for AMD: HOLD (Score: 0.07) | Price: 495.76
+2026-07-20 13:08:03,324 - robTrader.Scheduler - INFO - Holding current position for AMD.
+2026-07-20 13:08:03,324 - robTrader.Scheduler - INFO - Analyzing AES...
+2026-07-20 13:08:03,589 - robTrader.Scheduler - INFO - Strategy recommendation for AES: HOLD (Score: 0.11) | Price: 14.77
+2026-07-20 13:08:03,695 - robTrader.Scheduler - INFO - Holding current position for AES.
+2026-07-20 13:08:03,696 - robTrader.Scheduler - INFO - Analyzing AFL...
+2026-07-20 13:08:03,946 - robTrader.Scheduler - INFO - Strategy recommendation for AFL: HOLD (Score: 0.0) | Price: 124.72
+2026-07-20 13:08:04,051 - robTrader.Scheduler - INFO - Holding current position for AFL.
+2026-07-20 13:08:04,051 - robTrader.Scheduler - INFO - Analyzing A...
+2026-07-20 13:08:04,293 - robTrader.Scheduler - INFO - Strategy recommendation for A: HOLD (Score: 0.11) | Price: 131.46
+2026-07-20 13:08:04,396 - robTrader.Scheduler - INFO - Holding current position for A.
+2026-07-20 13:08:04,396 - robTrader.Scheduler - INFO - Analyzing APD...
+2026-07-20 13:08:04,635 - robTrader.Scheduler - INFO - Strategy recommendation for APD: HOLD (Score: 0.07) | Price: 295.62
+2026-07-20 13:08:04,739 - robTrader.Scheduler - INFO - Holding current position for APD.
+2026-07-20 13:08:04,740 - robTrader.Scheduler - INFO - Analyzing ABNB...
+2026-07-20 13:08:04,986 - robTrader.Scheduler - INFO - Strategy recommendation for ABNB: HOLD (Score: 0.07) | Price: 145.98
+2026-07-20 13:08:05,088 - robTrader.Scheduler - INFO - Holding current position for ABNB.
+2026-07-20 13:08:05,089 - robTrader.Scheduler - INFO - Analyzing AKAM...
+2026-07-20 13:08:05,325 - robTrader.Scheduler - INFO - Strategy recommendation for AKAM: HOLD (Score: 0.0) | Price: 120.19
+2026-07-20 13:08:05,437 - robTrader.Scheduler - INFO - Holding current position for AKAM.
+2026-07-20 13:08:05,438 - robTrader.Scheduler - INFO - Analyzing ALB...
+2026-07-20 13:08:05,684 - robTrader.Scheduler - INFO - Strategy recommendation for ALB: BUY (Score: 0.19) | Price: 120.78
+2026-07-20 13:08:05,786 - robTrader.Scheduler - INFO - Submitting LIMIT BUY order for ALB: 827.9516 shares at 120.78
+2026-07-20 13:08:06,094 - robTrader.Scheduler - INFO - BUY Order Placed! Order ID: 1a221a05-88b7-4460-83fd-445a31659815 | Status: new
+2026-07-20 13:08:06,094 - robTrader.Scheduler - INFO - Updated local available cash after BUY order: 799800.00
+2026-07-20 13:08:06,094 - robTrader.Scheduler - INFO - Analyzing ARE...
+2026-07-20 13:08:06,354 - robTrader.Scheduler - INFO - Strategy recommendation for ARE: HOLD (Score: 0.11) | Price: 50.22
+2026-07-20 13:08:06,457 - robTrader.Scheduler - INFO - Holding current position for ARE.
+2026-07-20 13:08:06,457 - robTrader.Scheduler - INFO - Analyzing ALGN...
+2026-07-20 13:08:06,702 - robTrader.Scheduler - INFO - Strategy recommendation for ALGN: HOLD (Score: 0.0) | Price: 176.76
+2026-07-20 13:08:06,804 - robTrader.Scheduler - INFO - Holding current position for ALGN.
+2026-07-20 13:08:06,805 - robTrader.Scheduler - INFO - Analyzing ALLE...
+2026-07-20 13:08:07,065 - robTrader.Scheduler - INFO - Strategy recommendation for ALLE: HOLD (Score: 0.04) | Price: 137.24
+2026-07-20 13:08:07,171 - robTrader.Scheduler - INFO - Holding current position for ALLE.
+2026-07-20 13:08:07,172 - robTrader.Scheduler - INFO - Analyzing LNT...
+2026-07-20 13:08:07,422 - robTrader.Scheduler - INFO - Strategy recommendation for LNT: HOLD (Score: 0.11) | Price: 74.82
+2026-07-20 13:08:07,528 - robTrader.Scheduler - INFO - Holding current position for LNT.
+2026-07-20 13:08:07,528 - robTrader.Scheduler - INFO - Analyzing ALL...
+2026-07-20 13:08:07,762 - robTrader.Scheduler - INFO - Strategy recommendation for ALL: HOLD (Score: 0.11) | Price: 249.90
+2026-07-20 13:08:07,864 - robTrader.Scheduler - INFO - Holding current position for ALL.
+2026-07-20 13:08:07,864 - robTrader.Scheduler - INFO - Analyzing GOOGL...
+2026-07-20 13:08:08,093 - robTrader.Scheduler - INFO - Strategy recommendation for GOOGL: HOLD (Score: 0.04) | Price: 346.77
+2026-07-20 13:08:08,195 - robTrader.Scheduler - INFO - Holding current position for GOOGL.
+2026-07-20 13:08:08,196 - robTrader.Scheduler - INFO - Analyzing BTCUSD...
+2026-07-20 13:08:09,177 - robTrader.Scheduler - INFO - Strategy recommendation for BTCUSD: BUY (Score: 0.2) | Price: 64364.63
+2026-07-20 13:08:09,280 - robTrader.Scheduler - INFO - Submitting LIMIT BUY order for BTCUSD: 1.5536 shares at 64364.63
+2026-07-20 13:08:09,595 - robTrader.Scheduler - INFO - BUY Order Placed! Order ID: 750f62c6-71b4-449e-88b4-dca2d2a21e75 | Status: partially_filled
+2026-07-20 13:08:16,177 - robTrader.Scheduler - INFO - Updated local available cash after BUY order: 699700.00
+2026-07-20 13:08:16,177 - robTrader.Scheduler - INFO - Analyzing ETHUSD...
+2026-07-20 13:08:16,407 - robTrader.Scheduler - INFO - Strategy recommendation for ETHUSD: HOLD (Score: 0.14) | Price: 1872.34
+2026-07-20 13:08:16,507 - robTrader.Scheduler - INFO - Holding current position for ETHUSD.
+2026-07-20 13:08:16,507 - robTrader.Scheduler - INFO - Analyzing SOLUSD...
+2026-07-20 13:08:16,743 - robTrader.Scheduler - INFO - Strategy recommendation for SOLUSD: HOLD (Score: 0.12) | Price: 76.44
+2026-07-20 13:08:16,868 - robTrader.Scheduler - INFO - Holding current position for SOLUSD.
+2026-07-20 13:08:16,868 - robTrader.Scheduler - INFO - Analyzing LTCUSD...
+2026-07-20 13:08:17,121 - robTrader.Scheduler - INFO - Strategy recommendation for LTCUSD: HOLD (Score: 0.06) | Price: 47.08
+2026-07-20 13:08:17,223 - robTrader.Scheduler - INFO - Holding current position for LTCUSD.
+2026-07-20 13:08:17,224 - robTrader.Scheduler - INFO - Analyzing DOGEUSD...
+2026-07-20 13:08:17,454 - robTrader.Scheduler - INFO - Strategy recommendation for DOGEUSD: BUY (Score: 0.16) | Price: 0.07
+2026-07-20 13:08:17,558 - robTrader.Scheduler - INFO - Submitting LIMIT BUY order for DOGEUSD: 1384356.0841 shares at 0.07
+2026-07-20 13:08:17,868 - robTrader.Scheduler - INFO - BUY Order Placed! Order ID: b00f5a77-84f3-4345-b1c6-81862b86c28c | Status: new
+2026-07-20 13:08:17,868 - robTrader.Scheduler - INFO - Updated local available cash after BUY order: 599600.00
+2026-07-20 13:08:17,869 - robTrader.Scheduler - INFO - Analyzing ADAUSD...
+2026-07-20 13:08:18,120 - robTrader.Scheduler - INFO - Strategy recommendation for ADAUSD: HOLD (Score: -0.01) | Price: 0.16
+2026-07-20 13:08:18,229 - robTrader.Scheduler - INFO - Holding current position for ADAUSD.
+2026-07-20 13:08:18,230 - robTrader.Scheduler - INFO - Analyzing LINKUSD...
+2026-07-20 13:08:18,506 - robTrader.Scheduler - INFO - Strategy recommendation for LINKUSD: HOLD (Score: -0.01) | Price: 8.40
+2026-07-20 13:08:18,614 - robTrader.Scheduler - INFO - Holding current position for LINKUSD.
+2026-07-20 13:08:18,619 - robTrader.Scheduler - INFO - Saved analysis metrics for 27 symbols to C:\Users\EM2025007512\.gemini\antigravity\scratch\robTrader\data_logs\analysis_state.json
+2026-07-20 13:08:18,633 - robTrader.Scheduler - INFO - Spanish Tax Report generated successfully at: data_logs\spanish_tax_report.csv
+2026-07-20 13:08:18,633 - robTrader.Scheduler - INFO - Net gains/losses: 0.0 EUR
+2026-07-20 13:08:18,633 - robTrader.Scheduler - INFO - ------ Trading Cycle Finished ------
+2026-07-20 13:08:19,940 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 800001.89 | Total Value = 999757.20
+2026-07-20 13:08:50,266 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 800001.89 | Total Value = 999750.44
+2026-07-20 13:09:20,634 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 800001.90 | Total Value = 999749.31

@@ -1,0 +1,19 @@
+{
+    "timestamp": "2026-07-20T14:35:59.863110",
+    "status": "active",
+    "cash": 849564.31,
+    "portfolio_value": 1000358.96,
+    "start_day_portfolio_value": 1000000.0,
+    "positions": {
+        "BTCUSD": {
+            "qty": 1.555939039,
+            "avg_entry_price": 64292.358990777,
+            "current_price": 64627.3
+        },
+        "DOGEUSD": {
+            "qty": 689734.089573071,
+            "avg_entry_price": 0.072745425,
+            "current_price": 0.0728375
+        }
+    }
+}
