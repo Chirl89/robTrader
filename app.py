@@ -131,9 +131,12 @@ def api_control():
         try:
             python_exec = sys.executable
             # Ensure correct executable (use venv python if available)
-            venv_python = os.path.join(ROOT_DIR, "venv", "Scripts", "python.exe")
-            if os.path.exists(venv_python):
-                python_exec = venv_python
+            venv_python_win = os.path.join(ROOT_DIR, "venv", "Scripts", "python.exe")
+            venv_python_nix = os.path.join(ROOT_DIR, "venv", "bin", "python")
+            if os.path.exists(venv_python_win):
+                python_exec = venv_python_win
+            elif os.path.exists(venv_python_nix):
+                python_exec = venv_python_nix
                 
             # Create/truncate stdout file
             log_file_handle = open(get_bot_stdout_file(), "w", encoding="utf-8")
