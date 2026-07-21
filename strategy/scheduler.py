@@ -129,13 +129,39 @@ class TradingScheduler:
         except Exception:
             return 100000.0
 
-    def refresh_portfolio(self):
+    def calculate_available_cash(self) -> float:
+        """
+        Calculates available cash by subtracting the value of all pending/active buy orders
+        from the raw broker cash.
+        """
+        try:
+            broker_cash = self.broker.get_cash()
+            all_orders = self.broker.get_orders()
+            pending_buys = [
+                o for o in all_orders 
+                if o['status'].lower() in ['submitted', 'accepted', 'new', 'partially_filled', 'open']
+                and o['side'].lower() == 'buy'
+            ]
+            reserved_cash = sum(float(o['qty']) * float(o['price']) for o in pending_buys)
+            available_cash = max(0.0, broker_cash - reserved_cash)
+            return round(available_cash, 2)
+        except Exception as e:
+            logger.error(f"Failed to calculate available cash: {e}")
+            try:
+                return self.broker.get_cash()
+            except Exception:
+                return 0.0
+
+    def refresh_portfolio(self, override_cash: float = None):
         """
         Queries current portfolio stats (cash, value, positions) and exports them 
         to data_logs/portfolio_state.json for the web dashboard.
         """
         try:
-            cash = self.broker.get_cash()
+            if override_cash is not None:
+                cash = override_cash
+            else:
+                cash = self.calculate_available_cash()
             value = self.broker.get_portfolio_value()
             positions = self.broker.get_positions()
             
@@ -145,6 +171,17 @@ class TradingScheduler:
                 self.start_day_portfolio_value = value
                 self.last_check_date = now.date()
                 logger.info(f"New calendar day detected during runtime. Resetting daily start portfolio value to {value:.2f}")
+
+            # Enrich positions with names
+            name_cache = {}
+            for sym, pos_data in positions.items():
+                if sym not in name_cache:
+                    try:
+                        fundamentals = self.data_provider.get_fundamentals(sym)
+                        name_cache[sym] = fundamentals.get('name') or sym
+                    except Exception:
+                        name_cache[sym] = sym
+                pos_data['name'] = name_cache[sym]
 
             state = {
                 'timestamp': now.isoformat(),
@@ -230,9 +267,32 @@ class TradingScheduler:
                     include_crypto=True, 
                     index_name=self.dynamic_scan_index
                 )
-                logger.info(f"Dynamically scanned market. Target symbols for this cycle: {self.symbols}")
+                logger.info(f"Dynamically scanned market. Raw target symbols: {self.symbols}")
             except Exception as e:
                 logger.error(f"Failed to scan market dynamically: {e}")
+                
+        # Validate/Map symbols dynamically against broker active assets to resolve special characters
+        try:
+            tradable_symbols = self.broker.get_tradable_assets()
+            if tradable_symbols and tradable_symbols != ['*']:
+                logger.info("Normalizing and validating target symbols against broker's active assets...")
+                alpaca_lookup = {}
+                for ts in tradable_symbols:
+                    norm = ts.replace('.', '').replace('-', '').replace('/', '').upper()
+                    alpaca_lookup[norm] = ts
+                
+                validated_symbols = []
+                for sym in self.symbols:
+                    norm_sym = sym.replace('.', '').replace('-', '').replace('/', '').upper()
+                    if norm_sym in alpaca_lookup:
+                        # Map to broker's official symbol representation (e.g. BRK.B)
+                        validated_symbols.append(alpaca_lookup[norm_sym])
+                    else:
+                        logger.warning(f"Symbol {sym} is not supported or active on the broker. Skipping.")
+                self.symbols = validated_symbols
+                logger.info(f"Validated target symbols for this cycle: {self.symbols}")
+        except Exception as e:
+            logger.error(f"Failed to validate symbols against broker: {e}")
                 
         now = datetime.now()
         
@@ -242,18 +302,15 @@ class TradingScheduler:
             broker_cash = self.broker.get_cash()
             active_positions = self.broker.get_positions()
             
-            # Fetch all active open orders to calculate reserved cash
-            all_orders = self.broker.get_orders()
-            pending_buys = [
-                o for o in all_orders 
-                if o['status'].lower() in ['submitted', 'accepted', 'new', 'partially_filled', 'open']
-                and o['side'].lower() == 'buy'
-            ]
-            reserved_cash = sum(float(o['qty']) * float(o['price']) for o in pending_buys)
+            # Automatically append open positions to target symbols for monitoring
+            for pos_symbol in active_positions.keys():
+                if pos_symbol not in self.symbols:
+                    self.symbols.append(pos_symbol)
+                    logger.info(f"Added open position symbol {pos_symbol} to target symbols for monitoring/evaluation.")
             
-            # Subtract locked cash from starting cash to get estimated available cash
-            cash = max(0.0, broker_cash - reserved_cash)
-            logger.info(f"Broker Cash: {broker_cash:.2f} | Reserved in Pending Buys: {reserved_cash:.2f} | Estimated Available Cash: {cash:.2f}")
+            # Calculate available cash at the beginning of the cycle
+            cash = self.calculate_available_cash()
+            logger.info(f"Broker Cash: {broker_cash:.2f} | Estimated Available Cash: {cash:.2f}")
         except Exception as e:
             logger.error(f"Failed to fetch account info from broker: {e}")
             return
@@ -303,6 +360,7 @@ class TradingScheduler:
                 
                 # Save evaluation for metrics report
                 evaluations[symbol] = {
+                    'name': fundamentals.get('name') or symbol,
                     'score': score,
                     'action': action,
                     'latest_price': latest_price,
@@ -381,6 +439,7 @@ class TradingScheduler:
                                     commission_estimate = max(1.0, cost * 0.001)  # standard estimate
                                     cash = max(0.0, cash - (cost + commission_estimate))
                                     logger.info(f"Updated local available cash after BUY order: {cash:.2f}")
+                                    self.refresh_portfolio(override_cash=cash)
                                 else:
                                     logger.warning(f"BUY Order Rejected: {order_res.get('reason')}")
                         else:
@@ -398,7 +457,13 @@ class TradingScheduler:
                                 logger.info(f"SELL Order Placed! Order ID: {order_res.get('order_id')} | Status: {order_res.get('status')}")
                                 order_res['timestamp'] = now.isoformat()
                                 self.trade_logger.log_trade(order_res)
-                                # Local cash tracking: We don't increase cash until filled, keeping it conservative
+                                
+                                # For sell orders, check if they are executed/filled immediately
+                                if order_res.get('status').lower() == 'filled':
+                                    proceeds = pos_qty * latest_price - order_res.get('commission', 0.0)
+                                    cash = cash + proceeds
+                                    logger.info(f"Updated local available cash after filled SELL order: {cash:.2f}")
+                                    self.refresh_portfolio(override_cash=cash)
                             else:
                                 logger.warning(f"SELL Order Rejected: {order_res.get('reason')}")
                         else:

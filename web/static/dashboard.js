@@ -13,6 +13,7 @@ const tradesTbody = document.getElementById('trades-tbody');
 const taxTbody = document.getElementById('tax-tbody');
 
 const consoleLogs = document.getElementById('console-logs');
+const btnCopyConsole = document.getElementById('btn-copy-console');
 
 const taxNetGain = document.getElementById('tax-net-gain');
 const taxDividends = document.getElementById('tax-dividends');
@@ -42,6 +43,7 @@ let pollingInterval = null;
 let balanceChart = null;
 let rawHistoryData = [];
 let activeChartRange = 'all';
+let latestEvaluations = {};
 
 // Initialize Dashboard
 document.addEventListener('DOMContentLoaded', () => {
@@ -71,6 +73,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listeners
     btnToggleBot.addEventListener('click', toggleBotState);
     configForm.addEventListener('submit', saveConfig);
+    if (btnCopyConsole) {
+        btnCopyConsole.addEventListener('click', copyConsoleLogs);
+    }
+
+    // Modal Tab Trigger
+    const modalTabs = document.querySelectorAll('.modal-tab-link');
+    modalTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            switchModalTab(tab.dataset.modalTab);
+        });
+    });
+
+    // Close Modal Button and Overlay Dismiss
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalOverlay = document.getElementById('analysis-detail-modal');
+    if (modalCloseBtn && modalOverlay) {
+        const closeModal = () => {
+            modalOverlay.classList.remove('active');
+        };
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }
 });
 
 // Fetch active config and pre-fill form
@@ -311,7 +344,10 @@ function renderPositions(positions) {
         
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><strong>${sym}</strong></td>
+            <td>
+                <strong>${sym}</strong>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;" title="${pos.name || ''}">${pos.name || ''}</div>
+            </td>
             <td>${pos.qty}</td>
             <td>$${formatPrice(pos.avg_entry_price)}</td>
             <td>$${formatPrice(pos.current_price)}</td>
@@ -341,7 +377,10 @@ function renderTrades(trades) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td style="font-size: 0.75rem; color: var(--text-secondary);">${date}</td>
-            <td><strong>${trade.symbol}</strong></td>
+            <td>
+                <strong>${trade.symbol}</strong>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;" title="${trade.name || ''}">${trade.name || ''}</div>
+            </td>
             <td><span class="${sideClass}" style="text-transform: uppercase; font-weight: bold;">${trade.side}</span></td>
             <td>${parseFloat(trade.qty).toFixed(4)}</td>
             <td>${formatPrice(trade.price_eur)} €</td>
@@ -375,7 +414,10 @@ function renderLiveOrders(orders) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td style="font-size: 0.75rem; color: var(--text-secondary);">${date}</td>
-            <td><strong>${order.symbol}</strong></td>
+            <td>
+                <strong>${order.symbol}</strong>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;" title="${order.name || ''}">${order.name || ''}</div>
+            </td>
             <td><span class="${sideClass}" style="text-transform: uppercase; font-weight: bold;">${order.side}</span></td>
             <td>${parseFloat(order.qty).toFixed(4)}</td>
             <td>$${formatPrice(order.price)}</td>
@@ -406,7 +448,10 @@ function renderPendingOrders(orders) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td style="font-size: 0.75rem; color: var(--text-secondary);">${date}</td>
-            <td><strong>${order.symbol}</strong></td>
+            <td>
+                <strong>${order.symbol}</strong>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;" title="${order.name || ''}">${order.name || ''}</div>
+            </td>
             <td><span class="${sideClass}" style="text-transform: uppercase; font-weight: bold;">${order.side}</span></td>
             <td>${parseFloat(order.qty).toFixed(4)}</td>
             <td>${parseFloat(order.filled_qty || 0.0).toFixed(4)}</td>
@@ -441,11 +486,31 @@ async function updateAnalysisDashboard() {
                 }
             }
             
-            renderAnalysis(data.evaluations || {});
+            latestEvaluations = data.evaluations || {};
+            renderAnalysis(latestEvaluations);
         }
     } catch (err) {
         console.error("Analysis synchronization error:", err);
     }
+}
+
+function formatScore(val) {
+    if (val === undefined || val === null || val === '' || isNaN(parseFloat(val))) return 'ND';
+    return parseFloat(val).toFixed(2);
+}
+
+function formatVolume(val) {
+    if (val === undefined || val === null || val === '' || isNaN(parseFloat(val))) return 'N/A';
+    return parseFloat(val).toLocaleString();
+}
+
+function formatMarketCap(val) {
+    if (val === undefined || val === null || val === '' || isNaN(parseFloat(val))) return 'N/A';
+    const num = parseFloat(val);
+    if (num >= 1e12) return `${(num / 1e12).toFixed(2)}T`;
+    if (num >= 1e9) return `${(num / 1e9).toFixed(2)}B`;
+    if (num >= 1e6) return `${(num / 1e6).toFixed(2)}M`;
+    return num.toLocaleString();
 }
 
 // Render Analysis Table
@@ -470,8 +535,8 @@ function renderAnalysis(evaluations) {
         const macdSig = ta_inds.macd_signal || 'N/A';
         
         const fund_mets = details.fundamental_metrics || {};
-        const peVal = fund_mets.pe_ratio !== undefined ? parseFloat(fund_mets.pe_ratio).toFixed(1) : 'N/A';
-        const dyVal = fund_mets.dividend_yield !== undefined ? `${(parseFloat(fund_mets.dividend_yield)*100).toFixed(1)}%` : 'N/A';
+        const peVal = fund_mets.pe_ratio !== undefined && fund_mets.pe_ratio !== null ? parseFloat(fund_mets.pe_ratio).toFixed(1) : 'N/A';
+        const dyVal = fund_mets.dividend_yield !== undefined && fund_mets.dividend_yield !== null ? `${(parseFloat(fund_mets.dividend_yield)*100).toFixed(1)}%` : 'N/A';
         
         const artCount = details.article_count || 0;
         
@@ -482,26 +547,379 @@ function renderAnalysis(evaluations) {
         
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><strong>${sym}</strong></td>
-            <td>$${formatPrice(ev.latest_price)}</td>
             <td>
-                <div style="font-weight: bold; color: var(--text-accent);">${parseFloat(details.technical_score || 0).toFixed(2)}</div>
+                <strong>${sym}</strong>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;" title="${ev.name || ''}">${ev.name || ''}</div>
+            </td>
+            <td>$${formatPrice(ev.latest_price)}</td>
+            <td class="clickable-score" onclick="openAnalysisModal('${sym}', 'modal-tech')" title="Hacer clic para ver detalles técnicos">
+                <div style="font-weight: bold; color: var(--text-accent);">${formatScore(details.technical_score)}</div>
                 <div style="font-size: 0.7rem; color: var(--text-secondary);">RSI: ${rsiVal} | MACD: ${macdSig}</div>
             </td>
-            <td>
-                <div style="font-weight: bold; color: var(--text-accent);">${parseFloat(details.fundamental_score || 0).toFixed(2)}</div>
+            <td class="clickable-score" onclick="openAnalysisModal('${sym}', 'modal-fund')" title="Hacer clic para ver detalles fundamentales">
+                <div style="font-weight: bold; color: var(--text-accent);">${formatScore(details.fundamental_score)}</div>
                 <div style="font-size: 0.7rem; color: var(--text-secondary);">P/E: ${peVal} | Div: ${dyVal}</div>
             </td>
-            <td>
-                <div style="font-weight: bold; color: var(--text-accent);">${parseFloat(details.sentiment_score || 0).toFixed(2)}</div>
+            <td class="clickable-score" onclick="openAnalysisModal('${sym}', 'modal-sentiment')" title="Hacer clic para ver noticias y sentimiento">
+                <div style="font-weight: bold; color: var(--text-accent);">${formatScore(details.sentiment_score)}</div>
                 <div style="font-size: 0.7rem; color: var(--text-secondary);">Artículos: ${artCount}</div>
             </td>
-            <td><strong>${parseFloat(ev.score || 0).toFixed(2)}</strong></td>
+            <td><strong>${formatScore(ev.score)}</strong></td>
             <td><span class="${actionClass}" style="text-transform: uppercase; font-weight: 800; font-size: 0.9rem;">${ev.action}</span></td>
         `;
         analysisTbody.appendChild(row);
     });
 }
+
+// Open Modal with analysis details
+function openAnalysisModal(symbol, defaultTab) {
+    const ev = latestEvaluations[symbol];
+    if (!ev) return;
+    
+    // Set Header titles
+    document.getElementById('modal-asset-title').innerText = `${symbol} - ${ev.name || ''}`;
+    document.getElementById('modal-asset-subtitle').innerText = `Detalles del análisis y métricas del algoritmo de decisión`;
+    
+    const details = ev.details || {};
+    
+    // 1. Technical Tab
+    const techScore = details.technical_score;
+    const modalTechScoreEl = document.getElementById('modal-tech-score');
+    modalTechScoreEl.innerText = formatScore(techScore);
+    
+    const techInterpretationEl = document.getElementById('modal-tech-interpretation');
+    techInterpretationEl.className = 'interpretation-badge';
+    if (techScore === undefined || techScore === null) {
+        techInterpretationEl.classList.add('badge-neutral');
+        techInterpretationEl.innerText = 'ND (Sin datos)';
+    } else if (techScore >= 0.25) {
+        techInterpretationEl.classList.add('badge-bullish');
+        techInterpretationEl.innerText = 'Alcista';
+    } else if (techScore <= -0.25) {
+        techInterpretationEl.classList.add('badge-bearish');
+        techInterpretationEl.innerText = 'Bajista';
+    } else {
+        techInterpretationEl.classList.add('badge-neutral');
+        techInterpretationEl.innerText = 'Neutral';
+    }
+    
+    // Technical table indicators
+    const ta_inds = details.technical_indicators || {};
+    const techTbody = document.getElementById('modal-tech-tbody');
+    techTbody.innerHTML = '';
+    
+    if (Object.keys(ta_inds).length === 0) {
+        techTbody.innerHTML = `<tr><td colspan="3" class="empty-state">No hay indicadores técnicos disponibles para esta ejecución.</td></tr>`;
+    } else {
+        const indicatorsToRender = [
+            {
+                name: 'RSI (14 días)',
+                val: ta_inds.rsi !== undefined && ta_inds.rsi !== null ? parseFloat(ta_inds.rsi).toFixed(2) : 'N/A',
+                cond: getRsiInterpretation(ta_inds.rsi)
+            },
+            {
+                name: 'MACD Histograma',
+                val: ta_inds.macd_hist !== undefined && ta_inds.macd_hist !== null ? parseFloat(ta_inds.macd_hist).toFixed(4) : 'N/A',
+                cond: getMacdInterpretation(ta_inds.macd_hist)
+            },
+            {
+                name: 'Cruce de Medias (EMA 10 vs SMA 50)',
+                val: `EMA10: ${ta_inds.ema_10 !== undefined && ta_inds.ema_10 !== null ? parseFloat(ta_inds.ema_10).toFixed(2) : 'N/A'} / SMA50: ${ta_inds.sma_50 !== undefined && ta_inds.sma_50 !== null ? parseFloat(ta_inds.sma_50).toFixed(2) : 'N/A'}`,
+                cond: getMaInterpretation(ta_inds.ema_10, ta_inds.sma_50)
+            },
+            {
+                name: 'Bandas de Bollinger',
+                val: `Cierre: ${ta_inds.close !== undefined && ta_inds.close !== null ? parseFloat(ta_inds.close).toFixed(2) : 'N/A'} (Banda Inf: ${ta_inds.bb_lower !== undefined && ta_inds.bb_lower !== null ? parseFloat(ta_inds.bb_lower).toFixed(2) : 'N/A'} / Sup: ${ta_inds.bb_upper !== undefined && ta_inds.bb_upper !== null ? parseFloat(ta_inds.bb_upper).toFixed(2) : 'N/A'})`,
+                cond: getBbInterpretation(ta_inds.close, ta_inds.bb_lower, ta_inds.bb_upper)
+            }
+        ];
+        
+        indicatorsToRender.forEach(ind => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${ind.name}</strong></td>
+                <td>${ind.val}</td>
+                <td>${ind.cond}</td>
+            `;
+            techTbody.appendChild(tr);
+        });
+    }
+    
+    // 2. Fundamental Tab
+    const fundScore = details.fundamental_score;
+    const modalFundScoreEl = document.getElementById('modal-fund-score');
+    modalFundScoreEl.innerText = formatScore(fundScore);
+    
+    const fundInterpretationEl = document.getElementById('modal-fund-interpretation');
+    if (fundInterpretationEl) {
+        fundInterpretationEl.className = 'interpretation-badge';
+        if (fundScore === undefined || fundScore === null) {
+            fundInterpretationEl.classList.add('badge-neutral');
+            fundInterpretationEl.innerText = 'ND (No Aplicable)';
+        } else if (fundScore >= 0.4) {
+            fundInterpretationEl.classList.add('badge-bullish');
+            fundInterpretationEl.innerText = fundScore >= 0.6 ? 'Fuerte Compra' : 'Compra / Infravalorado';
+        } else if (fundScore <= -0.4) {
+            fundInterpretationEl.classList.add('badge-bearish');
+            fundInterpretationEl.innerText = fundScore <= -0.6 ? 'Fuerte Venta' : 'Venta / Sobrevalorado';
+        } else {
+            fundInterpretationEl.classList.add('badge-neutral');
+            fundInterpretationEl.innerText = 'Neutral';
+        }
+    }
+    
+    const fund_mets = details.fundamental_metrics || {};
+    const fundTbody = document.getElementById('modal-fund-tbody');
+    fundTbody.innerHTML = '';
+    
+    const hasCorporate = !(
+        fund_mets.pe_ratio === undefined && 
+        fund_mets.debt_to_equity === undefined && 
+        fund_mets.revenue_growth === undefined && 
+        fund_mets.profit_margins === undefined
+    );
+    
+    if (!hasCorporate || Object.keys(fund_mets).length === 0) {
+        fundTbody.innerHTML = `<tr><td colspan="3" class="empty-state">Métricas corporativas no aplicables a este tipo de activo.</td></tr>`;
+    } else {
+        const pe = fund_mets.pe_ratio;
+        const de = fund_mets.debt_to_equity;
+        const growth = fund_mets.revenue_growth;
+        const margins = fund_mets.profit_margins;
+        const divYield = fund_mets.dividend_yield;
+        
+        const fundamentalsToRender = [
+            {
+                name: 'Relación P/E (Precio/Beneficio)',
+                val: pe !== undefined && pe !== null ? parseFloat(pe).toFixed(2) : 'N/A',
+                cond: getPeInterpretation(pe)
+            },
+            {
+                name: 'Deuda sobre Patrimonio (D/E)',
+                val: de !== undefined && de !== null ? `${parseFloat(de).toFixed(2)}%` : 'N/A',
+                cond: getDeInterpretation(de)
+            },
+            {
+                name: 'Crecimiento de Ingresos (Anual)',
+                val: growth !== undefined && growth !== null ? `${(parseFloat(growth)*100).toFixed(2)}%` : 'N/A',
+                cond: getGrowthInterpretation(growth)
+            },
+            {
+                name: 'Margen de Beneficio',
+                val: margins !== undefined && margins !== null ? `${(parseFloat(margins)*100).toFixed(2)}%` : 'N/A',
+                cond: getMarginsInterpretation(margins)
+            },
+            {
+                name: 'Rentabilidad por Dividendo (Yield)',
+                val: divYield !== undefined && divYield !== null ? `${(parseFloat(divYield)*100).toFixed(2)}%` : 'N/A',
+                cond: divYield > 0 ? 'Paga dividendos de forma regular' : 'No paga dividendos'
+            }
+        ];
+        
+        fundamentalsToRender.forEach(f => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${f.name}</strong></td>
+                <td>${f.val}</td>
+                <td>${f.cond}</td>
+            `;
+            fundTbody.appendChild(tr);
+        });
+    }
+    
+    // Render the General / Market Metrics
+    const marketTbody = document.getElementById('modal-market-tbody');
+    marketTbody.innerHTML = '';
+    
+    const marketMetricsToRender = [
+        {
+            name: 'Precio de Cierre Anterior',
+            val: fund_mets.previous_close !== undefined && fund_mets.previous_close !== null ? `$${formatPrice(fund_mets.previous_close)}` : 'N/A'
+        },
+        {
+            name: 'Promedio Móvil 50 Días',
+            val: fund_mets.fifty_day_average !== undefined && fund_mets.fifty_day_average !== null ? `$${formatPrice(fund_mets.fifty_day_average)}` : 'N/A'
+        },
+        {
+            name: 'Promedio Móvil 200 Días',
+            val: fund_mets.two_hundred_day_average !== undefined && fund_mets.two_hundred_day_average !== null ? `$${formatPrice(fund_mets.two_hundred_day_average)}` : 'N/A'
+        },
+        {
+            name: 'Rango de 52 Semanas',
+            val: (fund_mets.fifty_two_week_low !== undefined && fund_mets.fifty_two_week_low !== null && fund_mets.fifty_two_week_high !== undefined && fund_mets.fifty_two_week_high !== null) 
+                 ? `$${formatPrice(fund_mets.fifty_two_week_low)} - $${formatPrice(fund_mets.fifty_two_week_high)}` 
+                 : 'N/A'
+        },
+        {
+            name: 'Volumen Diario',
+            val: fund_mets.volume !== undefined && fund_mets.volume !== null ? formatVolume(fund_mets.volume) : 'N/A'
+        },
+        {
+            name: 'Capitalización de Mercado',
+            val: fund_mets.market_cap !== undefined && fund_mets.market_cap !== null ? `$${formatMarketCap(fund_mets.market_cap)}` : 'N/A'
+        }
+    ];
+    
+    marketMetricsToRender.forEach(m => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>${m.name}</strong></td>
+            <td>${m.val}</td>
+        `;
+        marketTbody.appendChild(tr);
+    });
+    
+    // 3. Sentiment Tab
+    const sentScore = details.sentiment_score;
+    const modalSentScoreEl = document.getElementById('modal-sent-score');
+    modalSentScoreEl.innerText = formatScore(sentScore);
+    
+    const sentInterpretationEl = document.getElementById('modal-sent-interpretation');
+    sentInterpretationEl.className = 'interpretation-badge';
+    if (sentScore >= 0.15) {
+        sentInterpretationEl.classList.add('badge-bullish');
+        sentInterpretationEl.innerText = 'Optimista (Bullish)';
+    } else if (sentScore <= -0.15) {
+        sentInterpretationEl.classList.add('badge-bearish');
+        sentInterpretationEl.innerText = 'Pesimista (Bearish)';
+    } else {
+        sentInterpretationEl.classList.add('badge-neutral');
+        sentInterpretationEl.innerText = 'Neutral / Sin Sesgo';
+    }
+    
+    // Render articles
+    const newsListEl = document.getElementById('modal-news-list');
+    newsListEl.innerHTML = '';
+    
+    const articles = details.news_articles || [];
+    if (articles.length === 0) {
+        newsListEl.innerHTML = `<div class="empty-state" style="padding: 1.5rem; text-align: center; border: 1px dashed var(--border-color); border-radius: 8px;">No se registraron artículos en esta ejecución o no hay noticias recientes disponibles.</div>`;
+    } else {
+        articles.forEach(art => {
+            const card = document.createElement('div');
+            card.className = 'news-card';
+            
+            let sentimentText = 'Neutral';
+            let sentimentDotClass = 'neutral';
+            if (art.sentiment_score >= 0.15) {
+                sentimentText = 'Alcista';
+                sentimentDotClass = 'positive';
+            } else if (art.sentiment_score <= -0.15) {
+                sentimentText = 'Bajista';
+                sentimentDotClass = 'negative';
+            }
+            
+            const linkHref = art.url ? `href="${art.url}" target="_blank"` : '';
+            const externalIcon = art.url ? ' <span style="font-size: 0.8rem; color: var(--text-accent);">↗</span>' : '';
+            
+            card.innerHTML = `
+                <a ${linkHref} class="news-card-title-link" ${!art.url ? 'style="cursor: default; pointer-events: none;"' : ''}>
+                    ${art.title || 'Sin Título'}${externalIcon}
+                </a>
+                <div class="news-card-footer">
+                    <div>
+                        <span class="sentiment-dot ${sentimentDotClass}"></span>
+                        <span>Sentimiento del Artículo: <strong>${art.sentiment_score >= 0 ? '+' : ''}${parseFloat(art.sentiment_score).toFixed(2)}</strong> (${sentimentText})</span>
+                    </div>
+                    ${art.url ? `<span style="color: var(--text-accent); font-size: 0.8rem;">Abrir noticia</span>` : `<span style="color: var(--text-secondary); font-style: italic; font-size: 0.8rem;">Enlace no disponible</span>`}
+                </div>
+            `;
+            newsListEl.appendChild(card);
+        });
+    }
+    
+    // Show Modal
+    const modalEl = document.getElementById('analysis-detail-modal');
+    modalEl.classList.add('active');
+    
+    // Switch to specified tab
+    switchModalTab(defaultTab || 'modal-tech');
+}
+
+// Switch Modal Tab
+function switchModalTab(tabId) {
+    document.querySelectorAll('.modal-tab-link').forEach(btn => {
+        if (btn.dataset.modalTab === tabId) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+    document.querySelectorAll('.modal-tab-content').forEach(content => {
+        if (content.id === tabId) {
+            content.classList.add('active');
+        } else {
+            content.classList.remove('active');
+        }
+    });
+}
+
+// Expose openAnalysisModal globally for onclick handlers
+window.openAnalysisModal = openAnalysisModal;
+
+// Interpretations helpers for technical indicators and fundamentals
+function getRsiInterpretation(rsi) {
+    if (rsi === undefined || rsi === null || isNaN(rsi)) return 'Sin datos';
+    if (rsi < 30) return '<strong class="success-log">Sobreventa (Rebote Alcista)</strong>';
+    if (rsi > 70) return '<strong class="error-log">Sobrecompra (Riesgo Bajista)</strong>';
+    if (rsi >= 30 && rsi <= 45) return 'Moderadamente sobrevendido / Estabilizando';
+    if (rsi >= 55 && rsi <= 70) return 'Moderadamente sobrecomprado';
+    return 'Rango neutral';
+}
+
+function getMacdInterpretation(macd_hist) {
+    if (macd_hist === undefined || macd_hist === null || isNaN(macd_hist)) return 'Sin datos';
+    if (macd_hist > 0) return '<strong class="success-log">Alcista (Histograma > 0)</strong>';
+    return '<strong class="error-log">Bajista (Histograma < 0)</strong>';
+}
+
+function getMaInterpretation(ema, sma) {
+    if (ema === undefined || sma === undefined || isNaN(ema) || isNaN(sma)) return 'Sin datos';
+    if (ema > sma) return '<strong class="success-log">Alcista (EMA 10 > SMA 50)</strong>';
+    return '<strong class="error-log">Bajista (EMA 10 < SMA 50)</strong>';
+}
+
+function getBbInterpretation(close, lower, upper) {
+    if (close === undefined || lower === undefined || upper === undefined || isNaN(close) || isNaN(lower) || isNaN(upper)) return 'Sin datos';
+    if (close < lower) return '<strong class="success-log">Banda Inferior Superada (Sobrevendido)</strong>';
+    if (close > upper) return '<strong class="error-log">Banda Superior Superada (Sobrecomprado)</strong>';
+    return 'Dentro de rangos normalizados';
+}
+
+function getPeInterpretation(pe) {
+    if (pe === undefined || pe === null || isNaN(pe)) return 'Sin datos';
+    if (pe < 0) return '<strong class="error-log">Negativo (Compañía en Pérdidas)</strong>';
+    if (pe <= 15) return '<strong class="success-log">Bajo (Excelente Valor/Undervalued)</strong>';
+    if (pe <= 25) return 'Moderado (Valoración Razonable)';
+    if (pe <= 40) return 'Elevado (Crecimiento Esperado)';
+    return '<strong class="error-log">Muy Alto (Especulativo/Sobrevalorado)</strong>';
+}
+
+function getDeInterpretation(de) {
+    if (de === undefined || de === null || isNaN(de)) return 'Sin datos';
+    if (de <= 50) return '<strong class="success-log">Muy Seguro (Deuda Baja)</strong>';
+    if (de <= 100) return 'Moderado (Apalancamiento Normal)';
+    if (de <= 200) return '<strong class="warning-log">Alto Apalancamiento</strong>';
+    return '<strong class="error-log">Muy Alto (Riesgo de Solvencia)</strong>';
+}
+
+function getGrowthInterpretation(growth) {
+    if (growth === undefined || growth === null || isNaN(growth)) return 'Sin datos';
+    if (growth > 0.20) return '<strong class="success-log">Fuerte Crecimiento (>20%)</strong>';
+    if (growth >= 0.05) return 'Crecimiento Estable (Sano)';
+    if (growth >= -0.05) return 'Crecimiento Plano / Estancado';
+    return '<strong class="error-log">Contracción (Negocio en Declive)</strong>';
+}
+
+function getMarginsInterpretation(margins) {
+    if (margins === undefined || margins === null || isNaN(margins)) return 'Sin datos';
+    if (margins > 0.20) return '<strong class="success-log">Alta Rentabilidad (>20%)</strong>';
+    if (margins >= 0.08) return 'Rentabilidad Estable';
+    if (margins > 0) return 'Margen Muy Ajustado';
+    return '<strong class="error-log">Margen Negativo (Pérdidas Operativas)</strong>';
+}
+
 
 // Render Spanish Tax compliance
 function renderTaxReport(tax) {
@@ -525,7 +943,10 @@ function renderTaxReport(tax) {
         const signClass = ev.gain_loss >= 0 ? 'success-log' : 'error-log';
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><strong>${ev.symbol}</strong></td>
+            <td>
+                <strong>${ev.symbol}</strong>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;" title="${ev.name || ''}">${ev.name || ''}</div>
+            </td>
             <td>${ev.buy_date}</td>
             <td>${ev.sell_date}</td>
             <td>${ev.qty.toFixed(4)}</td>
@@ -729,4 +1150,58 @@ function renderChartData() {
     balanceChart.data.labels = labels;
     balanceChart.data.datasets[0].data = values;
     balanceChart.update();
+}
+
+// Fallback helper to copy text in non-secure HTTP contexts
+function copyTextFallback(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (!successful) {
+            throw new Error("execCommand copy returned false");
+        }
+    } catch (err) {
+        console.error("Fallback copy failed:", err);
+        throw err;
+    } finally {
+        document.body.removeChild(textArea);
+    }
+}
+
+// Copy console logs to clipboard
+async function copyConsoleLogs() {
+    try {
+        const text = consoleLogs.innerText || "";
+        
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+        } else {
+            copyTextFallback(text);
+        }
+        
+        const originalText = btnCopyConsole.innerText;
+        btnCopyConsole.innerText = '¡Copiado!';
+        const originalBg = btnCopyConsole.style.background;
+        btnCopyConsole.style.background = '#28a745'; // Success green
+        btnCopyConsole.disabled = true;
+        
+        setTimeout(() => {
+            btnCopyConsole.innerText = originalText;
+            btnCopyConsole.style.background = originalBg;
+            btnCopyConsole.disabled = false;
+        }, 2000);
+    } catch (err) {
+        console.error("Error al copiar la consola:", err);
+        alert("No se pudo copiar el contenido de la consola.");
+    }
 }

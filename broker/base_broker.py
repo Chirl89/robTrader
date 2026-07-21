@@ -76,3 +76,11 @@ class BaseBroker(ABC):
         Returns currently active/open orders in the broker.
         """
         pass
+
+    @abstractmethod
+    def get_tradable_assets(self) -> List[str]:
+        """
+        Returns a list of tradable asset symbols supported by the broker.
+        Use ['*'] to signal that any asset symbol is supported (unfiltered).
+        """
+        pass

@@ -216,3 +216,9 @@ class SimulatorBroker(BaseBroker):
                     'created_at': o.get('filled_at') or o.get('updated_at') or o['created_at']
                 })
         return open_list
+
+    def get_tradable_assets(self) -> List[str]:
+        """
+        Returns ['*'] indicating that all symbols are supported in simulation.
+        """
+        return ['*']

@@ -24,40 +24,60 @@ class CompositeStrategy(BaseStrategy):
     def evaluate(self, symbol: str, prices_df: pd.DataFrame, fundamentals: Dict[str, Any], sentiment: Dict[str, Any]) -> Dict[str, Any]:
         """
         Evaluates the symbol by combining technical indicators, fundamental health, and news sentiment.
+        Adjusts weights dynamically and forces HOLD if 2 or more indicators are not calculated (ND).
         """
         # 1. Technical Indicators & Signal
         df_indicators = add_all_indicators(prices_df)
         ta_result = generate_ta_signals(df_indicators)
-        ta_score = ta_result.get('score', 0.0)
+        ta_score = ta_result.get('score')
         
         # 2. Fundamental Score
         fund_result = evaluate_fundamentals(fundamentals)
-        fund_score = fund_result.get('score', 0.0)
+        fund_score = fund_result.get('score')
         
         # 3. Sentiment Score
-        sent_score = sentiment.get('score', 0.0)
+        sent_score = sentiment.get('score')
         
-        # Weighted score calculation
-        weighted_score = (
-            (ta_score * self.tech_w) + 
-            (fund_score * self.fund_w) + 
-            (sent_score * self.sent_w)
-        )
-        weighted_score = round(weighted_score, 2)
+        # Determine which indicators are applicable (not None)
+        active_factors = {}
+        if ta_score is not None:
+            active_factors['technical'] = (ta_score, self.tech_w)
+        if fund_score is not None:
+            active_factors['fundamental'] = (fund_score, self.fund_w)
+        if sent_score is not None:
+            active_factors['sentiment'] = (sent_score, self.sent_w)
+            
+        applicable_count = len(active_factors)
         
-        # Determine execution action based on threshold
-        # BUY threshold: > 0.25 (Moderately Bullish)
-        # SELL threshold: < -0.25 (Moderately Bearish)
-        # HOLD: inside [-0.25, 0.25]
-        buy_threshold = float(os.getenv("BUY_THRESHOLD", "0.25"))
-        sell_threshold = float(os.getenv("SELL_THRESHOLD", "-0.25"))
-        
-        if weighted_score >= buy_threshold:
-            action = "BUY"
-        elif weighted_score <= sell_threshold:
-            action = "SELL"
-        else:
+        # If two or more indicators cannot be calculated, average is ND (None) and action is HOLD.
+        if applicable_count < 2:
+            weighted_score = None
             action = "HOLD"
+        else:
+            # Calculate composite score by normalizing weights of active factors
+            total_active_w = sum(w for score, w in active_factors.values())
+            if total_active_w > 0:
+                weighted_score = 0.0
+                for name, (score, w) in active_factors.items():
+                    normalized_w = w / total_active_w
+                    weighted_score += score * normalized_w
+                weighted_score = round(weighted_score, 2)
+            else:
+                weighted_score = None
+                
+            # Determine execution action based on threshold
+            buy_threshold = float(os.getenv("BUY_THRESHOLD", "0.25"))
+            sell_threshold = float(os.getenv("SELL_THRESHOLD", "-0.25"))
+            
+            if weighted_score is not None:
+                if weighted_score >= buy_threshold:
+                    action = "BUY"
+                elif weighted_score <= sell_threshold:
+                    action = "SELL"
+                else:
+                    action = "HOLD"
+            else:
+                action = "HOLD"
             
         return {
             'symbol': symbol,
@@ -69,6 +89,7 @@ class CompositeStrategy(BaseStrategy):
                 'fundamental_score': fund_score,
                 'fundamental_metrics': fund_result.get('metrics', {}),
                 'sentiment_score': sent_score,
-                'article_count': sentiment.get('article_count', 0)
+                'article_count': sentiment.get('article_count', 0),
+                'news_articles': sentiment.get('details', [])
             }
         }

@@ -1,0 +1,1371 @@
+{
+    "timestamp": "2026-07-21T10:25:34.739443",
+    "buy_threshold": 0.2,
+    "sell_threshold": -0.1,
+    "evaluations": {
+        "MMM": {
+            "name": "3M Company",
+            "score": 0.24,
+            "action": "BUY",
+            "latest_price": 159.11,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": -0.02,
+                "fundamental_metrics": {
+                    "pe_ratio": 30.775629,
+                    "debt_to_equity": 396.497,
+                    "revenue_growth": 0.013,
+                    "profit_margins": 0.11137,
+                    "dividend_yield": 1.95,
+                    "fifty_day_average": 155.2662,
+                    "two_hundred_day_average": 158.16576,
+                    "fifty_two_week_high": 177.41,
+                    "fifty_two_week_low": 139.34,
+                    "volume": 3245695,
+                    "previous_close": 159.84
+                },
+                "sentiment_score": 0.5,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Dow Dips Over 300 Points As Oil Prices Rise: Greed Index Remains In \u2018Fear\u2019 Zone",
+                        "url": "https://www.benzinga.com/markets/market-summary/26/07/60569657/dow-dips-over-300-points-as-oil-prices-rise-greed-index-remains-in-fear-zone",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "3M, General Motors And 3 Stocks To Watch Heading Into Tuesday",
+                        "url": "https://www.benzinga.com/markets/equities/26/07/60569621/3m-general-motors-and-3-stocks-to-watch-heading-into-tuesday",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "How To Earn $500 A Month From 3M Stock Ahead Of Q2 Earnings",
+                        "url": "https://www.benzinga.com/trading-ideas/dividends/26/07/60550055/how-to-earn-500-a-month-from-3m-stock-ahead-of-q2-earnings-2",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Top Analysts are Extremely Bullish on 3M Stock Ahead of Earnings: Here\u2019s Why",
+                        "url": "https://www.benzinga.com/markets/equities/26/07/60543322/top-analysts-are-extremely-bullish-on-3m-stock-ahead-of-earnings-heres-why",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Consumer Tech (Jul 13-17): IBM Sees Worst Day On Record, Gemini 3.5 Pro Release Delayed, Uber Acquires Delivery Hero & More",
+                        "url": "https://www.benzinga.com/markets/tech/26/07/60542784/consumer-tech-jul-13-17-ibm-sees-worst-day-on-record-gemini-3-5-pro-release-delayed-uber-acquires-delivery-hero-more",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "This 3M Analyst Turns Bullish; Here Are Top 5 Upgrades For Friday",
+                        "url": "https://www.benzinga.com/analyst-stock-ratings/upgrades/26/07/60520317/this-3m-analyst-turns-bullish-here-are-top-5-upgrades-for-friday",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Abbott To Rally More Than 35%? Here Are 10 Top Analyst Forecasts For Friday",
+                        "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60519842/abbott-to-rally-more-than-35-here-are-10-top-analyst-forecasts-for-friday",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "JP Morgan Upgrades 3M to Overweight, Raises Price Target to $180",
+                        "url": "https://www.benzinga.com/news/26/07/60518836/jp-morgan-upgrades-3m-overweight-raises-price-target-180",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "AOS": {
+            "name": "A. O. Smith Corporation",
+            "score": 0.41,
+            "action": "BUY",
+            "latest_price": 58.88,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.43,
+                "fundamental_metrics": {
+                    "pe_ratio": 15.701334,
+                    "debt_to_equity": 34.981,
+                    "revenue_growth": -0.019,
+                    "profit_margins": 0.13841,
+                    "dividend_yield": 2.45,
+                    "fifty_day_average": 58.8896,
+                    "two_hundred_day_average": 66.3989,
+                    "fifty_two_week_high": 81.87,
+                    "fifty_two_week_low": 54.16,
+                    "volume": 1295544,
+                    "previous_close": 58.85
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Stifel Maintains Buy on A.O. Smith, Raises Price Target to $76",
+                        "url": "https://www.benzinga.com/news/26/07/60554306/stifel-maintains-buy-o-smith-raises-price-target-76",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Reported Earlier, A. O. Smith Names President And CEO Stephen Shafer Chairman As Executive Chairman Kevin Wheeler Retires July 1",
+                        "url": "https://www.benzinga.com/quote/AOS",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "A.O. Smith  Says Kevin Wheeler To Retire As Executive Chairman Effective July 1; Stephen Shafer Appointed As Chairman",
+                        "url": "https://www.benzinga.com/news/26/06/60031910/o-smith-says-kevin-wheeler-retire-executive-chairman-effective-july-1-stephen-shafer-appointed-chair",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Oppenheimer Maintains Outperform on A.O. Smith, Lowers Price Target to $75",
+                        "url": "https://www.benzinga.com/news/26/06/53125649/oppenheimer-maintains-outperform-on-a-o-smith-lowers-price-target-to-75",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "A. O. Smith Appoints Carrie L. Anderson To Executive VP And CFO Positions Effective July 1 Following Retirement Of Charles T. Lauber",
+                        "url": "https://www.benzinga.com/quote/AOS",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "This Alumis Analyst Is No Longer Bullish; Here Are Top 5 Downgrades For Friday",
+                        "url": "https://www.benzinga.com/analyst-stock-ratings/downgrades/26/05/52594028/this-alumis-analyst-is-no-longer-bullish-here-are-top-5-downgrades-for-friday",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "JP Morgan Downgrades A.O. Smith to Underweight, Lowers Price Target to $60",
+                        "url": "https://www.benzinga.com/news/26/05/52593950/jp-morgan-downgrades-a-o-smith-to-underweight-lowers-price-target-to-60",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Citigroup Maintains Neutral on A.O. Smith, Lowers Price Target to $65",
+                        "url": "https://www.benzinga.com/news/26/05/52258455/citigroup-maintains-neutral-on-a-o-smith-lowers-price-target-to-65",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "ABT": {
+            "name": "Abbott Laboratories",
+            "score": 0.5,
+            "action": "BUY",
+            "latest_price": 101.66,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.38,
+                "fundamental_metrics": {
+                    "pe_ratio": 28.160667,
+                    "debt_to_equity": 64.773,
+                    "revenue_growth": 0.13,
+                    "profit_margins": 0.116450004,
+                    "dividend_yield": 2.5,
+                    "fifty_day_average": 89.6578,
+                    "two_hundred_day_average": 109.83165,
+                    "fifty_two_week_high": 137.49,
+                    "fifty_two_week_low": 81.97,
+                    "volume": 12257313,
+                    "previous_close": 100.68
+                },
+                "sentiment_score": 0.62,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Citigroup Maintains Buy on Abbott Laboratories, Raises Price Target to $112",
+                        "url": "https://www.benzinga.com/news/26/07/60534714/citigroup-maintains-buy-abbott-laboratories-raises-price-target-112",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Piper Sandler Reiterates Overweight on Abbott Laboratories, Raises Price Target to $118",
+                        "url": "https://www.benzinga.com/news/26/07/60534179/piper-sandler-reiterates-overweight-abbott-laboratories-raises-price-target-118",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "JP Morgan Maintains Overweight on Abbott Laboratories, Raises Price Target to $120",
+                        "url": "https://www.benzinga.com/news/26/07/60527027/jp-morgan-maintains-overweight-abbott-laboratories-raises-price-target-120",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Wells Fargo Maintains Overweight on Abbott Laboratories, Raises Price Target to $112",
+                        "url": "https://www.benzinga.com/news/26/07/60525649/wells-fargo-maintains-overweight-abbott-laboratories-raises-price-target-112",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "TD Cowen Reiterates Buy on Abbott Laboratories, Maintains $115 Price Target",
+                        "url": "https://www.benzinga.com/news/26/07/60523926/td-cowen-reiterates-buy-abbott-laboratories-maintains-115-price-target",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "These Analysts Increase Their Forecasts On Abbott Following Better-Than-Expected Q2 Results",
+                        "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60522493/these-analysts-increase-their-forecasts-on-abbott-following-better-than-expected-q2-results",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Evercore ISI Group Maintains Outperform on Abbott Laboratories, Raises Price Target to $120",
+                        "url": "https://www.benzinga.com/news/26/07/60522158/evercore-isi-group-maintains-outperform-abbott-laboratories-raises-price-target-120",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "RBC Capital Reiterates Outperform on Abbott Laboratories, Maintains $130 Price Target",
+                        "url": "https://www.benzinga.com/news/26/07/60521503/rbc-capital-reiterates-outperform-abbott-laboratories-maintains-130-price-target",
+                        "sentiment_score": 1.0
+                    }
+                ]
+            }
+        },
+        "ABBV": {
+            "name": "AbbVie Inc.",
+            "score": 0.26,
+            "action": "BUY",
+            "latest_price": 253.38,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.1,
+                "fundamental_metrics": {
+                    "pe_ratio": 124.81774,
+                    "debt_to_equity": null,
+                    "revenue_growth": 0.124,
+                    "profit_margins": 0.05786,
+                    "dividend_yield": 2.72,
+                    "fifty_day_average": 228.1124,
+                    "two_hundred_day_average": 223.4958,
+                    "fifty_two_week_high": 261.64,
+                    "fifty_two_week_low": 184.63,
+                    "volume": 4332272,
+                    "previous_close": 254.49
+                },
+                "sentiment_score": 0.42,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Clinical Trial Results Show Extended Benefits for REGENXBIO Retinal Treatments",
+                        "url": "https://www.benzinga.com/news/health-care/26/07/60554516/clinical-trial-results-show-extended-benefits-for-regenxbio-retinal-treatments",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Here's How Much $1000 Invested In AbbVie 10 Years Ago Would Be Worth Today",
+                        "url": "https://www.benzinga.com/news/26/07/60538248/here-s-how-much-1000-invested-abbvie-10-years-ago-would-be-worth-today",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Allergan Aesthetics' Boey Receives European Commission Approval To Treat Moderate To Severe Lines Between The Eyebrows",
+                        "url": "https://www.benzinga.com/news/26/07/60519984/allergan-aesthetics-boey-receives-european-commission-approval-treat-moderate-severe-lines-between-e",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "UnitedHealth Rally Sparks Bullish Case for Healthcare ETFs Despite Medicare Advantage Losses",
+                        "url": "https://www.benzinga.com/etfs/sector-etfs/26/07/60506630/unitedhealth-rally-sparks-bullish-case-for-healthcare-etfs-despite-medicare-advantage-losses",
+                        "sentiment_score": 0.33
+                    },
+                    {
+                        "title": "Citigroup Maintains Neutral on AbbVie, Raises Price Target to $260",
+                        "url": "https://www.benzinga.com/news/26/07/60474235/citigroup-maintains-neutral-abbvie-raises-price-target-260",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "UBS Maintains Neutral on AbbVie, Raises Price Target to $260",
+                        "url": "https://www.benzinga.com/news/26/07/60426128/ubs-maintains-neutral-abbvie-raises-price-target-260",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "BMO Capital Maintains Outperform on AbbVie, Raises Price Target to $300",
+                        "url": "https://www.benzinga.com/news/26/07/60412550/bmo-capital-maintains-outperform-abbvie-raises-price-target-300",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "B of A Securities Maintains Buy on AbbVie, Raises Price Target to $276",
+                        "url": "https://www.benzinga.com/news/26/07/60396458/b-securities-maintains-buy-abbvie-raises-price-target-276",
+                        "sentiment_score": 1.0
+                    }
+                ]
+            }
+        },
+        "ACN": {
+            "name": "Accenture plc",
+            "score": 0.37,
+            "action": "BUY",
+            "latest_price": 144.73,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.62,
+                "fundamental_metrics": {
+                    "pe_ratio": 11.468304,
+                    "debt_to_equity": 25.035,
+                    "revenue_growth": 0.056,
+                    "profit_margins": 0.10656,
+                    "dividend_yield": 4.54,
+                    "fifty_day_average": 158.1998,
+                    "two_hundred_day_average": 215.7004,
+                    "fifty_two_week_high": 291.09,
+                    "fifty_two_week_low": 118.15,
+                    "volume": 6245011,
+                    "previous_close": 143.57
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Wells Fargo Maintains Overweight on Accenture, Lowers Price Target to $194",
+                        "url": "https://www.benzinga.com/news/26/07/60549241/wells-fargo-maintains-overweight-accenture-lowers-price-target-194",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Senator Who Opposes Ban on Congress Trading Discloses First Trades of 2026: Here\u2019s What He\u2019s Selling",
+                        "url": "https://www.benzinga.com/news/politics/26/07/60537231/senator-who-opposes-ban-on-congress-trading-discloses-first-trades-of-2026-heres-what-hes-selling",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Recent Report Shows That Rep. Rick Allen Sold Up to $50K Worth of Intuit Stock",
+                        "url": "https://www.benzinga.com/government/26/07/60500738/recent-report-shows-rep-rick-allen-sold-50k-worth-intuit-stock",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Wall Street's Most Accurate Analysts Give Their Take On 3 Tech Stocks Delivering High-Dividend Yields",
+                        "url": "https://www.benzinga.com/trading-ideas/dividends/26/07/60492527/wall-streets-most-accurate-analysts-give-their-take-on-3-tech-stocks-delivering-high-dividend-yields-16",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "IBM Crashes 24%, Drags Tech and IT Services Stocks Into Selloff",
+                        "url": "https://www.benzinga.com/trading-ideas/movers/26/07/60442792/ibm-crashes-24-drags-big-tech-and-it-services-stocks-into-selloff",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "'Selling Winners, Buying Losers': Tech Stocks Drop as Energy Jumps to Start H2",
+                        "url": "https://www.benzinga.com/markets/equities/26/07/60372477/selling-winners-buying-losers-tech-stocks-drop-as-energy-jumps-to-start-h2",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "Accenture Inks 7-Year Contract With NATO Communications And Information Agency For Protected Business Network Program",
+                        "url": "https://www.benzinga.com/news/26/07/60314418/accenture-inks-7-year-contract-nato-communications-and-information-agency-protected-business-network",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Accenture, Google Cloud Announce Suite Of Agentic Tools Over AI Transformation",
+                        "url": "https://www.benzinga.com/news/26/07/60303389/accenture-google-cloud-announce-suite-agentic-tools-over-ai-transformation",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "ADBE": {
+            "name": "Adobe Inc.",
+            "score": 0.33,
+            "action": "BUY",
+            "latest_price": 234.74,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.65,
+                "fundamental_metrics": {
+                    "pe_ratio": 13.568787,
+                    "debt_to_equity": 61.443,
+                    "revenue_growth": 0.127,
+                    "profit_margins": 0.28689,
+                    "dividend_yield": null,
+                    "fifty_day_average": 230.5718,
+                    "two_hundred_day_average": 281.94705,
+                    "fifty_two_week_high": 376.16,
+                    "fifty_two_week_low": 190.12,
+                    "volume": 4849188,
+                    "previous_close": 237.25
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "This House of Representative Just Sold Up To $270K In Adobe Stock",
+                        "url": "https://www.benzinga.com/government/26/07/60555117/house-representative-just-sold-270k-adobe-stock",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "$100 Invested In Adobe 15 Years Ago Would Be Worth This Much Today",
+                        "url": "https://www.benzinga.com/news/26/07/60539909/100-invested-adobe-15-years-ago-would-be-worth-much-today",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Alpha Buying: The Real Moats AI Can't Replace",
+                        "url": "https://www.benzinga.com/opinion/26/07/60503484/alpha-buying-the-real-moats-ai-cant-replace",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Adobe CMO Lara Balazs Says AI Is Rewriting Brand Discovery: 'There's AI. Do That.'",
+                        "url": "https://www.benzinga.com/markets/tech/26/07/60434186/adobe-cmo-lara-balazs-says-ai-is-rewriting-brand-discovery-theres-ai-do-that",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "10 Information Technology Stocks With Whale Alerts In Today\u2019s Session",
+                        "url": "https://www.benzinga.com/markets/options/26/07/60368130/10-information-technology-stocks-whale-alerts-today-s-session",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Adobe Shares Defy Nasdaq Sell-Off Tuesday: What's Going On?",
+                        "url": "https://www.benzinga.com/trading-ideas/movers/26/07/60316162/adobe-shares-defy-nasdaq-sell-off-tuesday-whats-going-on",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Michael Burry Fires Back at AI Bear Critic: 'Most People Think in Three Dimensions. Bears Think in Six'",
+                        "url": "https://www.benzinga.com/markets/tech/26/07/60296024/michael-burry-fires-back-at-ai-bear-critic-most-people-think-in-three-dimensions-bears-think-in-six",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "If You Invested $1000 In Adobe Stock 20 Years Ago, You Would Have This Much Today",
+                        "url": "https://www.benzinga.com/news/26/07/60262902/if-you-invested-1000-adobe-stock-20-years-ago-you-would-have-much-today",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "AMD": {
+            "name": "Advanced Micro Devices, Inc.",
+            "score": 0.23,
+            "action": "BUY",
+            "latest_price": 503.57,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.45,
+                "fundamental_metrics": {
+                    "pe_ratio": 164.02933,
+                    "debt_to_equity": 6.005,
+                    "revenue_growth": 0.378,
+                    "profit_margins": 0.13374,
+                    "dividend_yield": null,
+                    "fifty_day_average": 499.084,
+                    "two_hundred_day_average": 296.6862,
+                    "fifty_two_week_high": 584.73,
+                    "fifty_two_week_low": 149.22,
+                    "volume": 23212955,
+                    "previous_close": 495.76
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Jim Cramer Warns Investors Could Be 'Slaughtered' by Overloaded Tech Portfolios, but Backs Nvidia and Intel: 'It's Time to Go to Other Sectors'",
+                        "url": "https://www.benzinga.com/markets/tech/26/07/60569367/jim-cramer-tech-stocks-nvidia-intel-other-sectors",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Cathie Wood's Ark Bets Big on Mark Zuckerberg, Elon Musk as It Loads Up on Meta and SpaceX \u2014 Trims AMD and Robinhood",
+                        "url": "https://www.benzinga.com/etfs/broad-u-s-equity-etfs/26/07/60568428/cathie-wood-meta-spacex-investment-amd-robinhood",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Cathie Wood\u2019s Tempus AI Bet Is Bleeding \u2014 And the Chart Looks Worse Than Wall Street Thinks",
+                        "url": "https://www.benzinga.com/trading-ideas/technicals/26/07/60562651/tempus-ai-tem-stock-cathie-wood-bet-bleedingthinks",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Why Is Oracle Stock Falling on Monday?",
+                        "url": "https://www.benzinga.com/trading-ideas/movers/26/07/60560087/why-is-oracle-stock-falling-on-monday",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "AMD\u2019s Big AI Moment Is Here: 6 Wall Street Analysts Just Placed Their Bets",
+                        "url": "https://www.benzinga.com/markets/tech/26/07/60559728/amd-stock-ai-event-wall-street-price-targets",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Winners And Losers From Moonshot\u2014Wall Street Fears Overblown\u2014US May Ban Chinese Models",
+                        "url": "https://www.benzinga.com/Opinion/26/07/60557342/winners-and-losers-from-moonshot-wall-street-fears-overblown-us-may-ban-chinese-models",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "AMD Rises After Microsoft's Helios Win: Is Nvidia Finally Facing Real Competition?",
+                        "url": "https://www.benzinga.com/Opinion/26/07/60557022/amd-stock-rises-after-microsoft-helios-win-is-nvidia-finally-facing-real-competition",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Micron\u2019s Moonshot Meets UBS: Was the AI Stock Warning Early or Just Unloved?",
+                        "url": "https://www.benzinga.com/trading-ideas/movers/26/07/60556918/microns-moonshot-meets-ubs-was-the-ai-stock-warning-early-or-just-unloved",
+                        "sentiment_score": -1.0
+                    }
+                ]
+            }
+        },
+        "AES": {
+            "name": "The AES Corporation",
+            "score": 0.33,
+            "action": "BUY",
+            "latest_price": 14.8,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.28,
+                "fundamental_metrics": {
+                    "pe_ratio": 7.7083335,
+                    "debt_to_equity": 259.603,
+                    "revenue_growth": 0.087,
+                    "profit_margins": 0.10819,
+                    "dividend_yield": 4.77,
+                    "fifty_day_average": 14.6308,
+                    "two_hundred_day_average": 14.50365,
+                    "fifty_two_week_high": 17.65,
+                    "fifty_two_week_low": 12.33,
+                    "volume": 6242220,
+                    "previous_close": 14.77
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "AES Shareholders Approve Proposed Takeover By Global Infrastructure Partners, EQT Infrastructure VI Fund At $15/Share In Cash",
+                        "url": "https://www.benzinga.com/m/26/06/60140597/aes-shareholders-approve-proposed-takeover-global-infrastructure-partners-eqt-infrastructure-vi-fund",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Wall Street's Most Accurate Analysts Spotlight On 3 Utilities Stocks Delivering High-Dividend Yields",
+                        "url": "https://www.benzinga.com/trading-ideas/dividends/26/06/60010449/wall-streets-most-accurate-analysts-spotlight-on-3-utilities-stocks-delivering-high-dividend-yields-14",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Reported Earlier, AES Prices $600M Of 5.200% Senior Notes Due 2029 And $400M Of 5.750% Notes Due 2033",
+                        "url": "https://www.benzinga.com/quote/AES",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Elizabeth Warren Says Private Equity Wants To Profit From AI\u2014And Stick Consumers With The Bill",
+                        "url": "https://www.benzinga.com/markets/tech/26/06/53021275/elizabeth-warren-private-equity-profit-from-ai-stick-consumers-with-bill",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "\"Despite A Slowdown In The U.S. Electric Vehicle Market Affecting Joint Ventures Of Automakers And Battery Makers, Domestic Lithium Battery Production Faces Shortages Driven By Booming Energy Storage Demand. Subsidies From States And Utilities Support Storage Systems, While Geopolitical Tensions Boost The Premium On U.S.-Made Cells\"",
+                        "url": "https://www.benzinga.com/news/26/04/51912058/despite-a-slowdown-in-the-u-s-electric-vehicle-market-affecting-joint-ventures-of-automakers-and-bat",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "This Shake Shack Analyst Turns Bullish; Here Are Top 4 Upgrades For Friday",
+                        "url": "https://www.benzinga.com/analyst-stock-ratings/upgrades/26/04/51755105/this-shake-shack-analyst-turns-bullish-here-are-top-4-upgrades-for-friday",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "This Nike Analyst Is No Longer Bullish; Here Are Top 5 Downgrades For Friday",
+                        "url": "https://www.benzinga.com/analyst-stock-ratings/downgrades/26/04/51755078/this-nike-analyst-is-no-longer-bullish-here-are-top-5-downgrades-for-friday-3",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "This Zscaler Analyst Is No Longer Bullish; Here Are Top 5 Downgrades For Thursday",
+                        "url": "https://www.benzinga.com/analyst-stock-ratings/downgrades/26/04/51732161/this-zscaler-analyst-is-no-longer-bullish-here-are-top-5-downgrades-for-thursday",
+                        "sentiment_score": 1.0
+                    }
+                ]
+            }
+        },
+        "AFL": {
+            "name": "Aflac Incorporated",
+            "score": 0.4,
+            "action": "BUY",
+            "latest_price": 124.08,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.8,
+                "fundamental_metrics": {
+                    "pe_ratio": 14.245695,
+                    "debt_to_equity": 48.276,
+                    "revenue_growth": 0.279,
+                    "profit_margins": 0.25596002,
+                    "dividend_yield": 1.96,
+                    "fifty_day_average": 117.5748,
+                    "two_hundred_day_average": 112.6033,
+                    "fifty_two_week_high": 125.93,
+                    "fifty_two_week_low": 96.95,
+                    "volume": 1107445,
+                    "previous_close": 124.72
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Evercore ISI Group Maintains Underperform on Aflac, Raises Price Target to $115",
+                        "url": "https://www.benzinga.com/news/26/07/60422692/evercore-isi-group-maintains-underperform-aflac-raises-price-target-115",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Keysight To Rally Over 24%? Here Are 10 Top Analyst Forecasts For Monday",
+                        "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60411428/keysight-to-rally-over-24-here-are-10-top-analyst-forecasts-for-monday",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Keefe, Bruyette & Woods Maintains Market Perform on Aflac, Raises Price Target to $120",
+                        "url": "https://www.benzinga.com/news/26/07/60407862/keefe-bruyette-woods-maintains-market-perform-aflac-raises-price-target-120",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Jefferies Maintains Hold on Aflac, Raises Price Target to $108",
+                        "url": "https://www.benzinga.com/news/26/07/60385031/jefferies-maintains-hold-aflac-raises-price-target-108",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Wells Fargo Maintains Equal-Weight on Aflac, Raises Price Target to $120",
+                        "url": "https://www.benzinga.com/news/26/07/60369001/wells-fargo-maintains-equal-weight-aflac-raises-price-target-120",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "UBS Maintains Neutral on Aflac, Raises Price Target to $124",
+                        "url": "https://www.benzinga.com/news/26/07/60342043/ubs-maintains-neutral-aflac-raises-price-target-124",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Reported Earlier, 'Obamacare Insurers Seek Big Rate Hikes, Again' - WSJ Exclusive",
+                        "url": "https://www.benzinga.com/news/26/07/60326563/reported-earlier-obamacare-insurers-seek-big-rate-hikes-again-wsj-exclusive",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Barclays Maintains Underweight on Aflac, Lowers Price Target to $98",
+                        "url": "https://www.benzinga.com/news/26/07/60301831/barclays-maintains-underweight-aflac-lowers-price-target-98",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "A": {
+            "name": "Agilent Technologies, Inc.",
+            "score": 0.42,
+            "action": "BUY",
+            "latest_price": 130.26,
+            "details": {
+                "technical_score": null,
+                "technical_indicators": {},
+                "fundamental_score": 0.45,
+                "fundamental_metrics": {
+                    "pe_ratio": 26.36842,
+                    "debt_to_equity": 49.733,
+                    "revenue_growth": 0.1,
+                    "profit_margins": 0.19552,
+                    "dividend_yield": 0.78,
+                    "fifty_day_average": 127.001,
+                    "two_hundred_day_average": 131.07,
+                    "fifty_two_week_high": 160.27,
+                    "fifty_two_week_low": 108.35,
+                    "volume": 1932079,
+                    "previous_close": 131.46
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Agilent Receives FDA Approval For The PD\u2011L1 LHC 28\u20118 PharmDx Assay As Companion Diagnostic To Identify Patients With Carcinomas Who May Be Eligible For Treatment With OPDIVO or OPDIVO QVANTIG",
+                        "url": "https://www.benzinga.com/news/26/07/60438607/agilent-receives-fda-approval-pd-l1-lhc-28-8-pharmdx-assay-companion-diagnostic-identify-patients-ca",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Agilent Expands Altura Portfolio With Intro Of Altura Size Exclusion Chromatography And Altura PLRP-S Columns",
+                        "url": "https://www.benzinga.com/quote/A",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Evercore ISI Group Maintains Outperform on Agilent Technologies, Raises Price Target to $148",
+                        "url": "https://www.benzinga.com/news/26/07/60282660/evercore-isi-group-maintains-outperform-agilent-technologies-raises-price-target-148",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Bernstein Reinstates Outperform on Agilent Technologies, Announces $155 Price Target",
+                        "url": "https://www.benzinga.com/news/26/06/60123727/bernstein-reinstates-outperform-agilent-technologies-announces-155-price-target",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Agilent Technologies Q2 2026 Earnings Call: Complete Transcript",
+                        "url": "https://www.benzinga.com/insights/news/26/06/53242800/agilent-technologies-q2-2026-earnings-call-complete-transcript",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Piper Sandler Initiates Coverage On Agilent Technologies with Neutral Rating, Announces Price Target of $150",
+                        "url": "https://www.benzinga.com/news/26/06/53135652/piper-sandler-initiates-coverage-on-agilent-technologies-with-neutral-rating-announces-price-target",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "HSBC Maintains Buy on Agilent Technologies, Lowers Price Target to $165",
+                        "url": "https://www.benzinga.com/news/26/06/52981534/hsbc-maintains-buy-on-agilent-technologies-lowers-price-target-to-165",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Agilent Partners With OpenAI And Boston Consulting Group To Accelerate Deployment Of AI Across Its Products, Operations And Customer Workflows",
+                        "url": "https://www.benzinga.com/news/26/06/52965082/agilent-partners-with-openai-and-boston-consulting-group-to-accelerate-deployment-of-ai-across-its-p",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "BTC/USD": {
+            "name": "Bitcoin USD",
+            "score": 0.01,
+            "action": "HOLD",
+            "latest_price": 66271.9405,
+            "details": {
+                "technical_score": -0.07,
+                "technical_indicators": {
+                    "close": 66271.9405,
+                    "rsi": 61.603616547236186,
+                    "macd_hist": 371.24465838457024,
+                    "ema_10": 64610.01779467442,
+                    "sma_50": 63087.32104,
+                    "bb_upper": 66090.1712736973,
+                    "bb_lower": 61481.7293763027
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 63355.965,
+                    "two_hundred_day_average": 73044.63,
+                    "fifty_two_week_high": 126198.07,
+                    "fifty_two_week_low": 57747.766,
+                    "volume": 31606915072,
+                    "previous_close": 65214.098
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Obama's Wealth Grew From Book Royalties, Bush Jr.'s From Sports-Team Stake and Trump's $4 Billion Windfall From Deals Made in Office: Steve Rattner",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60569450/obama-bush-trump-wealth-steve-rattner",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "XRP Set for 'Further Upside' if It 'Decisively' Breaches This Level, Says Popular Analyst as Ripple-Linked Crypto Spikes 5% in a Week",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568836/xrp-price-analysis-further-upside-key-resistance",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Trump Hits Canada With 50% Tariffs on Wine, Cement \u2014 Prediction Market Punters See Odds of Trade Deal Fading",
+                        "url": "https://www.benzinga.com/markets/prediction-markets/26/07/60568545/trump-canada-50-percent-tariffs-trade-deal-odds",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Elizabeth Warren Says 'Dark Money' Groups Linked to Crypto, AI 'Spending Millions' to 'Hand-Pick' Congress Members",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568454/elizabeth-warren-crypto-ai-dark-money-congress",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin, Dogecoin Flat; Ethereum, XRP Gain as US-Iran Hostilities Continue: Analyst Says Short-term Gains Can Invite 'Faster Selloffs' If\u2026",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568312/bitcoin-ethereum-xrp-dogecoin-price-analysis-us-iran-tensions",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Strategy Stock Rises After $263.5 Million Sale Announcement",
+                        "url": "https://www.benzinga.com/trading-ideas/movers/26/07/60563465/strategy-stock-rises-after-263-5-million-sale-announcement",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "XRP Has Held a Top 10 Spot for 13 Straight Years: Is $6 the Next Stop?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60563072/xrp-price-outlook-6",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Crosses $65,000 As Ethereum, XRP, Dogecoin Rally After CLARITY Act Advances To Senate Floor",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60562956/bitcoin-crosses-65000-ethereum-xrp-dogecoin-rally-clarity-act-advances-senate-floor",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "ETH/USD": {
+            "name": "Ethereum USD",
+            "score": 0.06,
+            "action": "HOLD",
+            "latest_price": 1943.655,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 1943.655,
+                    "rsi": 66.64433933156606,
+                    "macd_hist": 13.758215523876899,
+                    "ema_10": 1866.795186995157,
+                    "sma_50": 1731.5311899999997,
+                    "bb_upper": 1948.9630230854455,
+                    "bb_lower": 1683.7253769145545
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 1734.6211,
+                    "two_hundred_day_average": 2183.6426,
+                    "fifty_two_week_high": 4953.733,
+                    "fifty_two_week_low": 1506.5057,
+                    "volume": 11989455872,
+                    "previous_close": 1903.3511
+                },
+                "sentiment_score": 0.04,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Bitcoin, Dogecoin Flat; Ethereum, XRP Gain as US-Iran Hostilities Continue: Analyst Says Short-term Gains Can Invite 'Faster Selloffs' If\u2026",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568312/bitcoin-ethereum-xrp-dogecoin-price-analysis-us-iran-tensions",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "XRP Has Held a Top 10 Spot for 13 Straight Years: Is $6 the Next Stop?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60563072/xrp-price-outlook-6",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Crosses $65,000 As Ethereum, XRP, Dogecoin Rally After CLARITY Act Advances To Senate Floor",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60562956/bitcoin-crosses-65000-ethereum-xrp-dogecoin-rally-clarity-act-advances-senate-floor",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin to $40,000, Then $250,000? Peter Brandt Maps BTC's Next Cycle",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60561629/bitcoin-40000-then-250000-peter-brandt-maps-btc-next-cycle",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitmine Slows ETH Buys to 7,430 Tokens as Tom Lee Redirects $86M to Stock Buybacks: What Changed?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60554959/bitmine-etf-buys",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Dogecoin Has a Chance, but Shiba Inu, Bonk Labeled 'Worthless' - Analyst Predicts No New Peaks",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60554572/dogecoin-has-a-chance-but-shiba-inu-bonk-labeled-worthless-analyst-predicts-no-new-peaks",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "'Everyone I Know Wants to Buy in October,' Analyst Warns: Why Is That a Red Flag for Bitcoin?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60552998/bitcoin-october-2026-analyst-warns-red-flag",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Ethereum's Next Bull Run? RWAs Could Make It More Valuable, but Shakeout Risk Remains",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60551784/ethereums-next-bull-run-rwas-could-make-it-more-valuable-but-shakeout-risk-remains",
+                        "sentiment_score": 0.33
+                    }
+                ]
+            }
+        },
+        "SOL/USD": {
+            "name": "Solana USD",
+            "score": 0.16,
+            "action": "HOLD",
+            "latest_price": 78.52005,
+            "details": {
+                "technical_score": -0.03,
+                "technical_indicators": {
+                    "close": 78.52005,
+                    "rsi": 56.827017580765435,
+                    "macd_hist": -0.1519105561263182,
+                    "ema_10": 76.99936112167924,
+                    "sma_50": 73.2104201171,
+                    "bb_upper": 83.08690445918226,
+                    "bb_lower": 73.35628112631771
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 73.34608,
+                    "two_hundred_day_average": 90.08011,
+                    "fifty_two_week_high": 253.2099,
+                    "fifty_two_week_low": 60.41472,
+                    "volume": 2023105664,
+                    "previous_close": 77.78996
+                },
+                "sentiment_score": 0.42,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Bitcoin, Dogecoin Flat; Ethereum, XRP Gain as US-Iran Hostilities Continue: Analyst Says Short-term Gains Can Invite 'Faster Selloffs' If\u2026",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568312/bitcoin-ethereum-xrp-dogecoin-price-analysis-us-iran-tensions",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Crosses $65,000 As Ethereum, XRP, Dogecoin Rally After CLARITY Act Advances To Senate Floor",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60562956/bitcoin-crosses-65000-ethereum-xrp-dogecoin-rally-clarity-act-advances-senate-floor",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Ethereum's Next Bull Run? RWAs Could Make It More Valuable, but Shakeout Risk Remains",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60551784/ethereums-next-bull-run-rwas-could-make-it-more-valuable-but-shakeout-risk-remains",
+                        "sentiment_score": 0.33
+                    },
+                    {
+                        "title": "Anthony Scaramucci Predicts Bitcoin Upside at 25x if Gold Hits $50 Trillion",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60551218/anthony-scaramucci-predicts-bitcoin-upside-at-25x-if-gold-hits-50t",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Bitcoin, Ethereum, XRP, Dogecoin Stay Flat Amid Iran Tensions\u2014Analyst Says This BTC Level Could Ignite 'Sustained Bull Trend'",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60543479/bitcoin-ethereum-xrp-dogecoin-stay-flat-amid-iran-tensions-analyst-says-this-btc-level-could-ignite-sustained-bull-trend",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Solana Co-Founder Anatoly Yakovenko Once Highlighted the Need for Decisive Leadership: Somebody Has to 'Wear the Crown' No Matter How 'Heavy' It Is",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60542889/solana-co-founder-anatoly-yakovenko-once-highlighted-the-need-for-decisive-leadership-somebody-has-to-wear-the-crown-no-matter-how-heavy-it-is",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Coinbase CEO Brian Armstrong Says Bitcoin Is 'Digital Gold,' Stablecoins Will Power AI Commerce",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60539685/coinbase-ceo-brian-armstrong-says-bitcoin-is-digital-gold-stablecoins-will-power-ai-commerce",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Solana Is 'Massively Underpriced,' Says Industry Expert\u2014Yet 1 Other Coin  Is Just as Juicy",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60538381/solana-is-massively-underpriced-says-industry-expert-yet-1-other-coin-is-just-as-juicy",
+                        "sentiment_score": 1.0
+                    }
+                ]
+            }
+        },
+        "LTC/USD": {
+            "name": "Litecoin USD",
+            "score": -0.04,
+            "action": "HOLD",
+            "latest_price": 47.66,
+            "details": {
+                "technical_score": -0.07,
+                "technical_indicators": {
+                    "close": 47.66,
+                    "rsi": 66.17952393946238,
+                    "macd_hist": 0.4246919881162469,
+                    "ema_10": 46.109174832240704,
+                    "sma_50": 44.13931210529999,
+                    "bb_upper": 47.64639135866832,
+                    "bb_lower": 42.49253864133167
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 44.299328,
+                    "two_hundred_day_average": 55.26675,
+                    "fifty_two_week_high": 135.56294,
+                    "fifty_two_week_low": 39.387177,
+                    "volume": 279087040,
+                    "previous_close": 47.336525
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "XRP Has Held a Top 10 Spot for 13 Straight Years: Is $6 the Next Stop?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60563072/xrp-price-outlook-6",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "As Stablecoins Lead Crypto Investment Themes, Bitcoin Is No Longer The Favorite Child",
+                        "url": "https://www.benzinga.com/Opinion/26/06/60200226/as-stablecoins-lead-crypto-investment-themes-bitcoin-is-no-longer-the-favorite-child",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Dogecoin Notes Shibes Have Been 'Quiet Lately' And Then The Internet Showed Off What Everyone Has Been Silently Building",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/06/53077572/dogecoin-says-shibes-have-been-quiet-lately-what-they-have-been-building",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin ETFs Sell $500M During BTC Implosion To $67,000: How Low Can Crypto Go?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/06/52967781/bitcoin-etfs-sell-500m-during-btc-implosion-to-67000-how-low-can-crypto-go",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "Bakkt (BKKT) Stock Jumps Over 16% After Hours: Here's Why The ICE-Backed Crypto Platform Is Trending Overnight",
+                        "url": "https://www.benzinga.com/markets/equities/26/05/52653642/bakkt-bkkt-stock-jumps-after-hours-ice-backed-crypto-platform",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Dogecoin Ditching The Shiba Inu For A 'Tasteful' Corporate Identity? You Might Want To Check Your Calendar",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/04/51591086/dogecoin-ditching-shiba-inu-tasteful-corporate-identity-check-your-calendar",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Who Stole The KitKat Bars? Dogecoin Says 'Woof,' Pengu Admits Nothing, Domino's Declares Culinary War, And Nobody's Taking A Break From The Jokes",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/03/51558276/kitkat-theft-dogecoin-pengu-dominos-jokes-no-one-taking-break",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "JPMorgan Identifies 8 CLARITY Act Catalysts\u2014And Altcoins Like XRP Could Benefit",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/03/50986146/jpmorgan-identifies-8-clarity-act-catalysts-and-altcoins-like-xrp-could-benefit",
+                        "sentiment_score": 1.0
+                    }
+                ]
+            }
+        },
+        "DOGE/USD": {
+            "name": "Dogecoin USD",
+            "score": 0.12,
+            "action": "HOLD",
+            "latest_price": 0.07357785,
+            "details": {
+                "technical_score": 0.03,
+                "technical_indicators": {
+                    "close": 0.07357785,
+                    "rsi": 43.94936586121284,
+                    "macd_hist": 0.00045484267922484825,
+                    "ema_10": 0.07302559127588201,
+                    "sma_50": 0.078990158,
+                    "bb_upper": 0.07781152163913699,
+                    "bb_lower": 0.070052658360863
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 0.0800888,
+                    "two_hundred_day_average": 0.09926984,
+                    "fifty_two_week_high": 0.305642,
+                    "fifty_two_week_low": 0.069611,
+                    "volume": 709908608,
+                    "previous_close": 0.072136335
+                },
+                "sentiment_score": 0.25,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Bitcoin, Dogecoin Flat; Ethereum, XRP Gain as US-Iran Hostilities Continue: Analyst Says Short-term Gains Can Invite 'Faster Selloffs' If\u2026",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568312/bitcoin-ethereum-xrp-dogecoin-price-analysis-us-iran-tensions",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Crosses $65,000 As Ethereum, XRP, Dogecoin Rally After CLARITY Act Advances To Senate Floor",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60562956/bitcoin-crosses-65000-ethereum-xrp-dogecoin-rally-clarity-act-advances-senate-floor",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Dogecoin Has a Chance, but Shiba Inu, Bonk Labeled 'Worthless' - Analyst Predicts No New Peaks",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60554572/dogecoin-has-a-chance-but-shiba-inu-bonk-labeled-worthless-analyst-predicts-no-new-peaks",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "Bitcoin, Ethereum, XRP, Dogecoin Stay Flat Amid Iran Tensions\u2014Analyst Says This BTC Level Could Ignite 'Sustained Bull Trend'",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60543479/bitcoin-ethereum-xrp-dogecoin-stay-flat-amid-iran-tensions-analyst-says-this-btc-level-could-ignite-sustained-bull-trend",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Bitcoin Holds Firm At $64,000 While Ethereum, XRP, Dogecoin Drop 1% On Macro Risk-Off Sentiment",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60535100/bitcoin-holds-firm-at-64000-while-ethereum-xrp-dogecoin-drop-1-on-macro-risk-off-sentiment",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin, Ethereum, XRP, Dogecoin Slide as 'Fear' Sentiment Prevails: Analyst Says BTC's 'Clear Breakthrough' Above This Level a Trigger for 'Strong Run",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60515898/bitcoin-ethereum-xrp-dogecoin-slide-as-fear-sentiment-prevails",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Holds $64,000 While Ethereum, XRP, Dogecoin Slip 2% as Geopolitical Tensions Escalate",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60510756/bitcoin-holds-64000-while-ethereum-xrp-dogecoin-slip-2-as-geopolitical-tensions-escalate",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "XRP Google Search Interest Rises as Analyst Flags Fresh Buy Signal\u2014Here's What the Technicals Are Showing",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60488987/xrp-google-search-interest-rises-as-analyst-flags-fresh-buy-signal-heres-what-the-technicals-are-showing",
+                        "sentiment_score": 1.0
+                    }
+                ]
+            }
+        },
+        "ADA/USD": {
+            "name": "Cardano USD",
+            "score": 0.13,
+            "action": "HOLD",
+            "latest_price": 0.175175,
+            "details": {
+                "technical_score": 0.22,
+                "technical_indicators": {
+                    "close": 0.175175,
+                    "rsi": 56.91467582325982,
+                    "macd_hist": 0.0012715674528207647,
+                    "ema_10": 0.16783672370641356,
+                    "sma_50": 0.1661316896,
+                    "bb_upper": 0.18911056519292332,
+                    "bb_lower": 0.15098943480707663
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 0.1685783,
+                    "two_hundred_day_average": 0.25517458,
+                    "fifty_two_week_high": 1.016464,
+                    "fifty_two_week_low": 0.138695,
+                    "volume": 475734656,
+                    "previous_close": 0.16976869
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Bitcoin to $40,000, Then $250,000? Peter Brandt Maps BTC's Next Cycle",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60561629/bitcoin-40000-then-250000-peter-brandt-maps-btc-next-cycle",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Cardano Beats BTC, ETH, XRP in Whale Accumulation, ADA Spikes 4%",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60451841/cardano-beats-btc-eth-xrp-in-whale-accumulation-ada-spikes-4",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "HOOD Stock Forms Golden Cross as Key Robinhood Chain Metrics Jump",
+                        "url": "https://www.benzinga.com/markets/equities/26/07/60404362/hood-stock-forms-golden-cross-as-key-robinhood-chain-metrics-jump",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin, Ethereum, XRP Got Clobbered in Q2: Here's What Will Decide Their Fate in Q3",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60381556/bitcoin-ethereum-xrp-got-clobbered-in-q2-heres-what-will-decide-their-fate-in-q3",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "As Stablecoins Lead Crypto Investment Themes, Bitcoin Is No Longer The Favorite Child",
+                        "url": "https://www.benzinga.com/Opinion/26/06/60200226/as-stablecoins-lead-crypto-investment-themes-bitcoin-is-no-longer-the-favorite-child",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Cardano Down To Prices Seen In December 2020: What Went Wrong The Last 5 Years?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/06/60124282/cardano-down-to-prices-seen-in-december-2020-what-went-wrong-the-last-5-years",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Cardano Founder Says The Outrage Cycle Needs To Stop, But ADA Is Still Down 10% In 1 Week",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/06/60010938/cardano-founder-says-the-outrage-cycle-needs-to-stop-but-ada-is-still-down-10-in-1-week",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Plunges To $62,500, Ethereum, XRP Lose 5%: What Is Going?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/06/53284954/bitcoin-plunges-to-62500-ethereum-xrp-lose-5-what-is-going",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "LINK/USD": {
+            "name": "Chainlink USD",
+            "score": -0.09,
+            "action": "HOLD",
+            "latest_price": 8.729265,
+            "details": {
+                "technical_score": -0.07,
+                "technical_indicators": {
+                    "close": 8.729265,
+                    "rsi": 66.05904224441764,
+                    "macd_hist": 0.08333005965814952,
+                    "ema_10": 8.357821770614807,
+                    "sma_50": 7.9042307,
+                    "bb_upper": 8.725242030086976,
+                    "bb_lower": 7.499062469913023
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 7.919437,
+                    "two_hundred_day_average": 9.409163,
+                    "fifty_two_week_high": 27.735258,
+                    "fifty_two_week_low": 7.022404,
+                    "volume": 280612032,
+                    "previous_close": 8.583231
+                },
+                "sentiment_score": -0.12,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "CaliberCos (CWD) Stock Is Trending Overnight \u2014 Here's Why it Fell Over 25% in After-Hours Session",
+                        "url": "https://www.benzinga.com/markets/equities/26/07/60263874/calibercos-cwd-stock-is-trending-overnight-heres-why-it-fell-over-25-in-after-hours-session",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Why Is Robinhood Markets Stock Gaining Thursday?",
+                        "url": "https://www.benzinga.com/trading-ideas/movers/26/07/60242755/why-is-robinhood-markets-stock-gaining-thursday",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Robinhood Announces Public Blockchain, Tokenized Stocks in Crypto Expansion Push",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60239833/robinhood-announces-public-blockchain-tokenized-stocks-in-crypto-expansion-push",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "'I'm Long On Bitcoin', Says Popular Trader: Here's Which Altcoins He Picked For A Reversal",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/06/60173908/im-long-on-bitcoin-says-popular-trader-heres-which-altcoins-he-picked-for-a-reversal",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin, Ethereum, Solana Plunge Over 10% In 1 Week: What Does Technical Analysis Say?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/06/53009321/bitcoin-ethereum-solana-plunge-over-10-in-1-week-what-does-technical-analysis-say",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "Bitcoin ETFs Sell $500M During BTC Implosion To $67,000: How Low Can Crypto Go?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/06/52967781/bitcoin-etfs-sell-500m-during-btc-implosion-to-67000-how-low-can-crypto-go",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "Goldman Sachs Dumped Its XRP Holdings But ETFs Still Saw $67M Inflows: What's Going On?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/05/52669045/goldman-sachs-dumped-its-xrp-holdings-but-etfs-still-saw-67m-inflows-whats-going-on",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Jumps 3% After Trump Announces 5-Day Iran Energy Infrastructure Strike Pause",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/03/51411654/bitcoin-jumps-3-after-trump-announces-5-day-iran-energy-infrastructure-strike-pause",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "BTCUSD": {
+            "name": "Bitcoin USD",
+            "score": 0.01,
+            "action": "HOLD",
+            "latest_price": 66271.9405,
+            "details": {
+                "technical_score": -0.07,
+                "technical_indicators": {
+                    "close": 66271.9405,
+                    "rsi": 61.603616547236186,
+                    "macd_hist": 371.24465838457024,
+                    "ema_10": 64610.01779467442,
+                    "sma_50": 63087.32104,
+                    "bb_upper": 66090.1712736973,
+                    "bb_lower": 61481.7293763027
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 63355.965,
+                    "two_hundred_day_average": 73044.63,
+                    "fifty_two_week_high": 126198.07,
+                    "fifty_two_week_low": 57747.766,
+                    "volume": 31606915072,
+                    "previous_close": 65214.098
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Obama's Wealth Grew From Book Royalties, Bush Jr.'s From Sports-Team Stake and Trump's $4 Billion Windfall From Deals Made in Office: Steve Rattner",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60569450/obama-bush-trump-wealth-steve-rattner",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "XRP Set for 'Further Upside' if It 'Decisively' Breaches This Level, Says Popular Analyst as Ripple-Linked Crypto Spikes 5% in a Week",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568836/xrp-price-analysis-further-upside-key-resistance",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Trump Hits Canada With 50% Tariffs on Wine, Cement \u2014 Prediction Market Punters See Odds of Trade Deal Fading",
+                        "url": "https://www.benzinga.com/markets/prediction-markets/26/07/60568545/trump-canada-50-percent-tariffs-trade-deal-odds",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Elizabeth Warren Says 'Dark Money' Groups Linked to Crypto, AI 'Spending Millions' to 'Hand-Pick' Congress Members",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568454/elizabeth-warren-crypto-ai-dark-money-congress",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin, Dogecoin Flat; Ethereum, XRP Gain as US-Iran Hostilities Continue: Analyst Says Short-term Gains Can Invite 'Faster Selloffs' If\u2026",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568312/bitcoin-ethereum-xrp-dogecoin-price-analysis-us-iran-tensions",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Strategy Stock Rises After $263.5 Million Sale Announcement",
+                        "url": "https://www.benzinga.com/trading-ideas/movers/26/07/60563465/strategy-stock-rises-after-263-5-million-sale-announcement",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "XRP Has Held a Top 10 Spot for 13 Straight Years: Is $6 the Next Stop?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60563072/xrp-price-outlook-6",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Crosses $65,000 As Ethereum, XRP, Dogecoin Rally After CLARITY Act Advances To Senate Floor",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60562956/bitcoin-crosses-65000-ethereum-xrp-dogecoin-rally-clarity-act-advances-senate-floor",
+                        "sentiment_score": 0.0
+                    }
+                ]
+            }
+        },
+        "ETHUSD": {
+            "name": "Ethereum USD",
+            "score": 0.06,
+            "action": "HOLD",
+            "latest_price": 1943.655,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 1943.655,
+                    "rsi": 66.64433933156606,
+                    "macd_hist": 13.758215523876899,
+                    "ema_10": 1866.795186995157,
+                    "sma_50": 1731.5311899999997,
+                    "bb_upper": 1948.9630230854455,
+                    "bb_lower": 1683.7253769145545
+                },
+                "fundamental_score": null,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null,
+                    "fifty_day_average": 1734.6211,
+                    "two_hundred_day_average": 2183.6426,
+                    "fifty_two_week_high": 4953.733,
+                    "fifty_two_week_low": 1506.5057,
+                    "volume": 11989455872,
+                    "previous_close": 1903.3511
+                },
+                "sentiment_score": 0.04,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "Bitcoin, Dogecoin Flat; Ethereum, XRP Gain as US-Iran Hostilities Continue: Analyst Says Short-term Gains Can Invite 'Faster Selloffs' If\u2026",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60568312/bitcoin-ethereum-xrp-dogecoin-price-analysis-us-iran-tensions",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "XRP Has Held a Top 10 Spot for 13 Straight Years: Is $6 the Next Stop?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60563072/xrp-price-outlook-6",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin Crosses $65,000 As Ethereum, XRP, Dogecoin Rally After CLARITY Act Advances To Senate Floor",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60562956/bitcoin-crosses-65000-ethereum-xrp-dogecoin-rally-clarity-act-advances-senate-floor",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitcoin to $40,000, Then $250,000? Peter Brandt Maps BTC's Next Cycle",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60561629/bitcoin-40000-then-250000-peter-brandt-maps-btc-next-cycle",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Bitmine Slows ETH Buys to 7,430 Tokens as Tom Lee Redirects $86M to Stock Buybacks: What Changed?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60554959/bitmine-etf-buys",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "Dogecoin Has a Chance, but Shiba Inu, Bonk Labeled 'Worthless' - Analyst Predicts No New Peaks",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60554572/dogecoin-has-a-chance-but-shiba-inu-bonk-labeled-worthless-analyst-predicts-no-new-peaks",
+                        "sentiment_score": -1.0
+                    },
+                    {
+                        "title": "'Everyone I Know Wants to Buy in October,' Analyst Warns: Why Is That a Red Flag for Bitcoin?",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60552998/bitcoin-october-2026-analyst-warns-red-flag",
+                        "sentiment_score": 1.0
+                    },
+                    {
+                        "title": "Ethereum's Next Bull Run? RWAs Could Make It More Valuable, but Shakeout Risk Remains",
+                        "url": "https://www.benzinga.com/crypto/cryptocurrency/26/07/60551784/ethereums-next-bull-run-rwas-could-make-it-more-valuable-but-shakeout-risk-remains",
+                        "sentiment_score": 0.33
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -263,3 +263,15 @@ class AlpacaBroker(BaseBroker):
                 'created_at': o.created_at.isoformat() if o.created_at else ''
             })
         return orders_list
+
+    def get_tradable_assets(self) -> List[str]:
+        """
+        Returns all active and tradable assets in Alpaca.
+        """
+        self._init_client()
+        from alpaca.trading.requests import GetAssetsRequest
+        from alpaca.trading.enums import AssetStatus
+        
+        req = GetAssetsRequest(status=AssetStatus.ACTIVE)
+        assets = self._trading_client.get_all_assets(req)
+        return [a.symbol for a in assets if a.tradable]

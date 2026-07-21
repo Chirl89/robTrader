@@ -134,7 +134,7 @@
 
                 <!-- Consola de Salida del Bot (Output Logs) -->
                 <section class="card glassmorphism console-card full-width">
-                    <h2>Consola de Ejecución</h2>
+                    <h2>Consola de Ejecución <button id="btn-copy-console" class="btn btn-secondary" style="width: auto; margin: 0; padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 6px;">Copiar Consola</button></h2>
                     <div id="console-logs" class="console-box">
                         <span class="system-log">[Sistema] Conectando con servidor de logs...</span>
                     </div>
@@ -339,8 +339,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="dynamic-limit">Límite Escáner Stocks</label>
-                                <input type="number" id="dynamic-limit" min="1" max="50">
+                                <label for="dynamic-limit">Límite Escáner Stocks (usar -1 para todo el índice)</label>
+                                <input type="number" id="dynamic-limit" min="-1" max="1000">
                             </div>
                         </div>
 
@@ -384,9 +384,109 @@
         </div>
     </main>
 
-    <footer class="app-footer">
-        <p>robTrader Platform &copy; 2026. Diseñado para operativa segura y cumplimiento tributario IRPF (FIFO).</p>
-    </footer>
+    <!-- Modal para Detalles de Análisis -->
+    <div id="analysis-detail-modal" class="modal-overlay">
+        <div class="modal-container glassmorphism">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-asset-title" style="margin: 0; padding: 0; border: none; font-size: 1.4rem;">AAPL - Apple Inc.</h2>
+                    <p id="modal-asset-subtitle" style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">Detalles del análisis y recomendaciones</p>
+                </div>
+                <button id="modal-close-btn" class="modal-close">&times;</button>
+            </div>
+            
+            <div class="modal-tabs">
+                <button class="modal-tab-link active" data-modal-tab="modal-tech">Análisis Técnico</button>
+                <button class="modal-tab-link" data-modal-tab="modal-fund">Análisis Fundamental</button>
+                <button class="modal-tab-link" data-modal-tab="modal-sentiment">Noticias y Sentimiento</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Pestaña Técnico -->
+                <div id="modal-tech" class="modal-tab-content active">
+                    <div class="score-display-row">
+                        <div class="score-pill">
+                            <span class="score-label">Puntuación Técnica (40%)</span>
+                            <span id="modal-tech-score" class="score-val">0.00</span>
+                        </div>
+                        <div id="modal-tech-interpretation" class="interpretation-badge">Neutral</div>
+                    </div>
+                    <div class="table-container">
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Indicador</th>
+                                    <th>Valor Actual</th>
+                                    <th>Interpretación / Condición</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-tech-tbody">
+                                <!-- Dinámico -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Pestaña Fundamental -->
+                <div id="modal-fund" class="modal-tab-content">
+                    <div class="score-display-row">
+                        <div class="score-pill">
+                            <span class="score-label">Puntuación Fundamental (30%)</span>
+                            <span id="modal-fund-score" class="score-val">0.00</span>
+                        </div>
+                        <div id="modal-fund-interpretation" class="interpretation-badge">Neutral</div>
+                    </div>
+                    
+                    <h3 style="font-size: 1rem; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-primary);">Métricas Fundamentales (Corporativas)</h3>
+                    <div class="table-container">
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Métrica</th>
+                                    <th>Valor</th>
+                                    <th>Análisis / Salud Financiera</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-fund-tbody">
+                                <!-- Dinámico -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 style="font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">Datos Generales de Mercado</h3>
+                    <div class="table-container">
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Métrica de Mercado</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-market-tbody">
+                                <!-- Dinámico -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Pestaña Sentimiento / Noticias -->
+                <div id="modal-sentiment" class="modal-tab-content">
+                    <div class="score-display-row">
+                        <div class="score-pill">
+                            <span class="score-label">Puntuación Sentimiento (30%)</span>
+                            <span id="modal-sent-score" class="score-val">0.00</span>
+                        </div>
+                        <div id="modal-sent-interpretation" class="interpretation-badge">Neutral</div>
+                    </div>
+                    
+                    <h3 style="font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--text-primary);">Artículos Analizados</h3>
+                    <div id="modal-news-list" class="news-list-container">
+                        <!-- Dinámico -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="/static/dashboard.js"></script>

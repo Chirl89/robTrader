@@ -1,79 +1,319 @@
 {
-    "timestamp": "2026-07-20T13:56:35.753964",
-    "buy_threshold": 0.15,
+    "timestamp": "2026-07-21T09:35:08.851341",
+    "buy_threshold": 0.2,
     "sell_threshold": -0.1,
     "evaluations": {
-        "ACS.MC": {
-            "score": -0.03,
+        "MMM": {
+            "name": "3M Company",
+            "score": 0.08,
             "action": "HOLD",
-            "latest_price": 117.69999694824219,
-            "details": {
-                "technical_score": 0.0,
-                "technical_indicators": {},
-                "fundamental_score": -0.1,
-                "fundamental_metrics": {
-                    "pe_ratio": 31.493334,
-                    "debt_to_equity": 257.434,
-                    "revenue_growth": 0.047,
-                    "profit_margins": 0.01967,
-                    "dividend_yield": 1.97
-                },
-                "sentiment_score": 0.0,
-                "article_count": 8
-            }
-        },
-        "ACX.MC": {
-            "score": -0.04,
-            "action": "HOLD",
-            "latest_price": 16.34000015258789,
+            "latest_price": 159.11,
             "details": {
                 "technical_score": 0.0,
                 "technical_indicators": {},
                 "fundamental_score": -0.12,
                 "fundamental_metrics": {
-                    "pe_ratio": 10.859342,
-                    "debt_to_equity": 100.14,
-                    "revenue_growth": -0.108,
-                    "profit_margins": -0.00802,
-                    "dividend_yield": 3.79
+                    "pe_ratio": 30.775629,
+                    "debt_to_equity": 396.497,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": 1.95
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "AOS": {
+            "name": "A. O. Smith Corporation",
+            "score": 0.21,
+            "action": "BUY",
+            "latest_price": 58.88,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.33,
+                "fundamental_metrics": {
+                    "pe_ratio": 15.701334,
+                    "debt_to_equity": 34.981,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": 2.45
+                },
+                "sentiment_score": 0.38,
+                "article_count": 8
+            }
+        },
+        "ABT": {
+            "name": "Abbott Laboratories",
+            "score": 0.23,
+            "action": "BUY",
+            "latest_price": 101.66,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.15,
+                "fundamental_metrics": {
+                    "pe_ratio": 28.160667,
+                    "debt_to_equity": 64.773,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": 2.5
+                },
+                "sentiment_score": 0.62,
+                "article_count": 8
+            }
+        },
+        "ABBV": {
+            "name": "AbbVie Inc.",
+            "score": 0.11,
+            "action": "HOLD",
+            "latest_price": 253.38,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": -0.05,
+                "fundamental_metrics": {
+                    "pe_ratio": 124.81774,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": 2.72
+                },
+                "sentiment_score": 0.42,
+                "article_count": 8
+            }
+        },
+        "ACN": {
+            "name": "Accenture plc",
+            "score": 0.16,
+            "action": "HOLD",
+            "latest_price": 144.73,
+            "details": {
+                "technical_score": 0.0,
+                "technical_indicators": {},
+                "fundamental_score": 0.4,
+                "fundamental_metrics": {
+                    "pe_ratio": 11.468304,
+                    "debt_to_equity": 25.035,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": 4.54
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8
+            }
+        },
+        "BTC/USD": {
+            "name": "Bitcoin USD",
+            "score": 0.06,
+            "action": "HOLD",
+            "latest_price": 65966.1105,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 65966.1105,
+                    "rsi": 60.575011419947415,
+                    "macd_hist": 351.72730225921174,
+                    "ema_10": 64554.41234012897,
+                    "sma_50": 63081.20444,
+                    "bb_upper": 66008.51903398197,
+                    "bb_lower": 61532.798616018015
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.12,
+                "article_count": 8
+            }
+        },
+        "ETH/USD": {
+            "name": "Ethereum USD",
+            "score": 0.04,
+            "action": "HOLD",
+            "latest_price": 1935.7415,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 1935.7415,
+                    "rsi": 66.07383003233363,
+                    "macd_hist": 13.25319444125573,
+                    "ema_10": 1865.356368813339,
+                    "sma_50": 1731.3729199999998,
+                    "bb_upper": 1947.0060594931329,
+                    "bb_lower": 1684.8909905068676
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.04,
+                "article_count": 8
+            }
+        },
+        "SOL/USD": {
+            "name": "Solana USD",
+            "score": 0.11,
+            "action": "HOLD",
+            "latest_price": 78.4805,
+            "details": {
+                "technical_score": -0.03,
+                "technical_indicators": {
+                    "close": 78.4805,
+                    "rsi": 56.73380030317241,
+                    "macd_hist": -0.15443454473029805,
+                    "ema_10": 76.99217021258833,
+                    "sma_50": 73.20962911710001,
+                    "bb_upper": 83.08444831702818,
+                    "bb_lower": 73.35478226847181
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.42,
+                "article_count": 8
+            }
+        },
+        "LTC/USD": {
+            "name": "Litecoin USD",
+            "score": 0.03,
+            "action": "HOLD",
+            "latest_price": 47.54005,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 47.54005,
+                    "rsi": 65.70935518944367,
+                    "macd_hist": 0.4170370593413182,
+                    "ema_10": 46.08736574133162,
+                    "sma_50": 44.1369131053,
+                    "bb_upper": 47.61544544007018,
+                    "bb_lower": 42.51148955992982
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
                 },
                 "sentiment_score": 0.0,
                 "article_count": 8
             }
         },
-        "AMS.MC": {
-            "score": 0.14,
+        "DOGE/USD": {
+            "name": "Dogecoin USD",
+            "score": 0.09,
             "action": "HOLD",
-            "latest_price": 49.939998626708984,
+            "latest_price": 0.073117,
             "details": {
-                "technical_score": 0.0,
-                "technical_indicators": {},
-                "fundamental_score": 0.45,
+                "technical_score": 0.03,
+                "technical_indicators": {
+                    "close": 0.073117,
+                    "rsi": 42.07166937060621,
+                    "macd_hist": 0.000425432308854484,
+                    "ema_10": 0.0729418003667911,
+                    "sma_50": 0.078980941,
+                    "bb_upper": 0.07780278655938824,
+                    "bb_lower": 0.07001530844061177
+                },
+                "fundamental_score": 0.0,
                 "fundamental_metrics": {
-                    "pe_ratio": 16.459017,
-                    "debt_to_equity": 69.85,
-                    "revenue_growth": 0.031,
-                    "profit_margins": 0.20364,
-                    "dividend_yield": 3.08
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": 0.25,
+                "article_count": 8
+            }
+        },
+        "ADA/USD": {
+            "name": "Cardano USD",
+            "score": 0.09,
+            "action": "HOLD",
+            "latest_price": 0.175115,
+            "details": {
+                "technical_score": 0.22,
+                "technical_indicators": {
+                    "close": 0.175115,
+                    "rsi": 56.87212122532522,
+                    "macd_hist": 0.0012677383929917123,
+                    "ema_10": 0.16782581461550447,
+                    "sma_50": 0.16613048960000001,
+                    "bb_upper": 0.18910418740500473,
+                    "bb_lower": 0.15098981259499528
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
                 },
                 "sentiment_score": 0.0,
+                "article_count": 8
+            }
+        },
+        "LINK/USD": {
+            "name": "Chainlink USD",
+            "score": -0.01,
+            "action": "HOLD",
+            "latest_price": 8.70595,
+            "details": {
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 8.70595,
+                    "rsi": 65.67967541918449,
+                    "macd_hist": 0.0818421508262404,
+                    "ema_10": 8.353582679705715,
+                    "sma_50": 7.9037644,
+                    "bb_upper": 8.719204962284895,
+                    "bb_lower": 7.5027680377151045
+                },
+                "fundamental_score": 0.0,
+                "fundamental_metrics": {
+                    "pe_ratio": null,
+                    "debt_to_equity": null,
+                    "revenue_growth": null,
+                    "profit_margins": null,
+                    "dividend_yield": null
+                },
+                "sentiment_score": -0.12,
                 "article_count": 8
             }
         },
         "BTCUSD": {
-            "score": 0.05,
+            "name": "Bitcoin USD",
+            "score": 0.06,
             "action": "HOLD",
-            "latest_price": 64690.8046875,
+            "latest_price": 65966.1105,
             "details": {
-                "technical_score": 0.12,
+                "technical_score": 0.07,
                 "technical_indicators": {
-                    "close": 64690.8046875,
-                    "rsi": 53.14822999329523,
-                    "macd_hist": 323.5756836534471,
-                    "ema_10": 64024.20823393832,
-                    "sma_50": 63355.963359375,
-                    "bb_upper": 66386.31941022705,
-                    "bb_lower": 59887.93879289796
+                    "close": 65966.1105,
+                    "rsi": 60.575011419947415,
+                    "macd_hist": 351.72730225921174,
+                    "ema_10": 64554.41234012897,
+                    "sma_50": 63081.20444,
+                    "bb_upper": 66008.51903398197,
+                    "bb_lower": 61532.798616018015
                 },
                 "fundamental_score": 0.0,
                 "fundamental_metrics": {
@@ -83,24 +323,25 @@
                     "profit_margins": null,
                     "dividend_yield": null
                 },
-                "sentiment_score": 0.0,
+                "sentiment_score": 0.12,
                 "article_count": 8
             }
         },
         "ETHUSD": {
-            "score": 0.03,
+            "name": "Ethereum USD",
+            "score": 0.04,
             "action": "HOLD",
-            "latest_price": 1871.508544921875,
+            "latest_price": 1935.7415,
             "details": {
                 "technical_score": 0.07,
                 "technical_indicators": {
-                    "close": 1871.508544921875,
-                    "rsi": 58.37408925494679,
-                    "macd_hist": 12.572961721951668,
-                    "ema_10": 1837.770596524142,
-                    "sma_50": 1734.62111328125,
-                    "bb_upper": 1955.1245813629082,
-                    "bb_lower": 1610.3860631683417
+                    "close": 1935.7415,
+                    "rsi": 66.07383003233363,
+                    "macd_hist": 13.25319444125573,
+                    "ema_10": 1865.356368813339,
+                    "sma_50": 1731.3729199999998,
+                    "bb_upper": 1947.0060594931329,
+                    "bb_lower": 1684.8909905068676
                 },
                 "fundamental_score": 0.0,
                 "fundamental_metrics": {
@@ -110,142 +351,7 @@
                     "profit_margins": null,
                     "dividend_yield": null
                 },
-                "sentiment_score": 0.0,
-                "article_count": 8
-            }
-        },
-        "SOLUSD": {
-            "score": 0.01,
-            "action": "HOLD",
-            "latest_price": 76.35526275634766,
-            "details": {
-                "technical_score": 0.02,
-                "technical_indicators": {
-                    "close": 76.35526275634766,
-                    "rsi": 49.205304044884244,
-                    "macd_hist": -0.44802742692351893,
-                    "ema_10": 76.41733851376637,
-                    "sma_50": 73.34607467651367,
-                    "bb_upper": 83.21905544994004,
-                    "bb_lower": 72.68618060352676
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.0,
-                "article_count": 8
-            }
-        },
-        "LTCUSD": {
-            "score": 0.03,
-            "action": "HOLD",
-            "latest_price": 47.04228973388672,
-            "details": {
-                "technical_score": 0.07,
-                "technical_indicators": {
-                    "close": 47.04228973388672,
-                    "rsi": 60.94793556032384,
-                    "macd_hist": 0.3856850134282765,
-                    "ema_10": 45.425649488587894,
-                    "sma_50": 44.299328384399416,
-                    "bb_upper": 47.09581702863987,
-                    "bb_lower": 42.01147552812283
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.0,
-                "article_count": 8
-            }
-        },
-        "DOGEUSD": {
-            "score": 0.01,
-            "action": "HOLD",
-            "latest_price": 0.07231000065803528,
-            "details": {
-                "technical_score": 0.03,
-                "technical_indicators": {
-                    "close": 0.07231000065803528,
-                    "rsi": 35.97673026156728,
-                    "macd_hist": 0.00040451486420030845,
-                    "ema_10": 0.0730623041313358,
-                    "sma_50": 0.08008879989385605,
-                    "bb_upper": 0.07779571557141281,
-                    "bb_lower": 0.06990098437570595
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.0,
-                "article_count": 8
-            }
-        },
-        "ADAUSD": {
-            "score": -0.01,
-            "action": "HOLD",
-            "latest_price": 0.16598300635814667,
-            "details": {
-                "technical_score": -0.02,
-                "technical_indicators": {
-                    "close": 0.16598300635814667,
-                    "rsi": 47.702245888074714,
-                    "macd_hist": 0.0005718729930616765,
-                    "ema_10": 0.1654174532213232,
-                    "sma_50": 0.16857829928398133,
-                    "bb_upper": 0.1907745948511565,
-                    "bb_lower": 0.1446919032853639
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.0,
-                "article_count": 8
-            }
-        },
-        "LINKUSD": {
-            "score": 0.03,
-            "action": "HOLD",
-            "latest_price": 8.37110710144043,
-            "details": {
-                "technical_score": 0.07,
-                "technical_indicators": {
-                    "close": 8.37110710144043,
-                    "rsi": 57.23624914383393,
-                    "macd_hist": 0.07181941692424139,
-                    "ema_10": 8.205287101400241,
-                    "sma_50": 7.9194370460510255,
-                    "bb_upper": 8.657575727845648,
-                    "bb_lower": 7.288845180128595
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.0,
+                "sentiment_score": 0.04,
                 "article_count": 8
             }
         }

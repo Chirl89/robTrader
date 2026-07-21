@@ -85,12 +85,12 @@ def get_news_sentiment(news_items: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Aggregates sentiment across a list of news items.
     Returns:
-    - 'score': Average sentiment score between -1.0 and +1.0
+    - 'score': Average sentiment score between -1.0 and +1.0 or None
     - 'article_count': Number of articles analyzed
     - 'details': List of articles and their individual scores
     """
     if not news_items:
-        return {'score': 0.0, 'article_count': 0, 'details': []}
+        return {'score': None, 'article_count': 0, 'details': []}
         
     api_key = os.getenv("GEMINI_API_KEY")
     

@@ -260,6 +260,21 @@ def api_trades():
                 reader = csv.DictReader(f)
                 for row in reader:
                     trades.append(row)
+            
+            # Enrich trades with name using cache to prevent slow repeated queries
+            from strategy.scheduler import TradingScheduler
+            scheduler = TradingScheduler()
+            name_cache = {}
+            for row in trades:
+                sym = row.get('symbol')
+                if sym:
+                    if sym not in name_cache:
+                        try:
+                            fundamentals = scheduler.data_provider.get_fundamentals(sym)
+                            name_cache[sym] = fundamentals.get('name') or sym
+                        except Exception:
+                            name_cache[sym] = sym
+                    row['name'] = name_cache[sym]
         except Exception as e:
             logger.error(f"Error reading trades file: {e}")
     # Return latest trades first
@@ -290,6 +305,21 @@ def api_tax():
                             'sale_val': float(row[5]),
                             'gain_loss': float(row[6])
                         })
+                        
+        # Enrich tax events with name using cache
+        from strategy.scheduler import TradingScheduler
+        scheduler = TradingScheduler()
+        name_cache = {}
+        for ev in events:
+            sym = ev['symbol']
+            if sym not in name_cache:
+                try:
+                    fundamentals = scheduler.data_provider.get_fundamentals(sym)
+                    name_cache[sym] = fundamentals.get('name') or sym
+                except Exception:
+                    name_cache[sym] = sym
+            ev['name'] = name_cache[sym]
+            
         report['events'] = events
         return jsonify(report)
     except Exception as e:
@@ -338,6 +368,19 @@ def api_alpaca_orders():
         from strategy.scheduler import TradingScheduler
         scheduler = TradingScheduler()
         orders = scheduler.broker.get_orders()
+        
+        # Enrich orders with name using cache
+        name_cache = {}
+        for o in orders:
+            sym = o['symbol']
+            if sym not in name_cache:
+                try:
+                    fundamentals = scheduler.data_provider.get_fundamentals(sym)
+                    name_cache[sym] = fundamentals.get('name') or sym
+                except Exception:
+                    name_cache[sym] = sym
+            o['name'] = name_cache[sym]
+            
         return jsonify(orders)
     except Exception as e:
         logger.error(f"Error fetching live orders: {e}")
@@ -349,6 +392,19 @@ def api_active_orders():
         from strategy.scheduler import TradingScheduler
         scheduler = TradingScheduler()
         orders = scheduler.broker.get_open_orders()
+        
+        # Enrich orders with name using cache
+        name_cache = {}
+        for o in orders:
+            sym = o['symbol']
+            if sym not in name_cache:
+                try:
+                    fundamentals = scheduler.data_provider.get_fundamentals(sym)
+                    name_cache[sym] = fundamentals.get('name') or sym
+                except Exception:
+                    name_cache[sym] = sym
+            o['name'] = name_cache[sym]
+            
         return jsonify(orders)
     except Exception as e:
         logger.error(f"Error fetching active orders: {e}")

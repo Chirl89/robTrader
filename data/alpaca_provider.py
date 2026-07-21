@@ -162,13 +162,49 @@ class AlpacaProvider(DataProvider):
     def get_fundamentals(self, symbol: str) -> Dict[str, Any]:
         """
         Alpaca Free API has limited fundamental data natively. 
-        We return empty or mock structure, and recommend YahooProvider for fundamentals.
+        We use yfinance as fallback to fetch the asset name and basic metrics.
         """
-        # Fundamentals are better sourced from yfinance or dedicated fundamental APIs
+        # Normalize symbol for Yahoo Finance
+        yf_symbol = symbol.upper()
+        yf_symbol = yf_symbol.replace('/', '-')
+        
+        # Normalize cryptos (e.g. BTCUSD -> BTC-USD)
+        crypto_assets = {'BTC', 'ETH', 'LTC', 'SOL', 'DOGE', 'XRP', 'ADA', 'DOT', 'LINK', 'UNI'}
+        for asset in crypto_assets:
+            if yf_symbol == f"{asset}USD" or yf_symbol == f"{asset}-USD":
+                yf_symbol = f"{asset}-USD"
+                break
+                
+        # Normalize dot tickers (e.g. BRK.B -> BRK-B)
+        if '.' in yf_symbol:
+            parts = yf_symbol.split('.')
+            if parts[-1] != 'MC':
+                yf_symbol = '-'.join(parts)
+                
+        try:
+            import yfinance as yf
+            ticker = yf.Ticker(yf_symbol)
+            info = ticker.info or {}
+            name = info.get('longName') or info.get('shortName') or symbol
+        except Exception:
+            name = symbol
+            info = {}
+            
         return {
-            'pe_ratio': None,
-            'dividend_yield': None,
-            'market_cap': None,
-            'debt_to_equity': None,
-            'price_to_book': None
+            'name': name,
+            'pe_ratio': info.get('trailingPE') or info.get('forwardPE'),
+            'dividend_yield': info.get('dividendYield'),
+            'market_cap': info.get('marketCap'),
+            'debt_to_equity': info.get('debtToEquity'),
+            'price_to_book': info.get('priceToBook'),
+            'forward_pe': info.get('forwardPE'),
+            'profit_margins': info.get('profitMargins'),
+            'revenue_growth': info.get('revenueGrowth'),
+            'operating_margins': info.get('operatingMargins'),
+            'fifty_day_average': info.get('fiftyDayAverage'),
+            'two_hundred_day_average': info.get('twoHundredDayAverage'),
+            'fifty_two_week_high': info.get('fiftyTwoWeekHigh'),
+            'fifty_two_week_low': info.get('fiftyTwoWeekLow'),
+            'volume': info.get('volume') or info.get('regularMarketVolume'),
+            'previous_close': info.get('previousClose')
         }

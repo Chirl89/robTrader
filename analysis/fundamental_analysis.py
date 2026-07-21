@@ -58,52 +58,66 @@ def evaluate_fundamentals(fundamentals: Dict[str, Any]) -> Dict[str, Any]:
     """
     Evaluates fundamental metrics and returns a score and summary details.
     Returns:
-    - 'score': Float between -1.0 and +1.0
+    - 'score': Float between -1.0 and +1.0 or None
     - 'evaluation': Summary details mapping
     """
     if not fundamentals:
-        return {'score': 0.0, 'metrics': {}}
+        return {'score': None, 'evaluation': 'N/A', 'metrics': {}}
         
-    scores = []
-    
-    # 1. Valuation (P/E Ratio)
     pe = fundamentals.get('pe_ratio')
-    pe_score = score_pe_ratio(pe)
-    scores.append(pe_score)
-    
-    # 2. Financial Leverage (Debt-to-Equity)
     de = fundamentals.get('debt_to_equity')
-    de_score = score_debt_to_equity(de)
-    scores.append(de_score)
-    
-    # 3. Growth Profile
     growth = fundamentals.get('revenue_growth')
-    growth_score = score_growth(growth)
-    scores.append(growth_score)
-    
-    # 4. Profitability
     margins = fundamentals.get('profit_margins')
-    margins_score = score_margins(margins)
-    scores.append(margins_score)
     
-    # Average the fundamental scores
-    avg_score = sum(scores) / len(scores) if scores else 0.0
+    # Check if there are any corporate fundamental metrics
+    has_corporate = not (pe is None and de is None and growth is None and margins is None)
     
-    # Generate a descriptive evaluation
-    eval_text = "Neutral"
-    if avg_score >= 0.4:
-        eval_text = "Strong Buy" if avg_score >= 0.6 else "Buy"
-    elif avg_score <= -0.4:
-        eval_text = "Strong Sell" if avg_score <= -0.6 else "Sell"
+    if not has_corporate:
+        avg_score = None
+        eval_text = "Neutral"
+    else:
+        scores = []
+        
+        # 1. Valuation (P/E Ratio)
+        pe_score = score_pe_ratio(pe)
+        scores.append(pe_score)
+        
+        # 2. Financial Leverage (Debt-to-Equity)
+        de_score = score_debt_to_equity(de)
+        scores.append(de_score)
+        
+        # 3. Growth Profile
+        growth_score = score_growth(growth)
+        scores.append(growth_score)
+        
+        # 4. Profitability
+        margins_score = score_margins(margins)
+        scores.append(margins_score)
+        
+        # Average the fundamental scores
+        avg_score = sum(scores) / len(scores) if scores else 0.0
+        
+        # Generate a descriptive evaluation
+        eval_text = "Neutral"
+        if avg_score >= 0.4:
+            eval_text = "Strong Buy" if avg_score >= 0.6 else "Buy"
+        elif avg_score <= -0.4:
+            eval_text = "Strong Sell" if avg_score <= -0.6 else "Sell"
         
     return {
-        'score': round(avg_score, 2),
+        'score': round(avg_score, 2) if avg_score is not None else None,
         'evaluation': eval_text,
         'metrics': {
             'pe_ratio': pe,
             'debt_to_equity': de,
             'revenue_growth': growth,
             'profit_margins': margins,
-            'dividend_yield': fundamentals.get('dividend_yield')
+            'dividend_yield': fundamentals.get('dividend_yield'),
+            'fifty_day_average': fundamentals.get('fifty_day_average'),
+            'two_hundred_day_average': fundamentals.get('two_hundred_day_average'),
+            'fifty_two_week_high': fundamentals.get('fifty_two_week_high'),
+            'fifty_two_week_low': fundamentals.get('fifty_two_week_low'),
+            'volume': fundamentals.get('volume'),
+            'previous_close': fundamentals.get('previous_close')
         }
     }

@@ -24,10 +24,8 @@ def get_sp500_symbols() -> List[str]:
         # Wrap response text in StringIO to prevent FileNotFoundError in pandas
         tables = pd.read_html(io.StringIO(response.text))
         df = tables[0]
-        # Wikipedia uses 'Symbol' for the column name
         symbols = df['Symbol'].tolist()
-        # yfinance/Alpaca expect hyphens instead of dots (e.g. BRK.B -> BRK-B)
-        cleaned_symbols = [sym.replace('.', '-') for sym in symbols]
+        cleaned_symbols = [sym.strip() for sym in symbols if isinstance(sym, str) and sym.strip()]
         return cleaned_symbols
     except Exception as e:
         logger.error(f"Failed to scrape S&P 500 symbols: {e}. Falling back to default list.")
@@ -82,21 +80,25 @@ def get_dynamic_market_symbols(max_stocks: int = 15, include_crypto: bool = True
     """
     Returns a combined list of top stocks from the selected index and cryptocurrencies.
     Supports index_name values: 'SP500', 'IBEX35', or 'BOTH'.
+    If max_stocks <= 0, no limit is applied (returns all stocks for that index).
     """
     index_name = index_name.upper() if index_name else "SP500"
     
     if index_name == "IBEX35":
         stocks = get_ibex35_symbols()
-        target_stocks = stocks[:max_stocks]
+        target_stocks = stocks[:max_stocks] if max_stocks > 0 else stocks
     elif index_name == "BOTH":
         # Alternate or split spaces equally
-        half = max_stocks // 2
         sp500_stocks = get_sp500_symbols()
         ibex_stocks = get_ibex35_symbols()
-        target_stocks = sp500_stocks[:half] + ibex_stocks[:(max_stocks - half)]
+        if max_stocks > 0:
+            half = max_stocks // 2
+            target_stocks = sp500_stocks[:half] + ibex_stocks[:(max_stocks - half)]
+        else:
+            target_stocks = sp500_stocks + ibex_stocks
     else:
         stocks = get_sp500_symbols()
-        target_stocks = stocks[:max_stocks]
+        target_stocks = stocks[:max_stocks] if max_stocks > 0 else stocks
         
     if include_crypto:
         cryptos = get_top_cryptos()

@@ -75,11 +75,11 @@ def generate_ta_signals(df: pd.DataFrame) -> Dict[str, Any]:
     """
     Analyzes indicator values for the most recent bar and returns a signal score.
     Returns a dict with:
-    - 'score': A float between -1.0 (strongly bearish) and +1.0 (strongly bullish)
+    - 'score': A float between -1.0 (strongly bearish) and +1.0 (strongly bullish) or None
     - 'indicators': Dict of current values
     """
     if df.empty or len(df) < 50:
-        return {'score': 0.0, 'indicators': {}}
+        return {'score': None, 'indicators': {}}
         
     latest = df.iloc[-1]
     prev = df.iloc[-2]

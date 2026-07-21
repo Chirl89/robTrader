@@ -1,0 +1,79 @@
+2026-07-21 10:25:13,344 - robTrader.Scheduler - INFO - Dynamic scan enabled. Fetching symbols dynamically from BOTH and top Cryptocurrencies...
+2026-07-21 10:25:15,360 - robTrader.Scheduler - INFO - Alpaca credentials found. Initializing Alpaca data provider and broker.
+2026-07-21 10:25:15,370 - robTrader.Scheduler - INFO - Recovered daily start portfolio value from history: 1003359.50 (Date: 2026-07-21)
+2026-07-21 10:25:15,371 - robTrader.Scheduler - INFO - Starting execution loop.
+2026-07-21 10:25:15,371 - robTrader.Scheduler - INFO - - Portfolio Refresh Interval: 10 seconds
+2026-07-21 10:25:15,371 - robTrader.Scheduler - INFO - - Market Re-Analysis Interval: 60 minutes
+2026-07-21 10:25:17,687 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 0.00 | Total Value = 1004059.27
+2026-07-21 10:25:17,782 - robTrader.Scheduler - INFO - ------ Starting Trading Cycle ------
+2026-07-21 10:25:17,782 - robTrader.Scheduler - INFO - Signal Thresholds: BUY >= 0.2 | SELL <= -0.1
+2026-07-21 10:25:19,734 - robTrader.Scheduler - INFO - Dynamically scanned market. Raw target symbols: ['MMM', 'AOS', 'ABT', 'ABBV', 'ACN', 'ADBE', 'AMD', 'AES', 'AFL', 'A', 'ACS.MC', 'ACX.MC', 'AMS.MC', 'ANA.MC', 'ANE.MC', 'BBVA.MC', 'BKT.MC', 'CABK.MC', 'CLNX.MC', 'COL.MC', 'BTCUSD', 'ETHUSD', 'SOLUSD', 'LTCUSD', 'DOGEUSD', 'ADAUSD', 'LINKUSD']
+2026-07-21 10:25:20,743 - robTrader.Scheduler - INFO - Normalizing and validating target symbols against broker's active assets...
+2026-07-21 10:25:20,750 - robTrader.Scheduler - WARNING - Symbol ACS.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,750 - robTrader.Scheduler - WARNING - Symbol ACX.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,750 - robTrader.Scheduler - WARNING - Symbol AMS.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,750 - robTrader.Scheduler - WARNING - Symbol ANA.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,751 - robTrader.Scheduler - WARNING - Symbol ANE.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,751 - robTrader.Scheduler - WARNING - Symbol BBVA.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,751 - robTrader.Scheduler - WARNING - Symbol BKT.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,751 - robTrader.Scheduler - WARNING - Symbol CABK.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,751 - robTrader.Scheduler - WARNING - Symbol CLNX.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,751 - robTrader.Scheduler - WARNING - Symbol COL.MC is not supported or active on the broker. Skipping.
+2026-07-21 10:25:20,751 - robTrader.Scheduler - INFO - Validated target symbols for this cycle: ['MMM', 'AOS', 'ABT', 'ABBV', 'ACN', 'ADBE', 'AMD', 'AES', 'AFL', 'A', 'BTC/USD', 'ETH/USD', 'SOL/USD', 'LTC/USD', 'DOGE/USD', 'ADA/USD', 'LINK/USD']
+2026-07-21 10:25:21,013 - robTrader.Scheduler - INFO - Added open position symbol BTCUSD to target symbols for monitoring/evaluation.
+2026-07-21 10:25:21,013 - robTrader.Scheduler - INFO - Added open position symbol ETHUSD to target symbols for monitoring/evaluation.
+2026-07-21 10:25:21,194 - robTrader.Scheduler - INFO - Broker Cash: 878345.18 | Estimated Available Cash: 0.00
+2026-07-21 10:25:21,194 - robTrader.Scheduler - INFO - Portfolio Value: 1004059.27 | Cash: 0.00 | Open Positions: ['BTCUSD', 'ETHUSD']
+2026-07-21 10:25:21,194 - robTrader.Scheduler - INFO - Analyzing MMM...
+2026-07-21 10:25:23,403 - robTrader.Scheduler - INFO - Strategy recommendation for MMM: BUY (Score: 0.24) | Price: 159.11
+2026-07-21 10:25:23,492 - robTrader.Scheduler - INFO - Analyzing AOS...
+2026-07-21 10:25:23,995 - robTrader.Scheduler - INFO - Strategy recommendation for AOS: BUY (Score: 0.41) | Price: 58.88
+2026-07-21 10:25:24,090 - robTrader.Scheduler - INFO - Analyzing ABT...
+2026-07-21 10:25:24,517 - robTrader.Scheduler - INFO - Strategy recommendation for ABT: BUY (Score: 0.5) | Price: 101.66
+2026-07-21 10:25:24,610 - robTrader.Scheduler - INFO - Analyzing ABBV...
+2026-07-21 10:25:25,063 - robTrader.Scheduler - INFO - Strategy recommendation for ABBV: BUY (Score: 0.26) | Price: 253.38
+2026-07-21 10:25:25,153 - robTrader.Scheduler - INFO - Analyzing ACN...
+2026-07-21 10:25:25,671 - robTrader.Scheduler - INFO - Strategy recommendation for ACN: BUY (Score: 0.37) | Price: 144.73
+2026-07-21 10:25:25,766 - robTrader.Scheduler - INFO - Analyzing ADBE...
+2026-07-21 10:25:26,435 - robTrader.Scheduler - INFO - Strategy recommendation for ADBE: BUY (Score: 0.33) | Price: 234.74
+2026-07-21 10:25:26,529 - robTrader.Scheduler - INFO - Analyzing AMD...
+2026-07-21 10:25:26,946 - robTrader.Scheduler - INFO - Strategy recommendation for AMD: BUY (Score: 0.23) | Price: 503.57
+2026-07-21 10:25:27,039 - robTrader.Scheduler - INFO - Analyzing AES...
+2026-07-21 10:25:27,473 - robTrader.Scheduler - INFO - Strategy recommendation for AES: BUY (Score: 0.33) | Price: 14.80
+2026-07-21 10:25:27,567 - robTrader.Scheduler - INFO - Analyzing AFL...
+2026-07-21 10:25:28,067 - robTrader.Scheduler - INFO - Strategy recommendation for AFL: BUY (Score: 0.4) | Price: 124.08
+2026-07-21 10:25:28,173 - robTrader.Scheduler - INFO - Analyzing A...
+2026-07-21 10:25:28,764 - robTrader.Scheduler - INFO - Strategy recommendation for A: BUY (Score: 0.42) | Price: 130.26
+2026-07-21 10:25:28,885 - robTrader.Scheduler - INFO - Analyzing BTC/USD...
+2026-07-21 10:25:30,085 - robTrader.Scheduler - INFO - Strategy recommendation for BTC/USD: HOLD (Score: 0.01) | Price: 66271.94
+2026-07-21 10:25:30,265 - robTrader.Scheduler - INFO - Holding current position for BTC/USD.
+2026-07-21 10:25:30,265 - robTrader.Scheduler - INFO - Analyzing ETH/USD...
+2026-07-21 10:25:30,751 - robTrader.Scheduler - INFO - Strategy recommendation for ETH/USD: HOLD (Score: 0.06) | Price: 1943.65
+2026-07-21 10:25:30,868 - robTrader.Scheduler - INFO - Holding current position for ETH/USD.
+2026-07-21 10:25:30,868 - robTrader.Scheduler - INFO - Analyzing SOL/USD...
+2026-07-21 10:25:31,364 - robTrader.Scheduler - INFO - Strategy recommendation for SOL/USD: HOLD (Score: 0.16) | Price: 78.52
+2026-07-21 10:25:31,459 - robTrader.Scheduler - INFO - Holding current position for SOL/USD.
+2026-07-21 10:25:31,460 - robTrader.Scheduler - INFO - Analyzing LTC/USD...
+2026-07-21 10:25:31,974 - robTrader.Scheduler - INFO - Strategy recommendation for LTC/USD: HOLD (Score: -0.04) | Price: 47.66
+2026-07-21 10:25:32,066 - robTrader.Scheduler - INFO - Holding current position for LTC/USD.
+2026-07-21 10:25:32,066 - robTrader.Scheduler - INFO - Analyzing DOGE/USD...
+2026-07-21 10:25:32,592 - robTrader.Scheduler - INFO - Strategy recommendation for DOGE/USD: HOLD (Score: 0.12) | Price: 0.07
+2026-07-21 10:25:32,684 - robTrader.Scheduler - INFO - Holding current position for DOGE/USD.
+2026-07-21 10:25:32,684 - robTrader.Scheduler - INFO - Analyzing ADA/USD...
+2026-07-21 10:25:33,121 - robTrader.Scheduler - INFO - Strategy recommendation for ADA/USD: HOLD (Score: 0.13) | Price: 0.18
+2026-07-21 10:25:33,218 - robTrader.Scheduler - INFO - Holding current position for ADA/USD.
+2026-07-21 10:25:33,219 - robTrader.Scheduler - INFO - Analyzing LINK/USD...
+2026-07-21 10:25:33,728 - robTrader.Scheduler - INFO - Strategy recommendation for LINK/USD: HOLD (Score: -0.09) | Price: 8.73
+2026-07-21 10:25:33,817 - robTrader.Scheduler - INFO - Holding current position for LINK/USD.
+2026-07-21 10:25:33,817 - robTrader.Scheduler - INFO - Analyzing BTCUSD...
+2026-07-21 10:25:34,177 - robTrader.Scheduler - INFO - Strategy recommendation for BTCUSD: HOLD (Score: 0.01) | Price: 66271.94
+2026-07-21 10:25:34,268 - robTrader.Scheduler - INFO - Holding current position for BTCUSD.
+2026-07-21 10:25:34,268 - robTrader.Scheduler - INFO - Analyzing ETHUSD...
+2026-07-21 10:25:34,645 - robTrader.Scheduler - INFO - Strategy recommendation for ETHUSD: HOLD (Score: 0.06) | Price: 1943.65
+2026-07-21 10:25:34,739 - robTrader.Scheduler - INFO - Holding current position for ETHUSD.
+2026-07-21 10:25:34,745 - robTrader.Scheduler - INFO - Saved analysis metrics for 19 symbols to C:\Users\EM2025007512\.gemini\antigravity\scratch\robTrader\data_logs\analysis_state_alpaca_cb595c6b.json
+2026-07-21 10:25:34,759 - robTrader.Scheduler - INFO - Spanish Tax Report generated successfully at: data_logs\spanish_tax_report_alpaca_cb595c6b.csv
+2026-07-21 10:25:34,759 - robTrader.Scheduler - INFO - Net gains/losses: 0.0 EUR
+2026-07-21 10:25:34,759 - robTrader.Scheduler - INFO - ------ Trading Cycle Finished ------
+2026-07-21 10:25:36,556 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 0.00 | Total Value = 1004059.27
+2026-07-21 10:25:47,312 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 0.00 | Total Value = 1004059.27

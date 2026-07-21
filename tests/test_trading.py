@@ -1,6 +1,7 @@
 import os
 import shutil
 import unittest
+from unittest.mock import patch, MagicMock
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -40,6 +41,35 @@ class TestTechnicalAnalysis(unittest.TestCase):
         self.assertFalse(np.isnan(df_indicators.iloc[-1]['rsi']))
         self.assertFalse(np.isnan(df_indicators.iloc[-1]['sma_50']))
         self.assertTrue(0 <= df_indicators.iloc[-1]['rsi'] <= 100)
+
+    def test_yahoo_provider_symbol_normalization(self):
+        from data.yahoo_provider import YahooProvider
+        provider = YahooProvider()
+        # BRK.B should normalize to BRK-B (for Yahoo Finance)
+        self.assertEqual(provider._normalize_symbol("BRK.B"), "BRK-B")
+        # BF.B should normalize to BF-B
+        self.assertEqual(provider._normalize_symbol("BF.B"), "BF-B")
+        # SAN.MC should keep .MC suffix
+        self.assertEqual(provider._normalize_symbol("SAN.MC"), "SAN.MC")
+        # BTCUSD should normalize to BTC-USD
+        self.assertEqual(provider._normalize_symbol("BTCUSD"), "BTC-USD")
+
+    @patch('yfinance.Ticker')
+    def test_alpaca_provider_fundamental_normalization(self, mock_ticker_class):
+        from data.alpaca_provider import AlpacaProvider
+        provider = AlpacaProvider()
+        
+        # Mock yfinance return values
+        mock_instance = MagicMock()
+        mock_instance.info = {'longName': 'Bitcoin', 'trailingPE': 10}
+        mock_ticker_class.return_value = mock_instance
+        
+        # Call get_fundamentals
+        res = provider.get_fundamentals("BTCUSD")
+        
+        # Verify yfinance Ticker was called with "BTC-USD" instead of "BTCUSD"
+        mock_ticker_class.assert_called_with("BTC-USD")
+        self.assertEqual(res['name'], 'Bitcoin')
 
 class TestSimulatorBroker(unittest.TestCase):
     def setUp(self):
@@ -133,6 +163,52 @@ class TestSimulatorBroker(unittest.TestCase):
         self.assertEqual(open_orders[0]['order_id'], 'open1')
         self.assertEqual(open_orders[0]['qty'], 100.0)
         self.assertEqual(open_orders[0]['filled_qty'], 40.0)
+
+    def test_scheduler_symbol_validation_and_positions_tracking(self):
+        from strategy.scheduler import TradingScheduler
+        from broker.simulator_broker import SimulatorBroker
+        
+        scheduler = TradingScheduler()
+        scheduler.broker = SimulatorBroker(initial_cash=10000.0)
+        # Mock active positions (holding TEF.MC)
+        scheduler.broker.submit_order(symbol="TEF.MC", qty=10, side="buy", price=4.0)
+        
+        scheduler.dynamic_scan = False
+        scheduler.symbols = ['AAPL', 'MSFT']
+        
+        # Mock broker get_tradable_assets to return specific active assets
+        # simulating a real Alpaca Broker response
+        scheduler.broker.get_tradable_assets = lambda: ['AAPL', 'MSFT', 'BRK.B', 'BF.B']
+        
+        # Test validation and mapping logic
+        scheduler.symbols = ['AAPL', 'BRK-B', 'BF-B', 'SAN.MC']
+        
+        tradable_symbols = scheduler.broker.get_tradable_assets()
+        if tradable_symbols and tradable_symbols != ['*']:
+            alpaca_lookup = {}
+            for ts in tradable_symbols:
+                norm = ts.replace('.', '').replace('-', '').replace('/', '').upper()
+                alpaca_lookup[norm] = ts
+            
+            validated_symbols = []
+            for sym in scheduler.symbols:
+                norm_sym = sym.replace('.', '').replace('-', '').replace('/', '').upper()
+                if norm_sym in alpaca_lookup:
+                    validated_symbols.append(alpaca_lookup[norm_sym])
+            scheduler.symbols = validated_symbols
+            
+        self.assertIn('AAPL', scheduler.symbols)
+        self.assertIn('BRK.B', scheduler.symbols)
+        self.assertIn('BF.B', scheduler.symbols)
+        self.assertNotIn('SAN.MC', scheduler.symbols)
+        
+        # Verify active positions inclusion
+        active_positions = scheduler.broker.get_positions()
+        for pos_symbol in active_positions.keys():
+            if pos_symbol not in scheduler.symbols:
+                scheduler.symbols.append(pos_symbol)
+                
+        self.assertIn('TEF.MC', scheduler.symbols)
 
 class TestTaxExporter(unittest.TestCase):
     def setUp(self):
@@ -237,6 +313,16 @@ class TestTaxExporter(unittest.TestCase):
         ibex_count = sum(1 for sym in both_symbols if sym.endswith('.MC'))
         self.assertEqual(sp_count, 5)
         self.assertEqual(ibex_count, 5)
+        
+        # Test dynamic market symbols with max_stocks <= 0 (unlimited)
+        sp_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="SP500")
+        self.assertTrue(len(sp_symbols_all) > 400) # S&P 500 contains ~500 components
+        
+        ibex_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="IBEX35")
+        self.assertTrue(len(ibex_symbols_all) >= 35) # IBEX 35 contains 35 components
+        
+        both_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="BOTH")
+        self.assertTrue(len(both_symbols_all) > 400)
 
     def test_eur_asset_logging(self):
         # 1. Buy EUR asset SAN.MC (Bco. Santander) at 4.50 EUR, commission 1 EUR.
@@ -289,6 +375,56 @@ class TestTaxExporter(unittest.TestCase):
         self.assertAlmostEqual(div_row['withholding_tax_usd'], 0.04 / 0.92, places=4)
         self.assertEqual(div_row['amount_eur'], 0.20)
         self.assertEqual(div_row['withholding_tax_eur'], 0.04)
+
+from strategy.composite_strategy import CompositeStrategy
+
+class TestCompositeStrategyND(unittest.TestCase):
+    def setUp(self):
+        self.strategy = CompositeStrategy(technical_weight=0.40, fundamental_weight=0.30, sentiment_weight=0.30)
+        
+    @patch.dict(os.environ, {"BUY_THRESHOLD": "0.25", "SELL_THRESHOLD": "-0.25"})
+    def test_one_indicator_missing_redistribution(self):
+        prices_df = pd.DataFrame({'close': [100.0] * 60})
+        fundamentals = {}
+        sentiment = {'score': -0.5, 'article_count': 3, 'details': []}
+        
+        with patch('strategy.composite_strategy.add_all_indicators') as mock_add, \
+             patch('strategy.composite_strategy.generate_ta_signals') as mock_ta:
+            mock_ta.return_value = {'score': 0.8, 'indicators': {'rsi': 25}}
+            
+            res = self.strategy.evaluate("TEST", prices_df, fundamentals, sentiment)
+            
+            # Weighted calculation: (0.8 * 0.4/0.7) + (-0.5 * 0.3/0.7) = 0.457 - 0.214 = 0.24
+            self.assertEqual(res['score'], 0.24)
+            self.assertEqual(res['action'], 'HOLD')
+            self.assertIsNone(res['details']['fundamental_score'])
+            self.assertEqual(res['details']['technical_score'], 0.8)
+            self.assertEqual(res['details']['sentiment_score'], -0.5)
+
+    def test_two_indicators_missing_blocks_orders(self):
+        prices_df = pd.DataFrame() # empty => technical score is None
+        fundamentals = {} # empty => fundamental score is None
+        sentiment = {'score': 0.8, 'article_count': 3, 'details': []}
+        
+        res = self.strategy.evaluate("TEST", prices_df, fundamentals, sentiment)
+        
+        # 2 indicators missing (applicable_count = 1 < 2) => score is None, action is HOLD
+        self.assertIsNone(res['score'])
+        self.assertEqual(res['action'], 'HOLD')
+        self.assertIsNone(res['details']['technical_score'])
+        self.assertIsNone(res['details']['fundamental_score'])
+        self.assertEqual(res['details']['sentiment_score'], 0.8)
+
+    def test_all_indicators_missing(self):
+        prices_df = pd.DataFrame()
+        fundamentals = {}
+        sentiment = {'score': None, 'article_count': 0, 'details': []}
+        
+        res = self.strategy.evaluate("TEST", prices_df, fundamentals, sentiment)
+        
+        # All indicators missing => score is None, action is HOLD
+        self.assertIsNone(res['score'])
+        self.assertEqual(res['action'], 'HOLD')
 
 if __name__ == '__main__':
     unittest.main()

@@ -526,3 +526,283 @@ td {
     font-weight: 700;
 }
 
+/* Clickable analysis scores */
+.clickable-score {
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.clickable-score:hover {
+    background: rgba(0, 240, 255, 0.06);
+    box-shadow: inset 0 0 0 1px rgba(0, 240, 255, 0.2);
+    border-radius: 8px;
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(6, 9, 17, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: none; /* Controlled by JS */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-container {
+    background: rgba(20, 27, 45, 0.95);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    box-shadow: 0 10px 40px -10px rgba(0, 240, 255, 0.25), var(--shadow-premium);
+    width: 90%;
+    max-width: 780px;
+    max-height: 85vh;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-close:hover {
+    color: var(--text-accent);
+    transform: scale(1.1);
+}
+
+.modal-tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1px;
+}
+
+.modal-tab-link {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-tab-link:hover {
+    color: var(--text-primary);
+}
+
+.modal-tab-link.active {
+    color: var(--text-accent);
+}
+
+.modal-tab-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-accent);
+    box-shadow: 0 0 10px var(--text-accent);
+    border-radius: 2px;
+}
+
+.modal-body {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 0.5rem;
+}
+
+/* Custom Scrollbar for Modal Body */
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+.modal-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 3px;
+}
+.modal-body::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.2);
+    border-radius: 3px;
+}
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 240, 255, 0.4);
+}
+
+.modal-tab-content {
+    display: none;
+    animation: modal-fade-in 0.25s ease;
+}
+
+.modal-tab-content.active {
+    display: block;
+}
+
+@keyframes modal-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal Inner Layouts */
+.score-display-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.score-pill {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0.6rem 1.25rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.score-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.2rem;
+}
+
+.score-val {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-accent);
+}
+
+/* Interpretation Badges */
+.interpretation-badge {
+    padding: 0.45rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-bullish, .badge-buy {
+    background: rgba(0, 230, 118, 0.12);
+    color: var(--color-success);
+    border: 1px solid rgba(0, 230, 118, 0.25);
+    box-shadow: 0 0 10px rgba(0, 230, 118, 0.05);
+}
+
+.badge-bearish, .badge-sell {
+    background: rgba(255, 23, 68, 0.12);
+    color: var(--color-error);
+    border: 1px solid rgba(255, 23, 68, 0.25);
+    box-shadow: 0 0 10px rgba(255, 23, 68, 0.05);
+}
+
+.badge-neutral, .badge-hold {
+    background: rgba(148, 163, 184, 0.12);
+    color: var(--text-secondary);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* News List */
+.news-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.news-card {
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1.1rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.news-card:hover {
+    border-color: rgba(0, 240, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.news-card-title-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.news-card-title-link:hover {
+    color: var(--text-accent);
+}
+
+.news-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.sentiment-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+}
+
+.sentiment-dot.positive { background-color: var(--color-success); box-shadow: 0 0 6px var(--color-success); }
+.sentiment-dot.negative { background-color: var(--color-error); box-shadow: 0 0 6px var(--color-error); }
+.sentiment-dot.neutral { background-color: var(--text-secondary); }
+
+

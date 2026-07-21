@@ -13,6 +13,13 @@ class YahooProvider(DataProvider):
         sym = symbol.upper()
         # Convert BTC/USD or BTC-USD to BTC-USD
         sym = sym.replace('/', '-')
+        
+        # Handle dots for Yahoo Finance (e.g. BRK.B -> BRK-B, but keep SAN.MC)
+        if '.' in sym:
+            parts = sym.split('.')
+            if parts[-1] != 'MC':
+                sym = '-'.join(parts)
+                
         # Convert BTCUSD to BTC-USD
         crypto_assets = {'BTC', 'ETH', 'LTC', 'SOL', 'DOGE', 'XRP', 'ADA', 'DOT', 'LINK', 'UNI'}
         for asset in crypto_assets:
@@ -105,9 +112,10 @@ class YahooProvider(DataProvider):
         info = ticker.info
         
         if not info:
-            return {}
+            return {'name': symbol}
             
         return {
+            'name': info.get('longName') or info.get('shortName') or symbol,
             'pe_ratio': info.get('trailingPE') or info.get('forwardPE'),
             'dividend_yield': info.get('dividendYield'),
             'market_cap': info.get('marketCap'),
@@ -117,4 +125,10 @@ class YahooProvider(DataProvider):
             'profit_margins': info.get('profitMargins'),
             'revenue_growth': info.get('revenueGrowth'),
             'operating_margins': info.get('operatingMargins'),
+            'fifty_day_average': info.get('fiftyDayAverage'),
+            'two_hundred_day_average': info.get('twoHundredDayAverage'),
+            'fifty_two_week_high': info.get('fiftyTwoWeekHigh'),
+            'fifty_two_week_low': info.get('fiftyTwoWeekLow'),
+            'volume': info.get('volume') or info.get('regularMarketVolume'),
+            'previous_close': info.get('previousClose')
         }
