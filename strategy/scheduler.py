@@ -136,13 +136,15 @@ class TradingScheduler:
         """
         try:
             broker_cash = self.broker.get_cash()
-            all_orders = self.broker.get_orders()
+            open_orders = self.broker.get_open_orders()
             pending_buys = [
-                o for o in all_orders 
-                if o['status'].lower() in ['submitted', 'accepted', 'new', 'partially_filled', 'open']
-                and o['side'].lower() == 'buy'
+                o for o in open_orders 
+                if o['side'].lower() == 'buy'
             ]
-            reserved_cash = sum(float(o['qty']) * float(o['price']) for o in pending_buys)
+            reserved_cash = sum(
+                (float(o['qty']) - float(o.get('filled_qty', 0.0))) * float(o['price']) 
+                for o in pending_buys
+            )
             available_cash = max(0.0, broker_cash - reserved_cash)
             return round(available_cash, 2)
         except Exception as e:
@@ -379,11 +381,10 @@ class TradingScheduler:
                 pending_orders = []
                 try:
                     norm_sym = symbol.replace('/', '').replace('-', '').upper()
-                    broker_orders = self.broker.get_orders()
+                    open_orders = self.broker.get_open_orders()
                     pending_orders = [
-                        o for o in broker_orders 
+                        o for o in open_orders 
                         if o['symbol'].replace('/', '').replace('-', '').upper() == norm_sym
-                        and o['status'].lower() in ['submitted', 'accepted', 'new', 'partially_filled', 'open']
                     ]
                     
                     # If we have pending orders, check if they are stale and should be canceled
