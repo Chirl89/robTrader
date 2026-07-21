@@ -52,39 +52,61 @@ class AlpacaBroker(BaseBroker):
     def get_orders(self) -> List[Dict[str, Any]]:
         """
         Retrieves recent orders (all statuses) from the Alpaca API.
+        Paginates to retrieve all orders without limit.
         """
         self._init_client()
-        
         from alpaca.trading.requests import GetOrdersRequest
         from alpaca.trading.enums import QueryOrderStatus
+        import logging
+        logger = logging.getLogger("robTrader.AlpacaBroker")
         
-        request_params = GetOrdersRequest(
-            status=QueryOrderStatus.ALL,
-            limit=20
-        )
+        all_orders = []
+        until_time = None
+        seen_ids = set()
         
-        alpaca_orders = self._trading_client.get_orders(request_params)
-        
-        orders_list = []
-        for order in alpaca_orders:
-            # Parse price (fallback if not filled yet)
-            price = 0.0
-            if order.filled_avg_price:
-                price = float(order.filled_avg_price)
-            elif order.limit_price:
-                price = float(order.limit_price)
+        while True:
+            try:
+                req = GetOrdersRequest(
+                    status=QueryOrderStatus.ALL,
+                    limit=500,
+                    direction='desc',
+                    until=until_time
+                )
+                orders = self._trading_client.get_orders(filter=req)
+                if not orders:
+                    break
                 
-            orders_list.append({
-                'order_id': str(order.id),
-                'symbol': order.symbol,
-                'side': order.side.value.lower(),
-                'qty': float(order.qty) if order.qty else 0.0,
-                'price': price,
-                'status': order.status.value.lower(),
-                'created_at': order.created_at.isoformat() if order.created_at else ''
-            })
-            
-        return orders_list
+                new_orders_added = 0
+                for order in orders:
+                    order_id = str(order.id)
+                    if order_id not in seen_ids:
+                        seen_ids.add(order_id)
+                        # Parse price (fallback if not filled yet)
+                        price = 0.0
+                        if order.filled_avg_price:
+                            price = float(order.filled_avg_price)
+                        elif order.limit_price:
+                            price = float(order.limit_price)
+                            
+                        all_orders.append({
+                            'order_id': order_id,
+                            'symbol': order.symbol,
+                            'side': order.side.value.lower(),
+                            'qty': float(order.qty) if order.qty else 0.0,
+                            'price': price,
+                            'status': order.status.value.lower(),
+                            'created_at': order.created_at.isoformat() if order.created_at else ''
+                        })
+                        new_orders_added += 1
+                
+                if new_orders_added == 0 or len(orders) < 500:
+                    break
+                until_time = orders[-1].created_at
+            except Exception as e:
+                logger.error(f"Error fetching all orders: {e}")
+                break
+                
+        return all_orders
 
     def submit_order(self, symbol: str, qty: float, side: str, price: float, order_type: str = 'market') -> Dict[str, Any]:
         """
@@ -196,6 +218,7 @@ class AlpacaBroker(BaseBroker):
     def get_filled_orders(self) -> List[Dict[str, Any]]:
         """
         Returns historically completed/filled orders.
+        Paginates to retrieve all closed/filled orders without limit.
         """
         self._init_client()
         from alpaca.trading.requests import GetOrdersRequest
@@ -203,33 +226,50 @@ class AlpacaBroker(BaseBroker):
         import logging
         logger = logging.getLogger("robTrader.AlpacaBroker")
         
-        req = GetOrdersRequest(status=QueryOrderStatus.CLOSED, limit=50)
-        try:
-            orders = self._trading_client.get_orders(filter=req)
-        except Exception as e:
-            logger.error(f"Error fetching closed orders: {e}")
-            return []
-            
-        orders_list = []
-        for o in orders:
-            status_lower = o.status.value.lower()
-            filled_qty = float(o.filled_qty) if o.filled_qty else 0.0
-            if status_lower == 'filled' or (status_lower in ['canceled', 'cancelled', 'expired'] and filled_qty > 0):
-                orders_list.append({
-                    'order_id': str(o.id),
-                    'symbol': o.symbol,
-                    'qty': filled_qty,
-                    'side': o.side.value.lower(),
-                    'price': float(o.filled_avg_price) if o.filled_avg_price else 0.0,
-                    'commission': 0.0,
-                    'status': status_lower,
-                    'timestamp': o.filled_at.isoformat() if o.filled_at else (o.updated_at.isoformat() if o.updated_at else (o.created_at.isoformat() if o.created_at else None))
-                })
-        return orders_list
+        all_orders = []
+        until_time = None
+        seen_ids = set()
+        
+        while True:
+            try:
+                req = GetOrdersRequest(status=QueryOrderStatus.CLOSED, limit=500, direction='desc', until=until_time)
+                orders = self._trading_client.get_orders(filter=req)
+                if not orders:
+                    break
+                
+                new_orders_added = 0
+                for o in orders:
+                    order_id = str(o.id)
+                    if order_id not in seen_ids:
+                        seen_ids.add(order_id)
+                        status_lower = o.status.value.lower()
+                        filled_qty = float(o.filled_qty) if o.filled_qty else 0.0
+                        if status_lower == 'filled' or (status_lower in ['canceled', 'cancelled', 'expired'] and filled_qty > 0):
+                            all_orders.append({
+                                'order_id': order_id,
+                                'symbol': o.symbol,
+                                'qty': filled_qty,
+                                'side': o.side.value.lower(),
+                                'price': float(o.filled_avg_price) if o.filled_avg_price else 0.0,
+                                'commission': 0.0,
+                                'status': status_lower,
+                                'timestamp': o.filled_at.isoformat() if o.filled_at else (o.updated_at.isoformat() if o.updated_at else (o.created_at.isoformat() if o.created_at else None))
+                            })
+                            new_orders_added += 1
+                
+                if new_orders_added == 0 or len(orders) < 500:
+                    break
+                until_time = orders[-1].created_at
+            except Exception as e:
+                logger.error(f"Error fetching closed orders: {e}")
+                break
+                
+        return all_orders
 
     def get_open_orders(self) -> List[Dict[str, Any]]:
         """
         Retrieves active/open orders (new, partially_filled, etc.) from the Alpaca API.
+        Paginates to retrieve all open orders without limit.
         """
         self._init_client()
         from alpaca.trading.requests import GetOrdersRequest
@@ -237,32 +277,48 @@ class AlpacaBroker(BaseBroker):
         import logging
         logger = logging.getLogger("robTrader.AlpacaBroker")
         
-        req = GetOrdersRequest(status=QueryOrderStatus.OPEN, limit=50)
-        try:
-            orders = self._trading_client.get_orders(filter=req)
-        except Exception as e:
-            logger.error(f"Error fetching open orders from Alpaca: {e}")
-            return []
-            
-        orders_list = []
-        for o in orders:
-            price = 0.0
-            if o.filled_avg_price:
-                price = float(o.filled_avg_price)
-            elif o.limit_price:
-                price = float(o.limit_price)
+        all_orders = []
+        until_time = None
+        seen_ids = set()
+        
+        while True:
+            try:
+                req = GetOrdersRequest(status=QueryOrderStatus.OPEN, limit=500, direction='desc', until=until_time)
+                orders = self._trading_client.get_orders(filter=req)
+                if not orders:
+                    break
                 
-            orders_list.append({
-                'order_id': str(o.id),
-                'symbol': o.symbol,
-                'side': o.side.value.lower(),
-                'qty': float(o.qty) if o.qty else 0.0,
-                'filled_qty': float(o.filled_qty) if o.filled_qty else 0.0,
-                'price': price,
-                'status': o.status.value.lower(),
-                'created_at': o.created_at.isoformat() if o.created_at else ''
-            })
-        return orders_list
+                new_orders_added = 0
+                for o in orders:
+                    order_id = str(o.id)
+                    if order_id not in seen_ids:
+                        seen_ids.add(order_id)
+                        price = 0.0
+                        if o.filled_avg_price:
+                            price = float(o.filled_avg_price)
+                        elif o.limit_price:
+                            price = float(o.limit_price)
+                            
+                        all_orders.append({
+                            'order_id': order_id,
+                            'symbol': o.symbol,
+                            'side': o.side.value.lower(),
+                            'qty': float(o.qty) if o.qty else 0.0,
+                            'filled_qty': float(o.filled_qty) if o.filled_qty else 0.0,
+                            'price': price,
+                            'status': o.status.value.lower(),
+                            'created_at': o.created_at.isoformat() if o.created_at else ''
+                        })
+                        new_orders_added += 1
+                
+                if new_orders_added == 0 or len(orders) < 500:
+                    break
+                until_time = orders[-1].created_at
+            except Exception as e:
+                logger.error(f"Error fetching open orders from Alpaca: {e}")
+                break
+                
+        return all_orders
 
     def get_tradable_assets(self) -> List[str]:
         """

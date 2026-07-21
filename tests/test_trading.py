@@ -449,5 +449,56 @@ class TestSanitizeNan(unittest.TestCase):
         self.assertEqual(sanitized['e']['f'], [1.0, None, 2.0])
         self.assertEqual(sanitized['e']['g'], 'hello')
 
+class TestAlpacaBrokerPagination(unittest.TestCase):
+    @patch('alpaca.trading.client.TradingClient')
+    def test_get_open_orders_pagination(self, mock_trading_client_class):
+        from broker.alpaca_broker import AlpacaBroker
+        
+        # Instantiate broker with credentials so it initializes
+        broker = AlpacaBroker(api_key="test_key", secret_key="test_secret")
+        
+        # Create mock trading client instance
+        mock_client = MagicMock()
+        broker._trading_client = mock_client
+        broker.initialized = True
+        
+        class MockOrder:
+            def __init__(self, order_id, symbol, side, qty, price, created_at):
+                self.id = order_id
+                self.symbol = symbol
+                self.side = MagicMock()
+                self.side.value = side
+                self.qty = qty
+                self.filled_avg_price = price
+                self.limit_price = price
+                self.filled_qty = 0.0
+                self.status = MagicMock()
+                self.status.value = 'new'
+                self.created_at = created_at
+                
+        from datetime import datetime, timezone
+        t1 = datetime(2026, 7, 21, 12, 0, 0, tzinfo=timezone.utc)
+        t2 = datetime(2026, 7, 21, 11, 0, 0, tzinfo=timezone.utc)
+        
+        page1 = [
+            MockOrder(f"id_{i}", f"SYM_{i}", 'buy', 10.0, 100.0, t1)
+            for i in range(500)
+        ]
+        page2 = [
+            MockOrder(f"id_{i}", f"SYM_{i}", 'buy', 10.0, 100.0, t2)
+            for i in range(500, 550)
+        ]
+        
+        mock_client.get_orders.side_effect = [page1, page2, []]
+        
+        orders = broker.get_open_orders()
+        
+        # Verify get_orders was called 2 times (terminates early since page 2 is not full)
+        self.assertEqual(mock_client.get_orders.call_count, 2)
+        # Total orders fetched should be 550
+        self.assertEqual(len(orders), 550)
+        self.assertEqual(orders[0]['order_id'], "id_0")
+        self.assertEqual(orders[-1]['order_id'], "id_549")
+
 if __name__ == '__main__':
     unittest.main()
