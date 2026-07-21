@@ -203,6 +203,7 @@ def api_config():
             'DYNAMIC_STOCK_LIMIT': '15',
             'BUY_THRESHOLD': '0.25',
             'SELL_THRESHOLD': '-0.25',
+            'HISTORICAL_DAYS': '120',
             'PORTFOLIO_REFRESH_SECS': '15',
             'REANALYZE_INTERVAL_MINS': '60',
             'MAX_POSITION_SIZE_PCT': '0.10',
@@ -227,7 +228,8 @@ def api_config():
                 f.write("# Strategy Configuration\n")
                 f.write(f"DEFAULT_TRADING_SYMBOLS={data.get('DEFAULT_TRADING_SYMBOLS', '').strip()}\n")
                 f.write(f"BUY_THRESHOLD={data.get('BUY_THRESHOLD', '0.25').strip()}\n")
-                f.write(f"SELL_THRESHOLD={data.get('SELL_THRESHOLD', '-0.25').strip()}\n\n")
+                f.write(f"SELL_THRESHOLD={data.get('SELL_THRESHOLD', '-0.25').strip()}\n")
+                f.write(f"HISTORICAL_DAYS={data.get('HISTORICAL_DAYS', '120').strip()}\n\n")
                 
                 f.write("# Dynamic Scanner Configuration\n")
                 f.write(f"DYNAMIC_SCAN={data.get('DYNAMIC_SCAN', 'False').strip()}\n")

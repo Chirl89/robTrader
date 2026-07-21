@@ -77,6 +77,7 @@ class TradingScheduler:
             
         self.max_pos_pct = float(os.getenv("MAX_POSITION_SIZE_PCT", "0.10"))
         self.daily_loss_limit = float(os.getenv("DAILY_LOSS_LIMIT_PCT", "0.02"))
+        self.historical_days = int(os.getenv("HISTORICAL_DAYS", "120"))
         
         # 2. Select and initialize components
         self.use_alpaca = bool(os.getenv("ALPACA_API_KEY_ID") and os.getenv("ALPACA_SECRET_KEY"))
@@ -333,9 +334,9 @@ class TradingScheduler:
         for symbol in self.symbols:
             logger.info(f"Analyzing {symbol}...")
             try:
-                # Get historical prices (last 60 days to calculate technical indicators)
+                # Get historical prices (last X days to calculate technical indicators)
                 end_date = now.strftime("%Y-%m-%d")
-                start_date = (now - timedelta(days=60)).strftime("%Y-%m-%d")
+                start_date = (now - timedelta(days=self.historical_days)).strftime("%Y-%m-%d")
                 
                 prices_df = self.data_provider.get_historical_data(symbol, start_date, end_date, timeframe="1Day")
                 if prices_df.empty:

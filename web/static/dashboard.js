@@ -36,6 +36,7 @@ const inputRefresh = document.getElementById('refresh-secs');
 const inputReanalyze = document.getElementById('reanalyze-mins');
 const inputMaxPos = document.getElementById('max-pos-pct');
 const inputDailyLoss = document.getElementById('daily-loss-pct');
+const inputHistDays = document.getElementById('historical-days');
 
 // State holding
 let botRunningState = 'stopped';
@@ -127,6 +128,7 @@ async function loadConfig() {
         inputReanalyze.value = config.REANALYZE_INTERVAL_MINS || '60';
         inputMaxPos.value = config.MAX_POSITION_SIZE_PCT || '0.10';
         inputDailyLoss.value = config.DAILY_LOSS_LIMIT_PCT || '0.02';
+        inputHistDays.value = config.HISTORICAL_DAYS || '120';
         
     } catch (err) {
         appendLog(`[ERROR Web] No se pudo cargar la configuración: ${err.message}`, 'error-log');
@@ -148,6 +150,7 @@ async function saveConfig(e) {
         DYNAMIC_STOCK_LIMIT: inputLimit.value,
         BUY_THRESHOLD: inputBuyThresh.value,
         SELL_THRESHOLD: inputSellThresh.value,
+        HISTORICAL_DAYS: inputHistDays.value,
         PORTFOLIO_REFRESH_SECS: inputRefresh.value,
         REANALYZE_INTERVAL_MINS: inputReanalyze.value,
         MAX_POSITION_SIZE_PCT: inputMaxPos.value,
