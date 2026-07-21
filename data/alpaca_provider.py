@@ -181,14 +181,36 @@ class AlpacaProvider(DataProvider):
             if parts[-1] != 'MC':
                 yf_symbol = '-'.join(parts)
                 
+        # Setup session with custom headers to prevent yfinance blocking in Cloud VM
+        session = None
+        try:
+            import requests
+            session = requests.Session()
+            session.headers.update({
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            })
+        except Exception:
+            pass
+
         try:
             import yfinance as yf
-            ticker = yf.Ticker(yf_symbol)
+            ticker = yf.Ticker(yf_symbol, session=session)
             info = ticker.info or {}
             name = info.get('longName') or info.get('shortName') or symbol
         except Exception:
             name = symbol
             info = {}
+
+        # Fallback to Alpaca Trading Client if yfinance failed to get name
+        if (not name or name == symbol) and self.api_key and self.secret_key:
+            try:
+                from alpaca.trading.client import TradingClient
+                trading_client = TradingClient(self.api_key, self.secret_key)
+                asset = trading_client.get_asset(symbol)
+                if asset and asset.name:
+                    name = asset.name
+            except Exception:
+                pass
             
         return {
             'name': name,

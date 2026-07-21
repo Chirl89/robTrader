@@ -68,7 +68,7 @@ class TestTechnicalAnalysis(unittest.TestCase):
         res = provider.get_fundamentals("BTCUSD")
         
         # Verify yfinance Ticker was called with "BTC-USD" instead of "BTCUSD"
-        mock_ticker_class.assert_called_with("BTC-USD")
+        self.assertEqual(mock_ticker_class.call_args[0][0], "BTC-USD")
         self.assertEqual(res['name'], 'Bitcoin')
 
 class TestSimulatorBroker(unittest.TestCase):
@@ -499,6 +499,38 @@ class TestAlpacaBrokerPagination(unittest.TestCase):
         self.assertEqual(len(orders), 550)
         self.assertEqual(orders[0]['order_id'], "id_0")
         self.assertEqual(orders[-1]['order_id'], "id_549")
+
+class TestAlpacaProviderFundamentals(unittest.TestCase):
+    @patch('yfinance.Ticker')
+    @patch('alpaca.trading.client.TradingClient')
+    def test_alpaca_provider_fundamentals_fallback(self, mock_trading_client_class, mock_ticker_class):
+        from data.alpaca_provider import AlpacaProvider
+        
+        # Instantiate provider with test credentials
+        provider = AlpacaProvider(api_key="test_key", secret_key="test_secret")
+        
+        # 1. Simulate yfinance failure
+        mock_ticker_instance = MagicMock()
+        mock_ticker_instance.info = None  # fails
+        mock_ticker_class.return_value = mock_ticker_instance
+        
+        # 2. Simulate Alpaca fallback success
+        mock_trading_client_instance = MagicMock()
+        mock_asset = MagicMock()
+        mock_asset.name = "Alpaca Mock Company"
+        mock_trading_client_instance.get_asset.return_value = mock_asset
+        mock_trading_client_class.return_value = mock_trading_client_instance
+        
+        # Call get_fundamentals
+        res = provider.get_fundamentals("AAPL")
+        
+        # Verify it fell back to Alpaca and retrieved the name
+        self.assertEqual(res['name'], "Alpaca Mock Company")
+        # All fundamental metrics should be None because yfinance failed
+        self.assertIsNone(res['pe_ratio'])
+        
+        # Verify Alpaca TradingClient was called with the symbol
+        mock_trading_client_instance.get_asset.assert_called_with("AAPL")
 
 if __name__ == '__main__':
     unittest.main()

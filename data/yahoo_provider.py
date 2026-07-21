@@ -108,8 +108,23 @@ class YahooProvider(DataProvider):
         Fetches fundamental data from yfinance.info.
         """
         symbol = self._normalize_symbol(symbol)
-        ticker = yf.Ticker(symbol)
-        info = ticker.info
+        
+        # Setup session with custom headers to prevent yfinance blocking
+        session = None
+        try:
+            import requests
+            session = requests.Session()
+            session.headers.update({
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            })
+        except Exception:
+            pass
+
+        try:
+            ticker = yf.Ticker(symbol, session=session)
+            info = ticker.info
+        except Exception:
+            info = {}
         
         if not info:
             return {'name': symbol}
