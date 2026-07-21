@@ -25,6 +25,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger("robTrader.Scheduler")
 
+def sanitize_nan(val):
+    import math
+    if isinstance(val, float):
+        if math.isnan(val) or math.isinf(val):
+            return None
+    elif isinstance(val, dict):
+        return {k: sanitize_nan(v) for k, v in val.items()}
+    elif isinstance(val, list):
+        return [sanitize_nan(x) for x in val]
+    return val
+
 class TradingScheduler:
     """
     Main orchestrator that schedules and runs the trading cycle.
@@ -130,14 +141,15 @@ class TradingScheduler:
         except Exception:
             return 100000.0
 
-    def calculate_available_cash(self) -> float:
+    def calculate_available_cash(self, open_orders: list = None) -> float:
         """
         Calculates available cash by subtracting the value of all pending/active buy orders
-        from the raw broker cash.
+        from the raw broker cash. Reuses pre-fetched open orders if provided.
         """
         try:
             broker_cash = self.broker.get_cash()
-            open_orders = self.broker.get_open_orders()
+            if open_orders is None:
+                open_orders = self.broker.get_open_orders()
             pending_buys = [
                 o for o in open_orders 
                 if o['side'].lower() == 'buy'
@@ -186,14 +198,14 @@ class TradingScheduler:
                         name_cache[sym] = sym
                 pos_data['name'] = name_cache[sym]
 
-            state = {
+            state = sanitize_nan({
                 'timestamp': now.isoformat(),
                 'status': 'active',
                 'cash': cash,
                 'portfolio_value': value,
                 'start_day_portfolio_value': self.start_day_portfolio_value,
                 'positions': positions
-            }
+            })
             
             # Ensure log directory exists
             os.makedirs(os.path.dirname(self.portfolio_state_file), exist_ok=True)
@@ -305,14 +317,17 @@ class TradingScheduler:
             broker_cash = self.broker.get_cash()
             active_positions = self.broker.get_positions()
             
+            # Fetch open orders once at start of cycle to prevent rate-limiting (HTTP 429)
+            all_open_orders = self.broker.get_open_orders()
+            
             # Automatically append open positions to target symbols for monitoring
             for pos_symbol in active_positions.keys():
                 if pos_symbol not in self.symbols:
                     self.symbols.append(pos_symbol)
                     logger.info(f"Added open position symbol {pos_symbol} to target symbols for monitoring/evaluation.")
             
-            # Calculate available cash at the beginning of the cycle
-            cash = self.calculate_available_cash()
+            # Calculate available cash at the beginning of the cycle reusing open orders
+            cash = self.calculate_available_cash(open_orders=all_open_orders)
             logger.info(f"Broker Cash: {broker_cash:.2f} | Estimated Available Cash: {cash:.2f}")
         except Exception as e:
             logger.error(f"Failed to fetch account info from broker: {e}")
@@ -382,9 +397,8 @@ class TradingScheduler:
                 pending_orders = []
                 try:
                     norm_sym = symbol.replace('/', '').replace('-', '').upper()
-                    open_orders = self.broker.get_open_orders()
                     pending_orders = [
-                        o for o in open_orders 
+                        o for o in all_open_orders 
                         if o['symbol'].replace('/', '').replace('-', '').upper() == norm_sym
                     ]
                     
@@ -396,10 +410,12 @@ class TradingScheduler:
                                 logger.info(f"New strategy evaluation for {symbol} is {action} (Score: {score}), but found active pending BUY order. Canceling stale order {pending_order['order_id']}...")
                                 self.broker.cancel_order(pending_order['order_id'])
                                 pending_orders = [po for po in pending_orders if po['order_id'] != pending_order['order_id']]
+                                all_open_orders = [po for po in all_open_orders if po['order_id'] != pending_order['order_id']]
                             elif pending_side == 'SELL' and action != 'SELL':
                                 logger.info(f"New strategy evaluation for {symbol} is {action} (Score: {score}), but found active pending SELL order. Canceling stale order {pending_order['order_id']}...")
                                 self.broker.cancel_order(pending_order['order_id'])
                                 pending_orders = [po for po in pending_orders if po['order_id'] != pending_order['order_id']]
+                                all_open_orders = [po for po in all_open_orders if po['order_id'] != pending_order['order_id']]
                             elif pending_side == action:
                                 # Check if price drifted
                                 pending_price = pending_order.get('limit_price') or pending_order.get('price')
@@ -409,6 +425,7 @@ class TradingScheduler:
                                         logger.info(f"Price drifted for {symbol} ({pending_price:.2f} -> {latest_price:.2f}) while action is still {action}. Canceling stale order {pending_order['order_id']} to replace it.")
                                         self.broker.cancel_order(pending_order['order_id'])
                                         pending_orders = [po for po in pending_orders if po['order_id'] != pending_order['order_id']]
+                                        all_open_orders = [po for po in all_open_orders if po['order_id'] != pending_order['order_id']]
                 except Exception as e:
                     logger.error(f"Failed to process pending orders for {symbol}: {e}")
                 
@@ -479,12 +496,12 @@ class TradingScheduler:
 
         # 4. Save dynamic analysis state
         try:
-            analysis_state = {
+            analysis_state = sanitize_nan({
                 'timestamp': datetime.now().isoformat(),
                 'buy_threshold': float(os.getenv("BUY_THRESHOLD", "0.25")),
                 'sell_threshold': float(os.getenv("SELL_THRESHOLD", "-0.25")),
                 'evaluations': evaluations
-            }
+            })
             with open(self.analysis_state_file, 'w', encoding='utf-8') as f:
                 json.dump(analysis_state, f, indent=4)
             logger.info(f"Saved analysis metrics for {len(evaluations)} symbols to {self.analysis_state_file}")

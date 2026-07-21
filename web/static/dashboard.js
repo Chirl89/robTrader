@@ -534,12 +534,12 @@ function renderAnalysis(evaluations) {
         
         // Formulate Sub-Metrics detail labels
         const ta_inds = details.technical_indicators || {};
-        const rsiVal = ta_inds.rsi !== undefined ? parseFloat(ta_inds.rsi).toFixed(1) : 'N/A';
-        const macdSig = ta_inds.macd_signal || 'N/A';
+        const rsiVal = ta_inds.rsi !== undefined && ta_inds.rsi !== null && !isNaN(parseFloat(ta_inds.rsi)) ? parseFloat(ta_inds.rsi).toFixed(1) : 'N/A';
+        const macdSig = ta_inds.macd_signal !== undefined && ta_inds.macd_signal !== null ? ta_inds.macd_signal : 'N/A';
         
         const fund_mets = details.fundamental_metrics || {};
-        const peVal = fund_mets.pe_ratio !== undefined && fund_mets.pe_ratio !== null ? parseFloat(fund_mets.pe_ratio).toFixed(1) : 'N/A';
-        const dyVal = fund_mets.dividend_yield !== undefined && fund_mets.dividend_yield !== null ? `${(parseFloat(fund_mets.dividend_yield)*100).toFixed(1)}%` : 'N/A';
+        const peVal = fund_mets.pe_ratio !== undefined && fund_mets.pe_ratio !== null && !isNaN(parseFloat(fund_mets.pe_ratio)) ? parseFloat(fund_mets.pe_ratio).toFixed(1) : 'N/A';
+        const dyVal = fund_mets.dividend_yield !== undefined && fund_mets.dividend_yield !== null && !isNaN(parseFloat(fund_mets.dividend_yield)) ? `${(parseFloat(fund_mets.dividend_yield)*100).toFixed(1)}%` : 'N/A';
         
         const artCount = details.article_count || 0;
         
@@ -617,22 +617,22 @@ function openAnalysisModal(symbol, defaultTab) {
         const indicatorsToRender = [
             {
                 name: 'RSI (14 días)',
-                val: ta_inds.rsi !== undefined && ta_inds.rsi !== null ? parseFloat(ta_inds.rsi).toFixed(2) : 'N/A',
+                val: ta_inds.rsi !== undefined && ta_inds.rsi !== null && !isNaN(parseFloat(ta_inds.rsi)) ? parseFloat(ta_inds.rsi).toFixed(2) : 'N/A',
                 cond: getRsiInterpretation(ta_inds.rsi)
             },
             {
                 name: 'MACD Histograma',
-                val: ta_inds.macd_hist !== undefined && ta_inds.macd_hist !== null ? parseFloat(ta_inds.macd_hist).toFixed(4) : 'N/A',
+                val: ta_inds.macd_hist !== undefined && ta_inds.macd_hist !== null && !isNaN(parseFloat(ta_inds.macd_hist)) ? parseFloat(ta_inds.macd_hist).toFixed(4) : 'N/A',
                 cond: getMacdInterpretation(ta_inds.macd_hist)
             },
             {
                 name: 'Cruce de Medias (EMA 10 vs SMA 50)',
-                val: `EMA10: ${ta_inds.ema_10 !== undefined && ta_inds.ema_10 !== null ? parseFloat(ta_inds.ema_10).toFixed(2) : 'N/A'} / SMA50: ${ta_inds.sma_50 !== undefined && ta_inds.sma_50 !== null ? parseFloat(ta_inds.sma_50).toFixed(2) : 'N/A'}`,
+                val: `EMA10: ${ta_inds.ema_10 !== undefined && ta_inds.ema_10 !== null && !isNaN(parseFloat(ta_inds.ema_10)) ? parseFloat(ta_inds.ema_10).toFixed(2) : 'N/A'} / SMA50: ${ta_inds.sma_50 !== undefined && ta_inds.sma_50 !== null && !isNaN(parseFloat(ta_inds.sma_50)) ? parseFloat(ta_inds.sma_50).toFixed(2) : 'N/A'}`,
                 cond: getMaInterpretation(ta_inds.ema_10, ta_inds.sma_50)
             },
             {
                 name: 'Bandas de Bollinger',
-                val: `Cierre: ${ta_inds.close !== undefined && ta_inds.close !== null ? parseFloat(ta_inds.close).toFixed(2) : 'N/A'} (Banda Inf: ${ta_inds.bb_lower !== undefined && ta_inds.bb_lower !== null ? parseFloat(ta_inds.bb_lower).toFixed(2) : 'N/A'} / Sup: ${ta_inds.bb_upper !== undefined && ta_inds.bb_upper !== null ? parseFloat(ta_inds.bb_upper).toFixed(2) : 'N/A'})`,
+                val: `Cierre: ${ta_inds.close !== undefined && ta_inds.close !== null && !isNaN(parseFloat(ta_inds.close)) ? parseFloat(ta_inds.close).toFixed(2) : 'N/A'} (Banda Inf: ${ta_inds.bb_lower !== undefined && ta_inds.bb_lower !== null && !isNaN(parseFloat(ta_inds.bb_lower)) ? parseFloat(ta_inds.bb_lower).toFixed(2) : 'N/A'} / Sup: ${ta_inds.bb_upper !== undefined && ta_inds.bb_upper !== null && !isNaN(parseFloat(ta_inds.bb_upper)) ? parseFloat(ta_inds.bb_upper).toFixed(2) : 'N/A'})`,
                 cond: getBbInterpretation(ta_inds.close, ta_inds.bb_lower, ta_inds.bb_upper)
             }
         ];
@@ -694,28 +694,28 @@ function openAnalysisModal(symbol, defaultTab) {
         const fundamentalsToRender = [
             {
                 name: 'Relación P/E (Precio/Beneficio)',
-                val: pe !== undefined && pe !== null ? parseFloat(pe).toFixed(2) : 'N/A',
+                val: pe !== undefined && pe !== null && !isNaN(parseFloat(pe)) ? parseFloat(pe).toFixed(2) : 'N/A',
                 cond: getPeInterpretation(pe)
             },
             {
                 name: 'Deuda sobre Patrimonio (D/E)',
-                val: de !== undefined && de !== null ? `${parseFloat(de).toFixed(2)}%` : 'N/A',
+                val: de !== undefined && de !== null && !isNaN(parseFloat(de)) ? `${parseFloat(de).toFixed(2)}%` : 'N/A',
                 cond: getDeInterpretation(de)
             },
             {
                 name: 'Crecimiento de Ingresos (Anual)',
-                val: growth !== undefined && growth !== null ? `${(parseFloat(growth)*100).toFixed(2)}%` : 'N/A',
+                val: growth !== undefined && growth !== null && !isNaN(parseFloat(growth)) ? `${(parseFloat(growth)*100).toFixed(2)}%` : 'N/A',
                 cond: getGrowthInterpretation(growth)
             },
             {
                 name: 'Margen de Beneficio',
-                val: margins !== undefined && margins !== null ? `${(parseFloat(margins)*100).toFixed(2)}%` : 'N/A',
+                val: margins !== undefined && margins !== null && !isNaN(parseFloat(margins)) ? `${(parseFloat(margins)*100).toFixed(2)}%` : 'N/A',
                 cond: getMarginsInterpretation(margins)
             },
             {
                 name: 'Rentabilidad por Dividendo (Yield)',
-                val: divYield !== undefined && divYield !== null ? `${(parseFloat(divYield)*100).toFixed(2)}%` : 'N/A',
-                cond: divYield > 0 ? 'Paga dividendos de forma regular' : 'No paga dividendos'
+                val: divYield !== undefined && divYield !== null && !isNaN(parseFloat(divYield)) ? `${(parseFloat(divYield)*100).toFixed(2)}%` : 'N/A',
+                cond: (divYield !== undefined && divYield !== null && !isNaN(parseFloat(divYield)) && parseFloat(divYield) > 0) ? 'Paga dividendos de forma regular' : 'No paga dividendos'
             }
         ];
         

@@ -426,5 +426,28 @@ class TestCompositeStrategyND(unittest.TestCase):
         self.assertIsNone(res['score'])
         self.assertEqual(res['action'], 'HOLD')
 
+from strategy.scheduler import sanitize_nan
+
+class TestSanitizeNan(unittest.TestCase):
+    def test_sanitize_nan_basic(self):
+        import math
+        data = {
+            'a': 1.0,
+            'b': float('nan'),
+            'c': float('inf'),
+            'd': float('-inf'),
+            'e': {
+                'f': [1.0, float('nan'), 2.0],
+                'g': 'hello'
+            }
+        }
+        sanitized = sanitize_nan(data)
+        self.assertEqual(sanitized['a'], 1.0)
+        self.assertIsNone(sanitized['b'])
+        self.assertIsNone(sanitized['c'])
+        self.assertIsNone(sanitized['d'])
+        self.assertEqual(sanitized['e']['f'], [1.0, None, 2.0])
+        self.assertEqual(sanitized['e']['g'], 'hello')
+
 if __name__ == '__main__':
     unittest.main()
