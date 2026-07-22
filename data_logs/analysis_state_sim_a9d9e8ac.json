@@ -1,358 +1,386 @@
 {
-    "timestamp": "2026-07-21T09:35:08.851341",
-    "buy_threshold": 0.2,
-    "sell_threshold": -0.1,
+    "timestamp": "2026-07-22T08:42:30.644408",
+    "buy_threshold": 0.25,
+    "sell_threshold": -0.25,
     "evaluations": {
-        "MMM": {
-            "name": "3M Company",
-            "score": 0.08,
+        "AAPL": {
+            "name": "Apple Inc.",
+            "score": 0.17,
             "action": "HOLD",
-            "latest_price": 159.11,
+            "latest_price": 327.739990234375,
             "details": {
-                "technical_score": 0.0,
-                "technical_indicators": {},
-                "fundamental_score": -0.12,
-                "fundamental_metrics": {
-                    "pe_ratio": 30.775629,
-                    "debt_to_equity": 396.497,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": 1.95
+                "technical_score": 0.07,
+                "technical_indicators": {
+                    "close": 327.739990234375,
+                    "rsi": 64.5997355755205,
+                    "macd_hist": 2.206204269550925,
+                    "ema_10": 322.20641792344907,
+                    "sma_50": 304.23059997558596,
+                    "bb_upper": 344.0929073451755,
+                    "bb_lower": 272.8740878940823
                 },
-                "sentiment_score": 0.38,
-                "article_count": 8
+                "fundamental_score": 0.48,
+                "fundamental_metrics": {
+                    "pe_ratio": 39.534378,
+                    "debt_to_equity": 79.548,
+                    "revenue_growth": 0.166,
+                    "profit_margins": 0.27152002,
+                    "dividend_yield": 0.33,
+                    "fifty_day_average": 304.236,
+                    "two_hundred_day_average": 274.9368,
+                    "fifty_two_week_high": 334.99,
+                    "fifty_two_week_low": 201.5,
+                    "volume": 40800631,
+                    "previous_close": 326.59
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    }
+                ]
             }
         },
-        "AOS": {
-            "name": "A. O. Smith Corporation",
-            "score": 0.21,
-            "action": "BUY",
-            "latest_price": 58.88,
-            "details": {
-                "technical_score": 0.0,
-                "technical_indicators": {},
-                "fundamental_score": 0.33,
-                "fundamental_metrics": {
-                    "pe_ratio": 15.701334,
-                    "debt_to_equity": 34.981,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": 2.45
-                },
-                "sentiment_score": 0.38,
-                "article_count": 8
-            }
-        },
-        "ABT": {
-            "name": "Abbott Laboratories",
-            "score": 0.23,
-            "action": "BUY",
-            "latest_price": 101.66,
-            "details": {
-                "technical_score": 0.0,
-                "technical_indicators": {},
-                "fundamental_score": 0.15,
-                "fundamental_metrics": {
-                    "pe_ratio": 28.160667,
-                    "debt_to_equity": 64.773,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": 2.5
-                },
-                "sentiment_score": 0.62,
-                "article_count": 8
-            }
-        },
-        "ABBV": {
-            "name": "AbbVie Inc.",
-            "score": 0.11,
+        "MSFT": {
+            "name": "Microsoft Corporation",
+            "score": 0.19,
             "action": "HOLD",
-            "latest_price": 253.38,
+            "latest_price": 397.75,
             "details": {
-                "technical_score": 0.0,
-                "technical_indicators": {},
-                "fundamental_score": -0.05,
-                "fundamental_metrics": {
-                    "pe_ratio": 124.81774,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": 2.72
+                "technical_score": -0.02,
+                "technical_indicators": {
+                    "close": 397.75,
+                    "rsi": 53.438677075466664,
+                    "macd_hist": 3.146301106846796,
+                    "ema_10": 393.30066797869074,
+                    "sma_50": 400.65639343261716,
+                    "bb_upper": 409.2390254206791,
+                    "bb_lower": 358.40596969650835
                 },
-                "sentiment_score": 0.42,
-                "article_count": 8
+                "fundamental_score": 0.65,
+                "fundamental_metrics": {
+                    "pe_ratio": 23.703814,
+                    "debt_to_equity": 30.271,
+                    "revenue_growth": 0.183,
+                    "profit_margins": 0.39341998,
+                    "dividend_yield": 0.9,
+                    "fifty_day_average": 400.8178,
+                    "two_hundred_day_average": 438.16046,
+                    "fifty_two_week_high": 555.45,
+                    "fifty_two_week_low": 349.2,
+                    "volume": 23964731,
+                    "previous_close": 402.29
+                },
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    }
+                ]
             }
         },
-        "ACN": {
-            "name": "Accenture plc",
+        "GOOGL": {
+            "name": "Alphabet Inc.",
             "score": 0.16,
             "action": "HOLD",
-            "latest_price": 144.73,
+            "latest_price": 347.1499938964844,
             "details": {
-                "technical_score": 0.0,
-                "technical_indicators": {},
-                "fundamental_score": 0.4,
-                "fundamental_metrics": {
-                    "pe_ratio": 11.468304,
-                    "debt_to_equity": 25.035,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": 4.54
-                },
-                "sentiment_score": 0.12,
-                "article_count": 8
-            }
-        },
-        "BTC/USD": {
-            "name": "Bitcoin USD",
-            "score": 0.06,
-            "action": "HOLD",
-            "latest_price": 65966.1105,
-            "details": {
-                "technical_score": 0.07,
+                "technical_score": -0.07,
                 "technical_indicators": {
-                    "close": 65966.1105,
-                    "rsi": 60.575011419947415,
-                    "macd_hist": 351.72730225921174,
-                    "ema_10": 64554.41234012897,
-                    "sma_50": 63081.20444,
-                    "bb_upper": 66008.51903398197,
-                    "bb_lower": 61532.798616018015
+                    "close": 347.1499938964844,
+                    "rsi": 43.14113574386148,
+                    "macd_hist": -0.6933239284968398,
+                    "ema_10": 354.556474023154,
+                    "sma_50": 368.55718200683594,
+                    "bb_upper": 372.4029698652986,
+                    "bb_lower": 337.54203135540456
                 },
-                "fundamental_score": 0.0,
+                "fundamental_score": 0.62,
                 "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
+                    "pe_ratio": 26.890007,
+                    "debt_to_equity": 20.026,
+                    "revenue_growth": 0.218,
+                    "profit_margins": 0.37919,
+                    "dividend_yield": 0.25,
+                    "fifty_day_average": 368.6492,
+                    "two_hundred_day_average": 322.7117,
+                    "fifty_two_week_high": 408.61,
+                    "fifty_two_week_low": 187.46,
+                    "volume": 22327729,
+                    "previous_close": 351.99
                 },
-                "sentiment_score": 0.12,
-                "article_count": 8
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    }
+                ]
             }
         },
-        "ETH/USD": {
-            "name": "Ethereum USD",
-            "score": 0.04,
-            "action": "HOLD",
-            "latest_price": 1935.7415,
-            "details": {
-                "technical_score": 0.07,
-                "technical_indicators": {
-                    "close": 1935.7415,
-                    "rsi": 66.07383003233363,
-                    "macd_hist": 13.25319444125573,
-                    "ema_10": 1865.356368813339,
-                    "sma_50": 1731.3729199999998,
-                    "bb_upper": 1947.0060594931329,
-                    "bb_lower": 1684.8909905068676
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.04,
-                "article_count": 8
-            }
-        },
-        "SOL/USD": {
-            "name": "Solana USD",
+        "AMZN": {
+            "name": "Amazon.com, Inc.",
             "score": 0.11,
             "action": "HOLD",
-            "latest_price": 78.4805,
+            "latest_price": 247.5500030517578,
             "details": {
-                "technical_score": -0.03,
+                "technical_score": -0.02,
                 "technical_indicators": {
-                    "close": 78.4805,
-                    "rsi": 56.73380030317241,
-                    "macd_hist": -0.15443454473029805,
-                    "ema_10": 76.99217021258833,
-                    "sma_50": 73.20962911710001,
-                    "bb_upper": 83.08444831702818,
-                    "bb_lower": 73.35478226847181
+                    "close": 247.5500030517578,
+                    "rsi": 51.48615667664504,
+                    "macd_hist": 1.1341868637878783,
+                    "ema_10": 247.59001289678764,
+                    "sma_50": 251.1606002807617,
+                    "bb_upper": 256.82350933314484,
+                    "bb_lower": 229.32548969029267
                 },
-                "fundamental_score": 0.0,
+                "fundamental_score": 0.38,
                 "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.42,
-                "article_count": 8
-            }
-        },
-        "LTC/USD": {
-            "name": "Litecoin USD",
-            "score": 0.03,
-            "action": "HOLD",
-            "latest_price": 47.54005,
-            "details": {
-                "technical_score": 0.07,
-                "technical_indicators": {
-                    "close": 47.54005,
-                    "rsi": 65.70935518944367,
-                    "macd_hist": 0.4170370593413182,
-                    "ema_10": 46.08736574133162,
-                    "sma_50": 44.1369131053,
-                    "bb_upper": 47.61544544007018,
-                    "bb_lower": 42.51148955992982
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
+                    "pe_ratio": 29.933493,
+                    "debt_to_equity": 53.3,
+                    "revenue_growth": 0.166,
+                    "profit_margins": 0.12224,
+                    "dividend_yield": null,
+                    "fifty_day_average": 251.1606,
+                    "two_hundred_day_average": 234.3492,
+                    "fifty_two_week_high": 278.56,
+                    "fifty_two_week_low": 196.0,
+                    "volume": 25711227,
+                    "previous_close": 249.99
                 },
                 "sentiment_score": 0.0,
-                "article_count": 8
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    }
+                ]
             }
         },
-        "DOGE/USD": {
-            "name": "Dogecoin USD",
-            "score": 0.09,
-            "action": "HOLD",
-            "latest_price": 0.073117,
-            "details": {
-                "technical_score": 0.03,
-                "technical_indicators": {
-                    "close": 0.073117,
-                    "rsi": 42.07166937060621,
-                    "macd_hist": 0.000425432308854484,
-                    "ema_10": 0.0729418003667911,
-                    "sma_50": 0.078980941,
-                    "bb_upper": 0.07780278655938824,
-                    "bb_lower": 0.07001530844061177
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.25,
-                "article_count": 8
-            }
-        },
-        "ADA/USD": {
-            "name": "Cardano USD",
-            "score": 0.09,
-            "action": "HOLD",
-            "latest_price": 0.175115,
-            "details": {
-                "technical_score": 0.22,
-                "technical_indicators": {
-                    "close": 0.175115,
-                    "rsi": 56.87212122532522,
-                    "macd_hist": 0.0012677383929917123,
-                    "ema_10": 0.16782581461550447,
-                    "sma_50": 0.16613048960000001,
-                    "bb_upper": 0.18910418740500473,
-                    "bb_lower": 0.15098981259499528
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.0,
-                "article_count": 8
-            }
-        },
-        "LINK/USD": {
-            "name": "Chainlink USD",
-            "score": -0.01,
-            "action": "HOLD",
-            "latest_price": 8.70595,
-            "details": {
-                "technical_score": 0.07,
-                "technical_indicators": {
-                    "close": 8.70595,
-                    "rsi": 65.67967541918449,
-                    "macd_hist": 0.0818421508262404,
-                    "ema_10": 8.353582679705715,
-                    "sma_50": 7.9037644,
-                    "bb_upper": 8.719204962284895,
-                    "bb_lower": 7.5027680377151045
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": -0.12,
-                "article_count": 8
-            }
-        },
-        "BTCUSD": {
-            "name": "Bitcoin USD",
+        "TSLA": {
+            "name": "Tesla, Inc.",
             "score": 0.06,
             "action": "HOLD",
-            "latest_price": 65966.1105,
+            "latest_price": 378.92999267578125,
             "details": {
-                "technical_score": 0.07,
+                "technical_score": -0.07,
                 "technical_indicators": {
-                    "close": 65966.1105,
-                    "rsi": 60.575011419947415,
-                    "macd_hist": 351.72730225921174,
-                    "ema_10": 64554.41234012897,
-                    "sma_50": 63081.20444,
-                    "bb_upper": 66008.51903398197,
-                    "bb_lower": 61532.798616018015
+                    "close": 378.92999267578125,
+                    "rsi": 43.31673306872291,
+                    "macd_hist": -2.782710540794123,
+                    "ema_10": 388.4479864420134,
+                    "sma_50": 408.55939819335936,
+                    "bb_upper": 427.9036086874794,
+                    "bb_lower": 362.096385209005
                 },
-                "fundamental_score": 0.0,
+                "fundamental_score": 0.3,
                 "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
+                    "pe_ratio": 344.4818,
+                    "debt_to_equity": 18.738,
+                    "revenue_growth": 0.158,
+                    "profit_margins": 0.03946,
+                    "dividend_yield": null,
+                    "fifty_day_average": 408.5594,
+                    "two_hundred_day_average": 416.2698,
+                    "fifty_two_week_high": 498.83,
+                    "fifty_two_week_low": 297.82,
+                    "volume": 31140392,
+                    "previous_close": 369.57
                 },
-                "sentiment_score": 0.12,
-                "article_count": 8
-            }
-        },
-        "ETHUSD": {
-            "name": "Ethereum USD",
-            "score": 0.04,
-            "action": "HOLD",
-            "latest_price": 1935.7415,
-            "details": {
-                "technical_score": 0.07,
-                "technical_indicators": {
-                    "close": 1935.7415,
-                    "rsi": 66.07383003233363,
-                    "macd_hist": 13.25319444125573,
-                    "ema_10": 1865.356368813339,
-                    "sma_50": 1731.3729199999998,
-                    "bb_upper": 1947.0060594931329,
-                    "bb_lower": 1684.8909905068676
-                },
-                "fundamental_score": 0.0,
-                "fundamental_metrics": {
-                    "pe_ratio": null,
-                    "debt_to_equity": null,
-                    "revenue_growth": null,
-                    "profit_margins": null,
-                    "dividend_yield": null
-                },
-                "sentiment_score": 0.04,
-                "article_count": 8
+                "sentiment_score": 0.0,
+                "article_count": 8,
+                "news_articles": [
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    },
+                    {
+                        "title": "",
+                        "url": "",
+                        "sentiment_score": 0.0
+                    }
+                ]
             }
         }
     }

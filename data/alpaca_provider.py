@@ -1,14 +1,21 @@
 import os
+import time
+import logging
 import pandas as pd
 from datetime import datetime
 from typing import List, Dict, Any
 from data.data_provider import DataProvider
+
+logger = logging.getLogger("robTrader.AlpacaProvider")
 
 # We import Alpaca SDK components inside methods or handle ImportError to avoid crash if SDK installation is pending
 class AlpacaProvider(DataProvider):
     """
     Data provider implementing the DataProvider interface using Alpaca API.
     """
+
+    _fundamentals_cache = {}  # symbol -> (timestamp, data)
+    _news_cache = {}          # (symbol, limit) -> (timestamp, data)
 
     def __init__(self, api_key: str = None, secret_key: str = None):
         self.api_key = api_key or os.getenv("ALPACA_API_KEY_ID")
@@ -60,7 +67,7 @@ class AlpacaProvider(DataProvider):
         symbol = self.normalize_symbol(symbol)
         
         from alpaca.data.timeframe import TimeFrame, TimeFrameUnit
-
+ 
         # Parse timeframe
         tf_map = {
             "1Min": TimeFrame.Minute,
@@ -124,46 +131,70 @@ class AlpacaProvider(DataProvider):
     def get_news(self, symbol: str, limit: int = 10) -> List[Dict[str, Any]]:
         """
         Fetches news articles using Alpaca NewsClient.
+        Cache results for 2h by default.
         """
-        self._init_clients()
+        now = time.time()
+        expire_hours = float(os.getenv("SENTIMENT_CACHE_EXPIRE_HOURS", "2"))
+        expire_secs = expire_hours * 3600
         
-        symbol = self.normalize_symbol(symbol)
+        cache_key = (symbol, limit)
+        if cache_key in self._news_cache:
+            cache_time, cached_data = self._news_cache[cache_key]
+            if now - cache_time < expire_secs:
+                logger.info(f"Using cached Alpaca news for {symbol} (limit {limit})")
+                return cached_data
+                
+        self._init_clients()
+        symbol_normalized = self.normalize_symbol(symbol)
         
         from alpaca.data.requests import NewsRequest
-        
         request_params = NewsRequest(
-            symbols=symbol,
+            symbols=symbol_normalized,
             limit=limit
         )
         
-        response = self._news_client.get_news(request_params)
-        
+        try:
+            response = self._news_client.get_news(request_params)
+        except Exception as e:
+            logger.error(f"Error fetching news from Alpaca for {symbol}: {e}")
+            return []
+            
         news_items = []
-        if not response or not response.data or 'news' not in response.data:
-            return news_items
-            
-        for article in response.data['news']:
-            published = article.created_at
-            if isinstance(published, datetime):
-                published_at = published.isoformat()
-            else:
-                published_at = str(published)
+        if response and response.data and 'news' in response.data:
+            for article in response.data['news']:
+                published = article.created_at
+                if isinstance(published, datetime):
+                    published_at = published.isoformat()
+                else:
+                    published_at = str(published)
+                    
+                news_items.append({
+                    'title': article.headline,
+                    'url': article.url,
+                    'source': article.source,
+                    'summary': article.summary if article.summary else article.headline,
+                    'published_at': published_at
+                })
                 
-            news_items.append({
-                'title': article.headline,
-                'url': article.url,
-                'source': article.source,
-                'summary': article.summary if article.summary else article.headline,
-                'published_at': published_at
-            })
-            
+        self._news_cache[cache_key] = (now, news_items)
         return news_items
 
     def get_fundamentals(self, symbol: str) -> Dict[str, Any]:
         """
         Alpaca Free API has limited fundamental data natively. 
         We use yfinance as fallback to fetch the asset name and basic metrics.
+        Cache results for 24h by default.
         """
+        now = time.time()
+        expire_hours = float(os.getenv("FUNDAMENTALS_CACHE_EXPIRE_HOURS", "24"))
+        expire_secs = expire_hours * 3600
+        
+        if symbol in self._fundamentals_cache:
+            cache_time, cached_data = self._fundamentals_cache[symbol]
+            if now - cache_time < expire_secs:
+                logger.info(f"Using cached Alpaca fundamentals for {symbol}")
+                return cached_data
+                
         # Normalize symbol for Yahoo Finance
         yf_symbol = symbol.upper()
         yf_symbol = yf_symbol.replace('/', '-')
@@ -197,7 +228,8 @@ class AlpacaProvider(DataProvider):
             ticker = yf.Ticker(yf_symbol, session=session)
             info = ticker.info or {}
             name = info.get('longName') or info.get('shortName') or symbol
-        except Exception:
+        except Exception as e:
+            logger.warning(f"Error fetching fundamentals from yfinance for {symbol} under Alpaca: {e}")
             name = symbol
             info = {}
 
@@ -212,7 +244,7 @@ class AlpacaProvider(DataProvider):
             except Exception:
                 pass
             
-        return {
+        data = {
             'name': name,
             'pe_ratio': info.get('trailingPE') or info.get('forwardPE'),
             'dividend_yield': info.get('dividendYield'),
@@ -230,3 +262,7 @@ class AlpacaProvider(DataProvider):
             'volume': info.get('volume') or info.get('regularMarketVolume'),
             'previous_close': info.get('previousClose')
         }
+        
+        self._fundamentals_cache[symbol] = (now, data)
+        return data
+

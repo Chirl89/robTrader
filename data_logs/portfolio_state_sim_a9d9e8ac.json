@@ -1,21 +1,8 @@
 {
-    "timestamp": "2026-07-21T09:35:31.167303",
+    "timestamp": "2026-07-22T08:43:31.736016",
     "status": "active",
-    "cash": 878345.18,
-    "portfolio_value": 1003534.38,
-    "start_day_portfolio_value": 1003626.47,
-    "positions": {
-        "BTCUSD": {
-            "qty": 1.110774409,
-            "avg_entry_price": 64313.909635454,
-            "current_price": 65944.2,
-            "name": "Bitcoin USD"
-        },
-        "ETHUSD": {
-            "qty": 26.837283786,
-            "avg_entry_price": 1864.354177863,
-            "current_price": 1935.37,
-            "name": "Ethereum USD"
-        }
-    }
+    "cash": 10000.0,
+    "portfolio_value": 10000.0,
+    "start_day_portfolio_value": 10000.0,
+    "positions": {}
 }

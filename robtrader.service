@@ -22,9 +22,8 @@ RestartSec=5
 
 # Opcional: Límites de recursos para evitar que un bucle infinito o fuga de memoria congele todo el servidor
 # Si el proceso supera estos límites, systemd lo reiniciará automáticamente.
-# CPUQuota=80%
-# MemoryMax=1G
-# MemoryLimit=1G
+CPUQuota=50%
+MemoryMax=800M
 
 [Install]
 WantedBy=multi-user.target

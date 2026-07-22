@@ -1,0 +1,34 @@
+2026-07-22 08:42:11,749 - robTrader.Scheduler - WARNING - No Alpaca credentials found in .env. Falling back to Yahoo Finance data and Simulator Broker.
+2026-07-22 08:42:11,750 - robTrader.Scheduler - INFO - No history found for today. Set daily start portfolio value to current broker value: 10000.00
+2026-07-22 08:42:11,750 - robTrader.Scheduler - INFO - Starting execution loop.
+2026-07-22 08:42:11,750 - robTrader.Scheduler - INFO - - Portfolio Refresh Interval: 15 seconds
+2026-07-22 08:42:11,750 - robTrader.Scheduler - INFO - - Market Re-Analysis Interval: 60 minutes
+2026-07-22 08:42:11,752 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 10000.00 | Total Value = 10000.00
+2026-07-22 08:42:11,752 - robTrader.Scheduler - INFO - ------ Starting Trading Cycle ------
+2026-07-22 08:42:11,752 - robTrader.Scheduler - INFO - Signal Thresholds: BUY >= 0.25 | SELL <= -0.25
+2026-07-22 08:42:11,752 - robTrader.Scheduler - INFO - Broker Cash: 10000.00 | Estimated Available Cash: 10000.00
+2026-07-22 08:42:11,752 - robTrader.Scheduler - INFO - Portfolio Value: 10000.00 | Cash: 10000.00 | Open Positions: []
+2026-07-22 08:42:11,753 - robTrader.Scheduler - INFO - Analyzing AAPL...
+2026-07-22 08:42:13,966 - robTrader.Scheduler - INFO - Strategy recommendation for AAPL: HOLD (Score: 0.17) | Price: 327.74
+2026-07-22 08:42:13,967 - robTrader.Scheduler - INFO - Holding current position for AAPL.
+2026-07-22 08:42:15,468 - robTrader.Scheduler - INFO - Analyzing MSFT...
+2026-07-22 08:42:18,242 - robTrader.Scheduler - INFO - Strategy recommendation for MSFT: HOLD (Score: 0.19) | Price: 397.75
+2026-07-22 08:42:18,243 - robTrader.Scheduler - INFO - Holding current position for MSFT.
+2026-07-22 08:42:19,745 - robTrader.Scheduler - INFO - Analyzing GOOGL...
+2026-07-22 08:42:21,752 - robTrader.Scheduler - INFO - Strategy recommendation for GOOGL: HOLD (Score: 0.16) | Price: 347.15
+2026-07-22 08:42:21,752 - robTrader.Scheduler - INFO - Holding current position for GOOGL.
+2026-07-22 08:42:23,253 - robTrader.Scheduler - INFO - Analyzing AMZN...
+2026-07-22 08:42:25,397 - robTrader.Scheduler - INFO - Strategy recommendation for AMZN: HOLD (Score: 0.11) | Price: 247.55
+2026-07-22 08:42:25,398 - robTrader.Scheduler - INFO - Holding current position for AMZN.
+2026-07-22 08:42:26,898 - robTrader.Scheduler - INFO - Analyzing TSLA...
+2026-07-22 08:42:29,143 - robTrader.Scheduler - INFO - Strategy recommendation for TSLA: HOLD (Score: 0.06) | Price: 378.93
+2026-07-22 08:42:29,143 - robTrader.Scheduler - INFO - Holding current position for TSLA.
+2026-07-22 08:42:30,651 - robTrader.Scheduler - INFO - Saved analysis metrics for 5 symbols to C:\Users\EM2025007512\.gemini\antigravity\scratch\robTrader\data_logs\analysis_state_sim_a9d9e8ac.json
+2026-07-22 08:42:30,690 - robTrader.Scheduler - INFO - Spanish Tax Report generated successfully at: data_logs\spanish_tax_report_sim_a9d9e8ac.csv
+2026-07-22 08:42:30,690 - robTrader.Scheduler - INFO - Net gains/losses: 0.0 EUR
+2026-07-22 08:42:30,690 - robTrader.Scheduler - INFO - ------ Trading Cycle Finished ------
+2026-07-22 08:42:31,693 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 10000.00 | Total Value = 10000.00
+2026-07-22 08:42:46,709 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 10000.00 | Total Value = 10000.00
+2026-07-22 08:43:01,717 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 10000.00 | Total Value = 10000.00
+2026-07-22 08:43:16,726 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 10000.00 | Total Value = 10000.00
+2026-07-22 08:43:31,737 - robTrader.Scheduler - INFO - Refreshed portfolio: Cash = 10000.00 | Total Value = 10000.00

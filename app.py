@@ -66,6 +66,28 @@ os.makedirs(LOG_DIR, exist_ok=True)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("robTrader.Web")
 
+def get_data_provider():
+    import dotenv
+    dotenv.load_dotenv(os.path.join(ROOT_DIR, ".env"), override=True)
+    use_alpaca = bool(os.getenv("ALPACA_API_KEY_ID") and os.getenv("ALPACA_SECRET_KEY"))
+    if use_alpaca:
+        from data.alpaca_provider import AlpacaProvider
+        return AlpacaProvider()
+    else:
+        from data.yahoo_provider import YahooProvider
+        return YahooProvider()
+
+def get_broker():
+    import dotenv
+    dotenv.load_dotenv(os.path.join(ROOT_DIR, ".env"), override=True)
+    use_alpaca = bool(os.getenv("ALPACA_API_KEY_ID") and os.getenv("ALPACA_SECRET_KEY"))
+    if use_alpaca:
+        from broker.alpaca_broker import AlpacaBroker
+        return AlpacaBroker()
+    else:
+        from broker.simulator_broker import SimulatorBroker
+        return SimulatorBroker(initial_cash=10000.0)
+
 def get_bot_status():
     global bot_process
     is_running = bot_process is not None and bot_process.poll() is None
@@ -264,15 +286,14 @@ def api_trades():
                     trades.append(row)
             
             # Enrich trades with name using cache to prevent slow repeated queries
-            from strategy.scheduler import TradingScheduler
-            scheduler = TradingScheduler()
+            data_provider = get_data_provider()
             name_cache = {}
             for row in trades:
                 sym = row.get('symbol')
                 if sym:
                     if sym not in name_cache:
                         try:
-                            fundamentals = scheduler.data_provider.get_fundamentals(sym)
+                            fundamentals = data_provider.get_fundamentals(sym)
                             name_cache[sym] = fundamentals.get('name') or sym
                         except Exception:
                             name_cache[sym] = sym
@@ -309,14 +330,13 @@ def api_tax():
                         })
                         
         # Enrich tax events with name using cache
-        from strategy.scheduler import TradingScheduler
-        scheduler = TradingScheduler()
+        data_provider = get_data_provider()
         name_cache = {}
         for ev in events:
             sym = ev['symbol']
             if sym not in name_cache:
                 try:
-                    fundamentals = scheduler.data_provider.get_fundamentals(sym)
+                    fundamentals = data_provider.get_fundamentals(sym)
                     name_cache[sym] = fundamentals.get('name') or sym
                 except Exception:
                     name_cache[sym] = sym
@@ -367,9 +387,9 @@ def api_trades_download():
 @app.route('/api/alpaca_orders', methods=['GET'])
 def api_alpaca_orders():
     try:
-        from strategy.scheduler import TradingScheduler
-        scheduler = TradingScheduler()
-        orders = scheduler.broker.get_orders()
+        data_provider = get_data_provider()
+        broker = get_broker()
+        orders = broker.get_orders()
         
         # Enrich orders with name using cache
         name_cache = {}
@@ -377,7 +397,7 @@ def api_alpaca_orders():
             sym = o['symbol']
             if sym not in name_cache:
                 try:
-                    fundamentals = scheduler.data_provider.get_fundamentals(sym)
+                    fundamentals = data_provider.get_fundamentals(sym)
                     name_cache[sym] = fundamentals.get('name') or sym
                 except Exception:
                     name_cache[sym] = sym
@@ -391,9 +411,9 @@ def api_alpaca_orders():
 @app.route('/api/active_orders', methods=['GET'])
 def api_active_orders():
     try:
-        from strategy.scheduler import TradingScheduler
-        scheduler = TradingScheduler()
-        orders = scheduler.broker.get_open_orders()
+        data_provider = get_data_provider()
+        broker = get_broker()
+        orders = broker.get_open_orders()
         
         # Enrich orders with name using cache
         name_cache = {}
@@ -401,7 +421,7 @@ def api_active_orders():
             sym = o['symbol']
             if sym not in name_cache:
                 try:
-                    fundamentals = scheduler.data_provider.get_fundamentals(sym)
+                    fundamentals = data_provider.get_fundamentals(sym)
                     name_cache[sym] = fundamentals.get('name') or sym
                 except Exception:
                     name_cache[sym] = sym

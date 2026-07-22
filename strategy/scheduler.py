@@ -72,17 +72,8 @@ class TradingScheduler:
         self.portfolio_history_file = os.path.join(root_dir, "data_logs", f"portfolio_history_{suffix}.csv")
         
         if self.dynamic_scan:
-            logger.info(f"Dynamic scan enabled. Fetching symbols dynamically from {self.dynamic_scan_index} and top Cryptocurrencies...")
-            try:
-                from analysis.market_scanner import get_dynamic_market_symbols
-                self.symbols = get_dynamic_market_symbols(
-                    max_stocks=self.dynamic_stock_limit, 
-                    include_crypto=True, 
-                    index_name=self.dynamic_scan_index
-                )
-            except Exception as e:
-                logger.error(f"Failed to load dynamic symbols: {e}. Falling back to default list.")
-                self.symbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA']
+            logger.info(f"Dynamic scan enabled. Initializing empty symbols list; symbols will be scraped dynamically during run_cycle().")
+            self.symbols = []
         else:
             self.symbols = [s.strip() for s in os.getenv("DEFAULT_TRADING_SYMBOLS", "AAPL,MSFT,GOOGL,AMZN,TSLA").split(",")]
             
@@ -443,8 +434,14 @@ class TradingScheduler:
                             
                             qty_to_buy = cash_to_spend / latest_price
                             
+                            # Round down to integer for stocks (non-crypto assets)
+                            is_crypto = any(c in symbol.upper() for c in ['USD', '/'])
+                            if not is_crypto:
+                                qty_to_buy = int(qty_to_buy)
+                            
                             if qty_to_buy > 0.001:  # Buy minimum fraction
-                                logger.info(f"Submitting {self.order_type.upper()} BUY order for {symbol}: {qty_to_buy:.4f} shares at {latest_price:.2f}")
+                                log_qty = f"{qty_to_buy:.4f}" if is_crypto else str(qty_to_buy)
+                                logger.info(f"Submitting {self.order_type.upper()} BUY order for {symbol}: {log_qty} shares at {latest_price:.2f}")
                                 order_res = self.broker.submit_order(symbol, qty_to_buy, 'buy', latest_price, order_type=self.order_type)
                                 
                                 if order_res.get('status') != 'rejected':
@@ -493,6 +490,11 @@ class TradingScheduler:
                     
             except Exception as e:
                 logger.error(f"Error executing cycle for {symbol}: {e}", exc_info=True)
+            
+            # Throttle delay to prevent resource spike and rate limiting
+            throttle_delay = float(os.getenv("ANALYSIS_THROTTLE_DELAY_SECS", "1.5"))
+            if throttle_delay > 0:
+                time.sleep(throttle_delay)
 
         # 4. Save dynamic analysis state
         try:
