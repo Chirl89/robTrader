@@ -62,8 +62,21 @@ def get_analysis_file():
 
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Configure logging with Europe/Madrid timezone
+from zoneinfo import ZoneInfo
+import time
+
+def madrid_time_converter(*args):
+    t = args[0] if args else time.time()
+    from datetime import datetime
+    return datetime.fromtimestamp(t, tz=ZoneInfo('Europe/Madrid')).timetuple()
+
+logging.Formatter.converter = madrid_time_converter
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger("robTrader.Web")
 
 def get_data_provider():

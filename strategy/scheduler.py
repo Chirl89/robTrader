@@ -5,6 +5,7 @@ import json
 import logging
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from zoneinfo import ZoneInfo
 
 # Add project root directory to sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -19,6 +20,17 @@ from broker.hybrid_broker import HybridBroker
 from data.hybrid_provider import HybridDataProvider
 from reporting.trade_logger import TradeLogger
 from reporting.tax_exporter import TaxExporter
+
+# Set timezone-aware time converter for logging formatter
+def madrid_time_converter(*args):
+    t = args[0] if args else time.time()
+    return datetime.fromtimestamp(t, tz=ZoneInfo('Europe/Madrid')).timetuple()
+
+logging.Formatter.converter = madrid_time_converter
+
+# Helper to get current timezone-aware datetime in Madrid timezone
+def get_local_now():
+    return datetime.now(ZoneInfo('Europe/Madrid'))
 
 # Set up logging format
 logging.basicConfig(
@@ -105,7 +117,7 @@ class TradingScheduler:
         self.tax_exporter = TaxExporter()
         
         # Store portfolio starting value for daily loss check (recover from history if exists to survive restarts)
-        self.last_check_date = datetime.now().date()
+        self.last_check_date = get_local_now().date()
         self.start_day_portfolio_value = self.get_start_day_portfolio_value()
 
     def get_start_day_portfolio_value(self) -> float:
@@ -113,7 +125,7 @@ class TradingScheduler:
         Reads portfolio_history.csv to retrieve the first recorded portfolio value 
         for the current calendar day. Falls back to current broker value if none found.
         """
-        today_str = datetime.now().strftime("%Y-%m-%d")
+        today_str = get_local_now().strftime("%Y-%m-%d")
         if os.path.exists(self.portfolio_history_file):
             try:
                 import csv
@@ -178,7 +190,7 @@ class TradingScheduler:
             value = self.broker.get_portfolio_value()
             positions = self.broker.get_positions()
             
-            now = datetime.now()
+            now = get_local_now()
             # If calendar day changed during runtime, reset the daily start portfolio value
             if now.date() != self.last_check_date:
                 self.start_day_portfolio_value = value
@@ -270,7 +282,7 @@ class TradingScheduler:
         # Clear/truncate the log file at the beginning of the cycle to keep it clean
         try:
             with open(self.bot_stdout_file, 'w', encoding='utf-8') as f:
-                f.write(f"--- Starting New Trading Cycle: {datetime.now().isoformat()} ---\n")
+                f.write(f"--- Starting New Trading Cycle: {get_local_now().isoformat()} ---\n")
         except Exception as e:
             logger.error(f"Failed to clear log file: {e}")
 
@@ -314,7 +326,7 @@ class TradingScheduler:
         except Exception as e:
             logger.error(f"Failed to validate symbols against broker: {e}")
                 
-        now = datetime.now()
+        now = get_local_now()
         
         # 1. Safety Checks (Daily Loss Limit)
         try:
@@ -517,7 +529,7 @@ class TradingScheduler:
         # 4. Save dynamic analysis state
         try:
             analysis_state = sanitize_nan({
-                'timestamp': datetime.now().isoformat(),
+                'timestamp': get_local_now().isoformat(),
                 'buy_threshold': float(os.getenv("BUY_THRESHOLD", "0.25")),
                 'sell_threshold': float(os.getenv("SELL_THRESHOLD", "-0.25")),
                 'evaluations': evaluations
