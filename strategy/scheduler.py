@@ -15,6 +15,8 @@ from data.alpaca_provider import AlpacaProvider
 from strategy.composite_strategy import CompositeStrategy
 from broker.simulator_broker import SimulatorBroker
 from broker.alpaca_broker import AlpacaBroker
+from broker.hybrid_broker import HybridBroker
+from data.hybrid_provider import HybridDataProvider
 from reporting.trade_logger import TradeLogger
 from reporting.tax_exporter import TaxExporter
 
@@ -83,15 +85,19 @@ class TradingScheduler:
         
         # 2. Select and initialize components
         self.use_alpaca = bool(os.getenv("ALPACA_API_KEY_ID") and os.getenv("ALPACA_SECRET_KEY"))
+        sim_state_file = os.path.join(root_dir, "data_logs", f"simulator_state_{suffix}.json")
+        initial_cash = float(os.getenv("SIMULATOR_INITIAL_CASH", "10000.0"))
         
         if self.use_alpaca:
-            logger.info("Alpaca credentials found. Initializing Alpaca data provider and broker.")
-            self.data_provider = AlpacaProvider()
-            self.broker = AlpacaBroker()
+            logger.info("Alpaca credentials found. Initializing Hybrid data provider and broker.")
+            alpaca_b = AlpacaBroker()
+            sim_b = SimulatorBroker(initial_cash=initial_cash, state_file=sim_state_file)
+            self.broker = HybridBroker(alpaca_b, sim_b)
+            self.data_provider = HybridDataProvider(AlpacaProvider(), YahooProvider(), self.broker)
         else:
             logger.warning("No Alpaca credentials found in .env. Falling back to Yahoo Finance data and Simulator Broker.")
             self.data_provider = YahooProvider()
-            self.broker = SimulatorBroker(initial_cash=10000.0) # start simulator with 10k EUR/USD
+            self.broker = SimulatorBroker(initial_cash=initial_cash, state_file=sim_state_file)
             
         self.strategy = CompositeStrategy()
         self.trade_logger = TradeLogger()
@@ -491,6 +497,10 @@ class TradingScheduler:
             except Exception as e:
                 logger.error(f"Error executing cycle for {symbol}: {e}", exc_info=True)
             
+            # Force garbage collection to prevent memory build-up in long-running loops
+            import gc
+            gc.collect()
+
             # Throttle delay to prevent resource spike and rate limiting
             throttle_delay = float(os.getenv("ANALYSIS_THROTTLE_DELAY_SECS", "1.5"))
             if throttle_delay > 0:
@@ -519,6 +529,8 @@ class TradingScheduler:
         except Exception as e:
             logger.error(f"Error compiling tax report: {e}")
 
+        import gc
+        gc.collect()
         logger.info("------ Trading Cycle Finished ------")
 
     def start_loop(self):

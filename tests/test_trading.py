@@ -531,6 +531,79 @@ class TestAlpacaProviderFundamentals(unittest.TestCase):
         
         # Verify Alpaca TradingClient was called with the symbol
         mock_trading_client_instance.get_asset.assert_called_with("AAPL")
+class TestHybridRouting(unittest.TestCase):
+    def setUp(self):
+        from broker.alpaca_broker import AlpacaBroker
+        from broker.simulator_broker import SimulatorBroker
+        from broker.hybrid_broker import HybridBroker
+        from data.alpaca_provider import AlpacaProvider
+        from data.yahoo_provider import YahooProvider
+        from data.hybrid_provider import HybridDataProvider
+        
+        # Mock components
+        self.alpaca_broker = MagicMock(spec=AlpacaBroker)
+        self.simulator_broker = MagicMock(spec=SimulatorBroker)
+        self.hybrid_broker = HybridBroker(self.alpaca_broker, self.simulator_broker)
+        
+        self.alpaca_provider = MagicMock(spec=AlpacaProvider)
+        self.yahoo_provider = MagicMock(spec=YahooProvider)
+        self.hybrid_provider = HybridDataProvider(self.alpaca_provider, self.yahoo_provider, self.hybrid_broker)
+
+        # Mock get_tradable_assets to return AAPL, MSFT
+        self.alpaca_broker.get_tradable_assets.return_value = ["AAPL", "MSFT"]
+        
+    def test_routing_alpaca_asset(self):
+        # AAPL is in tradable assets, so it should route to Alpaca
+        self.hybrid_broker._is_alpaca_asset = MagicMock(return_value=True)
+        
+        # Mock non-empty returns to prevent fallback
+        self.alpaca_provider.get_historical_data.return_value = pd.DataFrame([{'close': 150.0}])
+        self.alpaca_provider.get_news.return_value = [{'title': 'AAPL news'}]
+        self.alpaca_provider.get_fundamentals.return_value = {'name': 'Apple Inc.', 'pe_ratio': 25.0}
+        
+        self.hybrid_broker.submit_order("AAPL", 10, "buy", 150.0)
+        self.alpaca_broker.submit_order.assert_called_once_with("AAPL", 10, "buy", 150.0, "market")
+        self.simulator_broker.submit_order.assert_not_called()
+
+        # Data Provider check
+        self.hybrid_provider.get_historical_data("AAPL", "2026-01-01", "2026-01-10")
+        self.alpaca_provider.get_historical_data.assert_called_once_with("AAPL", "2026-01-01", "2026-01-10", "1Day")
+        self.yahoo_provider.get_historical_data.assert_not_called()
+
+    def test_routing_simulator_asset(self):
+        # SAN.MC ends in .MC, so it is not Alpaca
+        # We also mock _is_alpaca_asset to return False to be double sure
+        self.hybrid_broker._is_alpaca_asset = MagicMock(return_value=False)
+        
+        self.hybrid_broker.submit_order("SAN.MC", 100, "buy", 4.0)
+        self.simulator_broker.submit_order.assert_called_once_with("SAN.MC", 100, "buy", 4.0, "market")
+        self.alpaca_broker.submit_order.assert_not_called()
+
+        # Data Provider check
+        self.hybrid_provider.get_historical_data("SAN.MC", "2026-01-01", "2026-01-10")
+        self.yahoo_provider.get_historical_data.assert_called_once_with("SAN.MC", "2026-01-01", "2026-01-10", "1Day")
+        self.alpaca_provider.get_historical_data.assert_not_called()
+
+    def test_hybrid_portfolio_aggregation(self):
+        # Mock broker values
+        self.alpaca_broker.get_cash.return_value = 50000.0
+        self.simulator_broker.get_cash.return_value = 10000.0
+        
+        self.alpaca_broker.get_portfolio_value.return_value = 55000.0
+        self.simulator_broker.get_portfolio_value.return_value = 12000.0
+        
+        self.assertEqual(self.hybrid_broker.get_cash(), 60000.0)
+        self.assertEqual(self.hybrid_broker.get_portfolio_value(), 67000.0)
+
+        # Mock positions
+        self.alpaca_broker.get_positions.return_value = {'AAPL': {'qty': 10}}
+        self.simulator_broker.get_positions.return_value = {'SAN.MC': {'qty': 100}}
+        
+        positions = self.hybrid_broker.get_positions()
+        self.assertIn('AAPL', positions)
+        self.assertIn('SAN.MC', positions)
+        self.assertEqual(positions['AAPL']['qty'], 10)
+        self.assertEqual(positions['SAN.MC']['qty'], 100)
 
 if __name__ == '__main__':
     unittest.main()

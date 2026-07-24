@@ -16,9 +16,19 @@ class YahooProvider(DataProvider):
 
     _fundamentals_cache = {}  # symbol -> (timestamp, data)
     _news_cache = {}          # (symbol, limit) -> (timestamp, data)
+    _session = None
 
     def __init__(self):
         super().__init__()
+
+    def _get_session(self):
+        if YahooProvider._session is None:
+            import requests
+            YahooProvider._session = requests.Session()
+            YahooProvider._session.headers.update({
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            })
+        return YahooProvider._session
 
     def _normalize_symbol(self, symbol: str) -> str:
         sym = symbol.upper()
@@ -101,7 +111,7 @@ class YahooProvider(DataProvider):
                 return cached_data
                 
         symbol_normalized = self._normalize_symbol(symbol)
-        ticker = yf.Ticker(symbol_normalized)
+        ticker = yf.Ticker(symbol_normalized, session=self._get_session())
         try:
             yf_news = ticker.news
         except Exception as e:
@@ -146,19 +156,8 @@ class YahooProvider(DataProvider):
                 
         symbol_normalized = self._normalize_symbol(symbol)
         
-        # Setup session with custom headers to prevent yfinance blocking
-        session = None
         try:
-            import requests
-            session = requests.Session()
-            session.headers.update({
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            })
-        except Exception:
-            pass
-
-        try:
-            ticker = yf.Ticker(symbol_normalized, session=session)
+            ticker = yf.Ticker(symbol_normalized, session=self._get_session())
             info = ticker.info or {}
         except Exception as e:
             logger.error(f"Error fetching fundamentals from yfinance for {symbol}: {e}")

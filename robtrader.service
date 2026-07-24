@@ -3,27 +3,18 @@ Description=robTrader Web Application & Bot Orchestrator
 After=network.target
 
 [Service]
-# Usuario y grupo del sistema que ejecutará el servicio (por ejemplo: ubuntu, debian, root)
-User=ubuntu
-Group=ubuntu
+# Directorio del proyecto en el servidor de cgzlazaro
+WorkingDirectory=/home/cgzlazaro/robTrader
 
-# Directorio donde está clonado el repositorio en el servidor
-WorkingDirectory=/var/www/robTrader
+# Archivo de variables de entorno
+EnvironmentFile=/home/cgzlazaro/robTrader/.env
 
-# Archivo de variables de entorno (API keys, etc.)
-EnvironmentFile=/var/www/robTrader/.env
+# Ruta al ejecutable de python dentro del venv
+ExecStart=/home/cgzlazaro/robTrader/venv/bin/python app.py
 
-# Ruta al ejecutable de python dentro del entorno virtual (venv)
-ExecStart=/var/www/robTrader/venv/bin/python app.py
-
-# Estrategia de reinicio si el proceso falla o se cae
+# Estrategia de reinicio si el proceso falla
 Restart=always
 RestartSec=5
 
-# Opcional: Límites de recursos para evitar que un bucle infinito o fuga de memoria congele todo el servidor
-# Si el proceso supera estos límites, systemd lo reiniciará automáticamente.
-CPUQuota=50%
-MemoryMax=800M
-
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

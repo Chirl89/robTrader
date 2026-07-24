@@ -9,13 +9,49 @@ class SimulatorBroker(BaseBroker):
     Tracks cash, positions, and logs all submitted orders.
     """
 
-    def __init__(self, initial_cash: float = 100000.0, commission_pct: float = 0.001, min_commission: float = 1.00):
-        self.cash = initial_cash
+    def __init__(self, initial_cash: float = 100000.0, commission_pct: float = 0.001, min_commission: float = 1.00, state_file: str = None):
+        self.state_file = state_file
         self.commission_pct = commission_pct
         self.min_commission = min_commission
         self.positions: Dict[str, Dict[str, Any]] = {}
         self.orders: List[Dict[str, Any]] = []
+        self.cash = initial_cash
         
+        if self.state_file:
+            self._load_state()
+        
+    def _load_state(self):
+        import os
+        import json
+        if not self.state_file or not os.path.exists(self.state_file):
+            return
+        try:
+            with open(self.state_file, 'r', encoding='utf-8') as f:
+                state = json.load(f)
+                self.cash = state.get('cash', self.cash)
+                self.positions = state.get('positions', {})
+                self.orders = state.get('orders', [])
+        except Exception as e:
+            import logging
+            logging.getLogger("robTrader.SimulatorBroker").error(f"Failed to load simulator state: {e}")
+
+    def _save_state(self):
+        if not self.state_file:
+            return
+        try:
+            import os
+            import json
+            os.makedirs(os.path.dirname(self.state_file), exist_ok=True)
+            with open(self.state_file, 'w', encoding='utf-8') as f:
+                json.dump({
+                    'cash': self.cash,
+                    'positions': self.positions,
+                    'orders': self.orders
+                }, f, indent=4)
+        except Exception as e:
+            import logging
+            logging.getLogger("robTrader.SimulatorBroker").error(f"Failed to save simulator state: {e}")
+
     def get_cash(self) -> float:
         return round(self.cash, 2)
 
@@ -23,9 +59,13 @@ class SimulatorBroker(BaseBroker):
         """
         Updates current prices of active positions to reflect portfolio value accurately.
         """
+        changed = False
         for symbol, price in prices.items():
             if symbol in self.positions:
                 self.positions[symbol]['current_price'] = price
+                changed = True
+        if changed:
+            self._save_state()
 
     def get_portfolio_value(self) -> float:
         positions_value = 0.0
@@ -53,6 +93,7 @@ class SimulatorBroker(BaseBroker):
                 'order_id': order_id, 'symbol': symbol, 'side': side, 'qty': qty, 'price': price,
                 'status': 'rejected', 'created_at': created_at
             })
+            self._save_state()
             return res
             
         if qty <= 0:
@@ -61,6 +102,7 @@ class SimulatorBroker(BaseBroker):
                 'order_id': order_id, 'symbol': symbol, 'side': side, 'qty': qty, 'price': price,
                 'status': 'rejected', 'created_at': created_at
             })
+            self._save_state()
             return res
 
         trade_value = qty * price
@@ -78,6 +120,7 @@ class SimulatorBroker(BaseBroker):
                     'order_id': order_id, 'symbol': symbol, 'side': 'buy', 'qty': qty, 'price': price,
                     'status': 'rejected', 'created_at': created_at
                 })
+                self._save_state()
                 return res
             
             # Deduct cash
@@ -115,6 +158,7 @@ class SimulatorBroker(BaseBroker):
                 'order_id': order_id, 'symbol': symbol, 'side': 'buy', 'qty': qty, 'price': price,
                 'status': 'filled', 'created_at': created_at
             })
+            self._save_state()
             return res
 
         elif side == 'sell':
@@ -128,6 +172,7 @@ class SimulatorBroker(BaseBroker):
                     'order_id': order_id, 'symbol': symbol, 'side': 'sell', 'qty': qty, 'price': price,
                     'status': 'rejected', 'created_at': created_at
                 })
+                self._save_state()
                 return res
                 
             # Add proceeds minus commission
@@ -161,8 +206,10 @@ class SimulatorBroker(BaseBroker):
                 'order_id': order_id, 'symbol': symbol, 'side': 'sell', 'qty': qty, 'price': price,
                 'status': 'filled', 'created_at': created_at
             })
+            self._save_state()
             return res
             
+        self._save_state()
         return {'status': 'rejected', 'reason': 'Unknown error'}
 
     def cancel_order(self, order_id: str) -> bool:
@@ -173,6 +220,7 @@ class SimulatorBroker(BaseBroker):
             if order['order_id'] == order_id:
                 if order['status'] in ['submitted', 'accepted', 'new', 'open']:
                     order['status'] = 'canceled'
+                    self._save_state()
                     return True
         return False
 

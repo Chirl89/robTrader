@@ -72,7 +72,21 @@ def get_data_provider():
     use_alpaca = bool(os.getenv("ALPACA_API_KEY_ID") and os.getenv("ALPACA_SECRET_KEY"))
     if use_alpaca:
         from data.alpaca_provider import AlpacaProvider
-        return AlpacaProvider()
+        from data.yahoo_provider import YahooProvider
+        from data.hybrid_provider import HybridDataProvider
+        
+        # Instantiate hybrid broker to share routing table / assets cache
+        from broker.alpaca_broker import AlpacaBroker
+        from broker.simulator_broker import SimulatorBroker
+        from broker.hybrid_broker import HybridBroker
+        suffix = get_account_suffix()
+        sim_state_file = os.path.join(ROOT_DIR, "data_logs", f"simulator_state_{suffix}.json")
+        alpaca_b = AlpacaBroker()
+        initial_cash = float(os.getenv("SIMULATOR_INITIAL_CASH", "10000.0"))
+        sim_b = SimulatorBroker(initial_cash=initial_cash, state_file=sim_state_file)
+        hb = HybridBroker(alpaca_b, sim_b)
+        
+        return HybridDataProvider(AlpacaProvider(), YahooProvider(), hb)
     else:
         from data.yahoo_provider import YahooProvider
         return YahooProvider()
@@ -81,12 +95,20 @@ def get_broker():
     import dotenv
     dotenv.load_dotenv(os.path.join(ROOT_DIR, ".env"), override=True)
     use_alpaca = bool(os.getenv("ALPACA_API_KEY_ID") and os.getenv("ALPACA_SECRET_KEY"))
+    suffix = get_account_suffix()
+    sim_state_file = os.path.join(ROOT_DIR, "data_logs", f"simulator_state_{suffix}.json")
+    initial_cash = float(os.getenv("SIMULATOR_INITIAL_CASH", "10000.0"))
+    
     if use_alpaca:
         from broker.alpaca_broker import AlpacaBroker
-        return AlpacaBroker()
+        from broker.simulator_broker import SimulatorBroker
+        from broker.hybrid_broker import HybridBroker
+        alpaca_b = AlpacaBroker()
+        sim_b = SimulatorBroker(initial_cash=initial_cash, state_file=sim_state_file)
+        return HybridBroker(alpaca_b, sim_b)
     else:
         from broker.simulator_broker import SimulatorBroker
-        return SimulatorBroker(initial_cash=10000.0)
+        return SimulatorBroker(initial_cash=initial_cash, state_file=sim_state_file)
 
 def get_bot_status():
     global bot_process
@@ -519,5 +541,54 @@ def api_logs():
     # Return last 100 lines
     return jsonify(lines[-100:])
 
+def auto_start_bot_if_enabled():
+    import dotenv
+    dotenv.load_dotenv(os.path.join(ROOT_DIR, ".env"), override=True)
+    if os.getenv("AUTO_START_BOT", "False").lower() == "true":
+        is_reloader_child = os.environ.get("WERKZEUG_RUN_MAIN") == "true"
+        is_debug_mode = os.getenv("FLASK_DEBUG", "False").lower() == "true"
+        
+        if not is_debug_mode or is_reloader_child:
+            global bot_process, log_file_handle
+            if get_bot_status() == 'running':
+                logger.info("Auto-start: Bot is already running.")
+                return
+                
+            logger.info("Auto-starting bot background process...")
+            try:
+                python_exec = sys.executable
+                venv_python_win = os.path.join(ROOT_DIR, "venv", "Scripts", "python.exe")
+                venv_python_nix = os.path.join(ROOT_DIR, "venv", "bin", "python")
+                if os.path.exists(venv_python_win):
+                    python_exec = venv_python_win
+                elif os.path.exists(venv_python_nix):
+                    python_exec = venv_python_nix
+                    
+                log_file_handle = open(get_bot_stdout_file(), "w", encoding="utf-8")
+                current_env = os.environ.copy()
+                env_path = os.path.join(ROOT_DIR, ".env")
+                if os.path.exists(env_path):
+                    file_env = dotenv.dotenv_values(env_path)
+                    for k, v in file_env.items():
+                        if v is not None:
+                            current_env[k] = v
+                
+                bot_process = subprocess.Popen(
+                    [python_exec, "-c", "from strategy.scheduler import TradingScheduler; TradingScheduler().start_loop()"],
+                    stdout=log_file_handle,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    cwd=ROOT_DIR,
+                    env=current_env
+                )
+                logger.info(f"Auto-start: Bot process started successfully (PID: {bot_process.pid}).")
+            except Exception as e:
+                logger.error(f"Auto-start: Failed to start bot process: {e}")
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    import dotenv
+    dotenv.load_dotenv(os.path.join(ROOT_DIR, ".env"), override=True)
+    auto_start_bot_if_enabled()
+    flask_debug = os.getenv("FLASK_DEBUG", "False").lower() == "true"
+    app.run(host='0.0.0.0', port=5000, debug=flask_debug)
+
