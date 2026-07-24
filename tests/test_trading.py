@@ -586,16 +586,23 @@ class TestHybridRouting(unittest.TestCase):
 
     def test_hybrid_portfolio_aggregation(self):
         # Mock broker values
+        self.alpaca_broker.initialized = True
         self.alpaca_broker.get_cash.return_value = 50000.0
         self.simulator_broker.get_cash.return_value = 10000.0
         
         self.alpaca_broker.get_portfolio_value.return_value = 55000.0
         self.simulator_broker.get_portfolio_value.return_value = 12000.0
         
-        self.assertEqual(self.hybrid_broker.get_cash(), 60000.0)
-        self.assertEqual(self.hybrid_broker.get_portfolio_value(), 67000.0)
+        # When Alpaca is initialized, it should return Alpaca's values directly (no aggregation of 10K)
+        self.assertEqual(self.hybrid_broker.get_cash(), 50000.0)
+        self.assertEqual(self.hybrid_broker.get_portfolio_value(), 55000.0)
 
-        # Mock positions
+        # When Alpaca is not initialized, it should fall back to simulator values
+        self.alpaca_broker.initialized = False
+        self.assertEqual(self.hybrid_broker.get_cash(), 10000.0)
+        self.assertEqual(self.hybrid_broker.get_portfolio_value(), 12000.0)
+
+        # Mock positions (should return both Alpaca and simulator positions)
         self.alpaca_broker.get_positions.return_value = {'AAPL': {'qty': 10}}
         self.simulator_broker.get_positions.return_value = {'SAN.MC': {'qty': 100}}
         

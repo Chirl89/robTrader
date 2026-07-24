@@ -11,10 +11,12 @@ class HybridBroker(BaseBroker):
     """
     A broker that routes US stocks and Cryptos to Alpaca and fallback assets (like IBEX) to SimulatorBroker.
     """
+    _cached_alpaca_assets = None
+    _last_fetched_time = 0.0
+
     def __init__(self, alpaca_broker: AlpacaBroker, simulator_broker: SimulatorBroker):
         self.alpaca_broker = alpaca_broker
         self.simulator_broker = simulator_broker
-        self._alpaca_assets = None
 
     def _is_alpaca_asset(self, symbol: str) -> bool:
         sym_upper = symbol.upper()
@@ -22,35 +24,43 @@ class HybridBroker(BaseBroker):
         if '.MC' in sym_upper:
             return False
             
-        if self._alpaca_assets is None:
+        import time
+        now = time.time()
+        # Cache for 24 hours (86400 seconds)
+        cache_duration = 86400.0
+        
+        if HybridBroker._cached_alpaca_assets is None or (now - HybridBroker._last_fetched_time > cache_duration):
             try:
                 logger.info("Fetching Alpaca tradable assets to build routing table...")
                 assets = self.alpaca_broker.get_tradable_assets()
-                self._alpaca_assets = {a.upper() for a in assets}
-                logger.info(f"Loaded {len(self._alpaca_assets)} Alpaca tradable assets.")
+                HybridBroker._cached_alpaca_assets = {a.upper() for a in assets}
+                HybridBroker._last_fetched_time = now
+                logger.info(f"Loaded {len(HybridBroker._cached_alpaca_assets)} Alpaca tradable assets.")
             except Exception as e:
                 logger.error(f"Failed to load Alpaca tradable assets: {e}. Falling back to suffix rule.")
-                return '.MC' not in sym_upper
+                if HybridBroker._cached_alpaca_assets is None:
+                    return '.MC' not in sym_upper
                 
         norm_sym = sym_upper.replace('/', '').replace('-', '')
-        return norm_sym in {a.replace('/', '').replace('-', '') for a in self._alpaca_assets}
+        return norm_sym in {a.replace('/', '').replace('-', '') for a in HybridBroker._cached_alpaca_assets}
 
     def get_cash(self) -> float:
-        # Sum both cash values to show the total cash in dashboard
-        try:
-            alpaca_cash = self.alpaca_broker.get_cash()
-        except Exception as e:
-            logger.error(f"Failed to fetch Alpaca cash: {e}")
-            alpaca_cash = 0.0
-        return round(alpaca_cash + self.simulator_broker.get_cash(), 2)
+        # If Alpaca is initialized, return Alpaca cash to match the real/paper account
+        if self.alpaca_broker.initialized:
+            try:
+                return round(self.alpaca_broker.get_cash(), 2)
+            except Exception as e:
+                logger.error(f"Failed to fetch Alpaca cash: {e}")
+        return round(self.simulator_broker.get_cash(), 2)
 
     def get_portfolio_value(self) -> float:
-        try:
-            alpaca_val = self.alpaca_broker.get_portfolio_value()
-        except Exception as e:
-            logger.error(f"Failed to fetch Alpaca portfolio value: {e}")
-            alpaca_val = 0.0
-        return round(alpaca_val + self.simulator_broker.get_portfolio_value(), 2)
+        # If Alpaca is initialized, return Alpaca portfolio value to match the real/paper account
+        if self.alpaca_broker.initialized:
+            try:
+                return round(self.alpaca_broker.get_portfolio_value(), 2)
+            except Exception as e:
+                logger.error(f"Failed to fetch Alpaca portfolio value: {e}")
+        return round(self.simulator_broker.get_portfolio_value(), 2)
 
     def get_positions(self) -> Dict[str, Dict[str, Any]]:
         try:

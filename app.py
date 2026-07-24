@@ -182,8 +182,8 @@ def api_control():
             elif os.path.exists(venv_python_nix):
                 python_exec = venv_python_nix
                 
-            # Create/truncate stdout file
-            log_file_handle = open(get_bot_stdout_file(), "w", encoding="utf-8")
+            # Create/append stdout file
+            log_file_handle = open(get_bot_stdout_file(), "a", encoding="utf-8")
             
             # Start loop
             import dotenv
@@ -564,7 +564,7 @@ def auto_start_bot_if_enabled():
                 elif os.path.exists(venv_python_nix):
                     python_exec = venv_python_nix
                     
-                log_file_handle = open(get_bot_stdout_file(), "w", encoding="utf-8")
+                log_file_handle = open(get_bot_stdout_file(), "a", encoding="utf-8")
                 current_env = os.environ.copy()
                 env_path = os.path.join(ROOT_DIR, ".env")
                 if os.path.exists(env_path):

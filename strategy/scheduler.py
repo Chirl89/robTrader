@@ -72,6 +72,7 @@ class TradingScheduler:
         self.portfolio_state_file = os.path.join(root_dir, "data_logs", f"portfolio_state_{suffix}.json")
         self.analysis_state_file = os.path.join(root_dir, "data_logs", f"analysis_state_{suffix}.json")
         self.portfolio_history_file = os.path.join(root_dir, "data_logs", f"portfolio_history_{suffix}.csv")
+        self.bot_stdout_file = os.path.join(root_dir, "data_logs", f"bot_stdout_{suffix}.log")
         
         if self.dynamic_scan:
             logger.info(f"Dynamic scan enabled. Initializing empty symbols list; symbols will be scraped dynamically during run_cycle().")
@@ -266,6 +267,13 @@ class TradingScheduler:
         """
         Executes a single cycle of: Data fetch -> Analysis -> Strategy -> Broker Execution -> Tax reporting.
         """
+        # Clear/truncate the log file at the beginning of the cycle to keep it clean
+        try:
+            with open(self.bot_stdout_file, 'w', encoding='utf-8') as f:
+                f.write(f"--- Starting New Trading Cycle: {datetime.now().isoformat()} ---\n")
+        except Exception as e:
+            logger.error(f"Failed to clear log file: {e}")
+
         logger.info("------ Starting Trading Cycle ------")
         buy_threshold = float(os.getenv("BUY_THRESHOLD", "0.25"))
         sell_threshold = float(os.getenv("SELL_THRESHOLD", "-0.25"))
