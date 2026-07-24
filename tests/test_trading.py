@@ -57,7 +57,10 @@ class TestTechnicalAnalysis(unittest.TestCase):
     @patch('yfinance.Ticker')
     def test_alpaca_provider_fundamental_normalization(self, mock_ticker_class):
         from data.alpaca_provider import AlpacaProvider
+        AlpacaProvider._fundamentals_cache = {}
         provider = AlpacaProvider()
+        provider._load_fundamentals_cache = MagicMock()
+        provider._save_fundamentals_cache = MagicMock()
         
         # Mock yfinance return values
         mock_instance = MagicMock()
@@ -315,14 +318,23 @@ class TestTaxExporter(unittest.TestCase):
         self.assertEqual(ibex_count, 5)
         
         # Test dynamic market symbols with max_stocks <= 0 (unlimited)
-        sp_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="SP500")
-        self.assertTrue(len(sp_symbols_all) > 400) # S&P 500 contains ~500 components
-        
-        ibex_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="IBEX35")
-        self.assertTrue(len(ibex_symbols_all) >= 35) # IBEX 35 contains 35 components
-        
-        both_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="BOTH")
-        self.assertTrue(len(both_symbols_all) > 400)
+        import os
+        orig_val = os.environ.get("ALLOW_UNLIMITED_SCAN")
+        os.environ["ALLOW_UNLIMITED_SCAN"] = "True"
+        try:
+            sp_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="SP500")
+            self.assertTrue(len(sp_symbols_all) > 400) # S&P 500 contains ~500 components
+            
+            ibex_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="IBEX35")
+            self.assertTrue(len(ibex_symbols_all) >= 35) # IBEX 35 contains 35 components
+            
+            both_symbols_all = get_dynamic_market_symbols(max_stocks=-1, include_crypto=False, index_name="BOTH")
+            self.assertTrue(len(both_symbols_all) > 400)
+        finally:
+            if orig_val is not None:
+                os.environ["ALLOW_UNLIMITED_SCAN"] = orig_val
+            else:
+                os.environ.pop("ALLOW_UNLIMITED_SCAN", None)
 
     def test_eur_asset_logging(self):
         # 1. Buy EUR asset SAN.MC (Bco. Santander) at 4.50 EUR, commission 1 EUR.
@@ -505,9 +517,12 @@ class TestAlpacaProviderFundamentals(unittest.TestCase):
     @patch('alpaca.trading.client.TradingClient')
     def test_alpaca_provider_fundamentals_fallback(self, mock_trading_client_class, mock_ticker_class):
         from data.alpaca_provider import AlpacaProvider
+        AlpacaProvider._fundamentals_cache = {}
         
         # Instantiate provider with test credentials
         provider = AlpacaProvider(api_key="test_key", secret_key="test_secret")
+        provider._load_fundamentals_cache = MagicMock()
+        provider._save_fundamentals_cache = MagicMock()
         
         # 1. Simulate yfinance failure
         mock_ticker_instance = MagicMock()

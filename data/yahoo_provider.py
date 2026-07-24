@@ -14,7 +14,8 @@ class YahooProvider(DataProvider):
     Data provider implementing the DataProvider interface using Yahoo Finance (yfinance).
     """
 
-    _fundamentals_cache = {}  # symbol -> (timestamp, data)
+    _fundamentals_cache = None  # Loaded dynamically from disk
+    _cache_file = None
     _news_cache = {}          # (symbol, limit) -> (timestamp, data)
     _session = None
 
@@ -139,11 +140,41 @@ class YahooProvider(DataProvider):
         self._news_cache[cache_key] = (now, news_items)
         return news_items
 
+    def _load_fundamentals_cache(self):
+        if YahooProvider._fundamentals_cache is not None:
+            return
+        
+        YahooProvider._fundamentals_cache = {}
+        try:
+            import json
+            root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            YahooProvider._cache_file = os.path.join(root_dir, "data_logs", "yahoo_fundamentals_cache.json")
+            if os.path.exists(YahooProvider._cache_file):
+                with open(YahooProvider._cache_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    # JSON stores tuples as lists, convert back to tuple
+                    YahooProvider._fundamentals_cache = {k: (v[0], v[1]) for k, v in data.items()}
+                logger.info(f"Loaded {len(YahooProvider._fundamentals_cache)} cached fundamentals from {YahooProvider._cache_file}")
+        except Exception as e:
+            logger.error(f"Failed to load Yahoo fundamentals cache from disk: {e}")
+
+    def _save_fundamentals_cache(self):
+        if YahooProvider._cache_file is None:
+            return
+        try:
+            import json
+            os.makedirs(os.path.dirname(YahooProvider._cache_file), exist_ok=True)
+            with open(YahooProvider._cache_file, 'w', encoding='utf-8') as f:
+                json.dump(YahooProvider._fundamentals_cache, f, indent=4)
+        except Exception as e:
+            logger.error(f"Failed to save Yahoo fundamentals cache to disk: {e}")
+
     def get_fundamentals(self, symbol: str) -> Dict[str, Any]:
         """
         Fetches fundamental data from yfinance.info.
         Cache results for 24h by default.
         """
+        self._load_fundamentals_cache()
         now = time.time()
         expire_hours = float(os.getenv("FUNDAMENTALS_CACHE_EXPIRE_HOURS", "24"))
         expire_secs = expire_hours * 3600
@@ -185,6 +216,7 @@ class YahooProvider(DataProvider):
                 'previous_close': info.get('previousClose')
             }
             
-        self._fundamentals_cache[symbol] = (now, data)
+        YahooProvider._fundamentals_cache[symbol] = (now, data)
+        self._save_fundamentals_cache()
         return data
 

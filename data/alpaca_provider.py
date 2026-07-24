@@ -14,8 +14,19 @@ class AlpacaProvider(DataProvider):
     Data provider implementing the DataProvider interface using Alpaca API.
     """
 
-    _fundamentals_cache = {}  # symbol -> (timestamp, data)
+    _fundamentals_cache = None  # Loaded dynamically from disk
+    _cache_file = None
     _news_cache = {}          # (symbol, limit) -> (timestamp, data)
+    _session = None
+
+    def _get_session(self):
+        if AlpacaProvider._session is None:
+            import requests
+            AlpacaProvider._session = requests.Session()
+            AlpacaProvider._session.headers.update({
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            })
+        return AlpacaProvider._session
 
     def __init__(self, api_key: str = None, secret_key: str = None):
         self.api_key = api_key or os.getenv("ALPACA_API_KEY_ID")
@@ -179,12 +190,42 @@ class AlpacaProvider(DataProvider):
         self._news_cache[cache_key] = (now, news_items)
         return news_items
 
+    def _load_fundamentals_cache(self):
+        if AlpacaProvider._fundamentals_cache is not None:
+            return
+        
+        AlpacaProvider._fundamentals_cache = {}
+        try:
+            import json
+            root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            AlpacaProvider._cache_file = os.path.join(root_dir, "data_logs", "alpaca_fundamentals_cache.json")
+            if os.path.exists(AlpacaProvider._cache_file):
+                with open(AlpacaProvider._cache_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    # JSON stores tuples as lists, convert back to tuple
+                    AlpacaProvider._fundamentals_cache = {k: (v[0], v[1]) for k, v in data.items()}
+                logger.info(f"Loaded {len(AlpacaProvider._fundamentals_cache)} cached fundamentals from {AlpacaProvider._cache_file}")
+        except Exception as e:
+            logger.error(f"Failed to load Alpaca fundamentals cache from disk: {e}")
+
+    def _save_fundamentals_cache(self):
+        if AlpacaProvider._cache_file is None:
+            return
+        try:
+            import json
+            os.makedirs(os.path.dirname(AlpacaProvider._cache_file), exist_ok=True)
+            with open(AlpacaProvider._cache_file, 'w', encoding='utf-8') as f:
+                json.dump(AlpacaProvider._fundamentals_cache, f, indent=4)
+        except Exception as e:
+            logger.error(f"Failed to save Alpaca fundamentals cache to disk: {e}")
+
     def get_fundamentals(self, symbol: str) -> Dict[str, Any]:
         """
         Alpaca Free API has limited fundamental data natively. 
         We use yfinance as fallback to fetch the asset name and basic metrics.
         Cache results for 24h by default.
         """
+        self._load_fundamentals_cache()
         now = time.time()
         expire_hours = float(os.getenv("FUNDAMENTALS_CACHE_EXPIRE_HOURS", "24"))
         expire_secs = expire_hours * 3600
@@ -212,20 +253,9 @@ class AlpacaProvider(DataProvider):
             if parts[-1] != 'MC':
                 yf_symbol = '-'.join(parts)
                 
-        # Setup session with custom headers to prevent yfinance blocking in Cloud VM
-        session = None
-        try:
-            import requests
-            session = requests.Session()
-            session.headers.update({
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            })
-        except Exception:
-            pass
-
         try:
             import yfinance as yf
-            ticker = yf.Ticker(yf_symbol, session=session)
+            ticker = yf.Ticker(yf_symbol, session=self._get_session())
             info = ticker.info or {}
             name = info.get('longName') or info.get('shortName') or symbol
         except Exception as e:
@@ -263,6 +293,7 @@ class AlpacaProvider(DataProvider):
             'previous_close': info.get('previousClose')
         }
         
-        self._fundamentals_cache[symbol] = (now, data)
+        AlpacaProvider._fundamentals_cache[symbol] = (now, data)
+        self._save_fundamentals_cache()
         return data
 

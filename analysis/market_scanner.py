@@ -82,6 +82,16 @@ def get_dynamic_market_symbols(max_stocks: int = 15, include_crypto: bool = True
     Supports index_name values: 'SP500', 'IBEX35', or 'BOTH'.
     If max_stocks <= 0, no limit is applied (returns all stocks for that index).
     """
+    import os
+    allow_unlimited = os.getenv("ALLOW_UNLIMITED_SCAN", "False").lower() == "true"
+    if max_stocks <= 0 and not allow_unlimited:
+        logger.warning(
+            f"DYNAMIC_STOCK_LIMIT is set to {max_stocks} (unlimited). "
+            f"To prevent VM freezes due to heavy API calls, a safe limit of 30 stocks is being enforced. "
+            f"To bypass this safety limit, add ALLOW_UNLIMITED_SCAN=True in your .env file."
+        )
+        max_stocks = 30
+
     index_name = index_name.upper() if index_name else "SP500"
     
     if index_name == "IBEX35":
