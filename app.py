@@ -67,7 +67,14 @@ from zoneinfo import ZoneInfo
 import time
 
 def madrid_time_converter(*args):
-    t = args[0] if args else time.time()
+    if len(args) == 2:
+        t = args[1]
+    elif len(args) == 1:
+        t = args[0]
+    else:
+        t = time.time()
+    if not isinstance(t, (int, float)):
+        t = time.time()
     from datetime import datetime
     return datetime.fromtimestamp(t, tz=ZoneInfo('Europe/Madrid')).timetuple()
 
